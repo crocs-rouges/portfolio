@@ -32,6 +32,6 @@ Projet d'application de sauvegarde de documents sécurisée par login, permettan
 
 Si vous souhaitez me contacter, n'hésitez pas à le faire par :
 
-- Email : romain.chevalier@example.com
+- Email : trpcrocs.rouges@gmail.com
 - LinkedIn : [lien vers mon profil LinkedIn]
 - GitHub : [lien vers mon profil GitHub]
