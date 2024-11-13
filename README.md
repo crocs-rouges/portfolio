@@ -34,4 +34,4 @@ Si vous souhaitez me contacter, n'hésitez pas à le faire par :
 
 - Email : trpcrocs.rouges@gmail.com
 - LinkedIn : [lien vers mon profil LinkedIn]
-- GitHub : [lien vers mon profil GitHub]
+- GitHub : https://github.com/crocs-rouges
