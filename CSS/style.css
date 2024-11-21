@@ -89,6 +89,48 @@ body {
     font-size: clamp(40px, 8vw, 80px);
     line-height: 1.1;
     margin-bottom: 20px;
+    animation: big-heading-color 3s;
+
+}
+@keyframes typing {
+    from {
+        justify-content: " ";
+        color: var(--bg-color);
+
+    }
+
+    60% {
+        justify-content: "Romain ";
+        color: var(--primary-color);
+
+    }
+
+
+    to {
+        content: "Romain Chevalier.";
+        color: var(--heading-color);
+    }
+}
+
+
+@keyframes big-heading-color{
+    from{
+        justify-content: " ";
+        color: var(--bg-color);
+
+    }
+    60%{
+        justify-content: "Romain ";
+        color: var(--primary-color);
+
+    }
+
+
+    to{
+        content: "Romain Chevalier.";
+        color: var(--heading-color);
+}
+
 }
 
 .subtitle {
@@ -103,6 +145,69 @@ body {
     margin-bottom: 50px;
 }
 
+/* début de la partie about */
+.about-title {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0 40px;
+    width: 100%;
+    font-size: clamp(26px, 5vw, 32px);
+    color: var(--heading-color);
+}
+
+.about-subtitle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0 5px;
+    width: 100%;
+    font-size: clamp(20px, 5vw, 28px);
+    color: var(--text-color);
+}
+
+.logo-language-div{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 1px;
+    position: relative;
+    margin-top: 5px;
+}
+
+.devicons{
+    font-size: 60px; /* Changez la taille si nécessaire */
+    color: #3776AB; /* Bleu officiel Python */
+}
+.devicons:hover{
+    animation: changecolor-icons .7s;
+    color: var(--text-color);
+}
+
+@keyframes changecolor-icons {
+    from {
+        color: #3776AB;
+        transform: scale(100%);
+
+
+    }
+
+    40% {
+        color: var(--heading-color);
+        transform: scale(150%);
+
+    }
+
+    to {
+        color: var(--text-color);
+        transform: scale(100%);
+
+    }
+}
+
+
+
+
+/* début de la partie projects */
 .section {
     margin: 100px 0;
 }
