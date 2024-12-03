@@ -135,7 +135,7 @@ body {
 
 .subtitle {
     color: var(--text-color);
-    font-size: clamp(40px, 8vw, 80px);
+    font-size: clamp(40px, 8vw, 50px);
     line-height: 0.9;
     margin-bottom: 30px;
 }
@@ -147,13 +147,11 @@ body {
 
 /* début de la partie about */
 .about-title {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin: 10px 0 40px;
-    width: 100%;
-    font-size: clamp(26px, 5vw, 32px);
     color: var(--heading-color);
+    font-size: clamp(40px, 8vw, 60px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: big-heading-color 3s;
 }
 
 .about-subtitle {
@@ -281,6 +279,25 @@ body {
     }
 }
 
+/* partie lettre de motivation */
+.para{
+    margin: 20px;
+}
+
+
+/* partie CV */
+.CV_img{
+    max-width: 100%;
+    min-width: 80%;
+}
+
+.CV{
+    color: var(--heading-color);
+    font-size: clamp(40px, 8vw, 30px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: big-heading-color 3s;
+}
 
 
 
@@ -296,7 +313,7 @@ body {
 }
 
 .recommandation_img {
-    max-width: 900px;
-    min-width: 600px;
+    max-width: 100%;
+    min-width: 80%;
 
 }
