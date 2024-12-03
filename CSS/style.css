@@ -282,3 +282,21 @@ body {
 }
 
 
+
+
+
+/* recommandation */
+
+.recommandation {
+    color: var(--heading-color);
+    font-size: clamp(40px, 8vw, 30px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: big-heading-color 3s;
+}
+
+.recommandation_img {
+    max-width: 900px;
+    min-width: 600px;
+
+}
