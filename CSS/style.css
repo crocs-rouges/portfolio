@@ -284,6 +284,10 @@ body {
     margin: 20px;
 }
 
+#header_moti{
+    margin: 60px;
+    margin-bottom: 60px;
+}
 
 /* partie CV */
 .CV_img{
@@ -296,6 +300,7 @@ body {
     font-size: clamp(40px, 8vw, 30px);
     line-height: 1.1;
     margin-bottom: 20px;
+    margin-top: 60px;
     animation: big-heading-color 3s;
 }
 
@@ -308,6 +313,7 @@ body {
     color: var(--heading-color);
     font-size: clamp(40px, 8vw, 30px);
     line-height: 1.1;
+    margin-top: 60px;
     margin-bottom: 20px;
     animation: big-heading-color 3s;
 }
