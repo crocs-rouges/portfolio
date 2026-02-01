@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -13,86 +13,180 @@
       <nav class="nav-container">
         <a href="#" class="logo">RC.</a>
         <ul class="nav-links">
-          <li><a href="#about">À propos</a></li>
-          <li><a href="#projects">Projets</a></li>
-          <li><a href="#CV">CV</a></li>
-          <li><a href="#motivation">Lettre de motivation</a></li>
-          <li><a href="#recommandation">Lettre de recommandation</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+          <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
+          <li><a href="#CV" data-i18n="nav_cv">CV</a></li>
+          <li>
+            <a href="#motivation" data-i18n="nav_motivation">Motivations</a>
+          </li>
+          <li>
+            <a href="#recommandation" data-i18n="nav_recommendation"
+              >Lettre de recommandation</a
+            >
+          </li>
+          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+          <li><button id="language-toggle" class="lang-btn">EN</button></li>
         </ul>
       </nav>
     </header>
-
+    <!-- MAIN -->
     <main class="main-container">
       <section class="hero-section" id="hero">
-        <h1 class="small-heading">Bonjour, je suis</h1>
+        <h1 class="small-heading" data-i18n="hero_greeting">
+          Bonjour, je suis
+        </h1>
         <h2 class="big-heading">Romain Chevalier.</h2>
-        <h3 class="subtitle">
+        <h3 class="subtitle" data-i18n="hero_subtitle">
           passionné par la conception et la création de jeux vidéo.
         </h3>
-        <p class="description">
-          Je suis actuellement élève en Terminale générale, spécialités Maths et
-          NSI avec les options de Maths expertes et Japonais et suis passionné
-          depuis très jeune par les jeux vidéo et les différents univers et
-          style de jeux qu’ils proposent (combat, épopée, histoire, ...).
+        <p class="description" data-i18n="hero_desc">
+          Je suis actuellement élève en première année en game design et
+          programming à ISART DIGITAL, en parallel j'apprend le japonais depuis
+          4 ans. Depuis très jeune passioné par les jeux vidéo et les différents
+          univers et style de jeux qu’ils proposent (combat, épopée, histoire,
+          ...).
         </p>
       </section>
-
+      <!-- ABOUT ME -->
       <section class="about" id="about">
-        <h1 class="about-title">About me</h1>
-        <h2 class="about-subtitle">Métier souhaité</h2>
-        <p class="about-description">
+        <h1 class="about-title" data-i18n="about_title">About me</h1>
+        <h2 class="about-subtitle" data-i18n="about_job_title">
+          Métier souhaité
+        </h2>
+        <p class="about-description" data-i18n="about_job_desc">
           je souhaite éxercer le métier de Game développeur gameplay, qui pour
           moi sera le moyen de participer au mieux à la réalisation du jeu dans
           sa globalité et à bien comprendre l’ambition souhaitée par le Game
           design.
         </p>
-        <h2 class="about-subtitle">Softskills</h2>
-        <p>
+        <h2 class="about-subtitle" data-i18n="about_softskills">Softskills</h2>
+        <p data-i18n="about_softskill_1">
           - Je suis passionné par l`univers du jeu vidéo et notamment la
           réalisation et la création de jeux vidéo. J`aime comprendre comment
           sont faites certaines mécaniques de jeu, (le codage) et toute la
           partie game design.
         </p>
-        <p>
+        <p data-i18n="about_softskill_2">
           - Je suis curieux dans plein de domaines tels que la science, la
           physique quantique et l`informatique quantique ainsi que l`IA et son
           développement. J`aime également la culture du japon , c`est pour cela
-          que j`apprends le japonais depuis 3 ans avec le cned.
+          que j`apprends le japonais depuis 3 ans.
         </p>
-        <p>
+        <p data-i18n="about_softskill_3">
           - Je suis persévérant, je cherche toujours une solution à un problème
           même si cela peut me prendre des semaines de recherches.
         </p>
       </section>
 
       <section class="logo-language" id="logo-language">
-        <h2 class="about-subtitle">Compétences</h2>
-        <div class="logo-language-div">
-          <i class="devicons devicons-python"></i>
-          <i class="devicons devicons-javascript"></i>
-          <i class="devicons devicons-html5"></i>
-          <i class="devicons devicons-css3_full"></i>
-          <i class="devicons devicons-sqllite"></i>
-          <i class="devicons devicons-scriptcs"></i>
-          <i class="devicons devicons-photoshop"></i>
-          <i class="devicons devicons-unity_small"></i>
-          <i class="devicons devicons-nodejs"></i>
-          <i class="devicons devicons-react"></i>
+        <h2 class="about-subtitle" data-i18n="skills_title">Compétences</h2>
+
+        <div class="skills-container">
+          <div class="skill-category">
+            <h3 class="skill-cat-title" data-i18n="skills_cat_languages">
+              Langages
+            </h3>
+            <div class="logo-language-div">
+              <i class="devicons devicons-scriptcs" title="C#"></i>
+              <i class="devicons devicons-python" title="Python"></i>
+              <i class="devicons devicons-javascript" title="JavaScript"></i>
+              <i class="devicons devicons-sqllite" title="SQL"></i>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3 class="skill-cat-title" data-i18n="skills_cat_engines">
+              Moteurs & Outils
+            </h3>
+            <div class="logo-language-div">
+              <i class="devicons devicons-unity_small" title="Unity"></i>
+              <i class="devicons devicons-photoshop" title="Photoshop"></i>
+              <i class="devicons devicons-git" title="Git"></i>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="section" id="projects">
-        <h2 class="section-title">Projets notables</h2>
+        <h2 class="section-title" data-i18n="projects_title">
+          Projets notables
+        </h2>
+        <div class="project-card">
+          <div class="project-content">
+            <h3 class="project-title" data-i18n="p_shmup_title">
+              AEGIS OVERDRIVE (SHMUP)
+            </h3>
+            <img class="project-image" src="assets\SHMUP\special feature.jpg" />
+            <p class="project-description" data-i18n="p_shmup_desc">
+              Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce
+              projet de 2 mois, entièrement développé sur Godot en C#, est axé
+              sur l'intégration d'effets de 'Juiciness' et une architecture de
+              code rigoureuse.
+            </p>
+          </div>
+        </div>
         <div class="project-grid">
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Puissance 4</h3>
+              <h3 class="project-title" data-i18n="p_zelda_title">
+                Remake Zelda
+              </h3>
+              <img
+                class="project-image"
+                src="assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg"
+              />
+              <p class="project-description" data-i18n="p_zelda_desc">
+                Réalisation de Link's Awakening sur Unity avec système de
+                combat, inventaire et sauvegarde JSON, système d'inventaire et
+                de swap d'armes à la Zelda.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_yt_title">
+                Youtube Uploader
+              </h3>
+              <img
+                class="project-image"
+                src="assets/yt_schedule/Capture d’écran 2024-12-02 091005.png"
+              />
+              <p class="project-description" data-i18n="p_yt_desc">
+                Ce code est un script python qui permet de mettre en ligne des
+                vidéos sur youtube. Il utilise l'api officielle de youtube et un
+                projet google cloud pour se connecter directement au compte
+                youtube de l'utilisateur et pouvoir uploader des vidéos.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_short_title">
+                Short Création
+              </h3>
+              <img
+                class="project-image"
+                src="assets/short_creation/VideoClipperPro.png"
+              />
+              <p class="project-description" data-i18n="p_short_desc">
+                Projet d'application servant à couper de longues vidéos en
+                petites vidéos au format 9/16 avec tkinter, python et cuda pour
+                utiliser la puissance des GPU nvidia et le multiprocessing.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_puissance4_title">
+                Puissance 4
+              </h3>
               <img
                 class="project-image"
                 src="assets/puissance/Capture d'écran 2024-11-30 160129.png"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_puissance4_desc">
                 Un jeu de Puissance 4 développé avec Pygame, incluant une
                 adaptation automatique de la taille, gestion des erreurs et
                 système de victoire, mode 2 joueurs avec un changement de
@@ -103,12 +197,14 @@
 
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Mario en 2D</h3>
+              <h3 class="project-title" data-i18n="p_mario_title">
+                Mario en 2D
+              </h3>
               <img
                 class="project-image"
                 src="assets/mario_python/Capture d'écran 2024-11-11 193851.png"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_mario_desc">
                 Réalisation d'un niveau de Mario en utilisant des tableaux 2D,
                 avec un système de mouvement innovant basé sur la manipulation
                 de matrices ainsi que la génération de tableaux 2D par
@@ -119,44 +215,18 @@
 
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Remake Zelda</h3>
-              <img
-                class="project-image"
-                src="assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg"
-              />
-              <p class="project-description">
-                Réalisation de Link's Awakening sur Unity avec système de
-                combat, inventaire et sauvegarde JSON, système d'inventaire et
-                de swap d'armes à la Zelda.
-              </p>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-content">
-              <h3 class="project-title">Short Création</h3>
-              <img
-                class="project-image"
-                src="assets/short_creation/VideoClipperPro.png"
-              />
-              <p class="project-description">
-                Projet d'application servant à couper de longues vidéos en
-                petites vidéos au format 9/16 avec tkinter, python et cuda pour
-                utiliser la puissance des GPU nvidia et le multiprocessing.
-              </p>
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-content">
-              <h3 class="project-title">ISART Summer School Project</h3>
+              <h3 class="project-title" data-i18n="p_isart_title">
+                ISART Summer School Project
+              </h3>
               <img
                 class="project-image"
                 src="assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_isart_desc1">
                 Réalisation d'un jeu sur unity en 2D top down en visual
                 scripting.
               </p>
-              <p>
+              <p data-i18n="p_isart_desc2">
                 Le but du jeu est de battre tous les ennemis et affronter le
                 grand méchant avec des pierres et un arc.
               </p>
@@ -164,23 +234,29 @@
           </div>
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Cloud File Explorer</h3>
+              <h3 class="project-title" data-i18n="p_cloud_title">
+                Cloud File Explorer
+              </h3>
               <img class="project-image" src="assets/cloud/cloud.png" />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_cloud_desc1">
                 Projet d'application de sauvegarde de dossiers sécurisés par
                 login, contenant des documents.
               </p>
-              <p>Réalisé en groupe en projet de NSI.</p>
+              <p data-i18n="p_cloud_desc2">
+                Réalisé en groupe dans le cadre scolaire.
+              </p>
             </div>
           </div>
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Le Portfolio</h3>
+              <h3 class="project-title" data-i18n="p_portfolio_title">
+                Le Portfolio
+              </h3>
               <img
                 class="project-image"
                 src="assets/porfolio-images/Capture d'écran 2024-12-02 222438.png"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_portfolio_desc">
                 Réalisation d'un portfolio pour montrer mes réalisations et mes
                 compétences.
               </p>
@@ -188,12 +264,14 @@
           </div>
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Unreal Engine Project</h3>
+              <h3 class="project-title" data-i18n="p_unreal_title">
+                Unreal Engine Project
+              </h3>
               <img
                 class="project-image"
                 src="assets/unreal/Capture d'écran 2024-12-03 180842.png"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_unreal_desc">
                 Projet débuté en 2022 pour découvrir le blueprint. Ce projet se
                 concentre sur la création d'un système de barre de vie(nombre de
                 coeurs) et d'un personnage qui fait de l'escalade sur tout type
@@ -201,29 +279,30 @@
               </p>
             </div>
           </div>
+
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Youtube Uploader</h3>
-              <img
-                class="project-image"
-                src="assets/yt_schedule/Capture d’écran 2024-12-02 091005.png"
-              />
-              <p class="project-description">
-                Ce code est un script python qui permet de mettre en ligne des
-                vidéos sur youtube. Il utilise l'api officielle de youtube et un
-                projet google cloud pour se connecter directement au compte
-                youtube de l'utilisateur et pouvoir uploader des vidéos.
+              <h3 class="project-title" data-i18n="p_tiktok_title">
+                TikTok Creation Upload
+              </h3>
+              <img class="project-image" src=".png" />
+              <p class="project-description" data-i18n="p_tiktok_desc">
+                C'est un script python qui va à l'aide de hashtags télécharger
+                des vidéos tiktok et programmer des publications sur une durée
+                de 10 jours.
               </p>
             </div>
           </div>
           <div class="project-card">
             <div class="project-content">
-              <h3 class="project-title">Peach Multiplayer in Godot</h3>
+              <h3 class="project-title" data-i18n="p_godot_title">
+                Peach Multiplayer in Godot
+              </h3>
               <img
                 class="project-image"
                 src="assets/mario Godot/mario godot.png"
               />
-              <p class="project-description">
+              <p class="project-description" data-i18n="p_godot_desc">
                 Un Remake de Super Mario World sur SNES avec Peach en caractère
                 principale. Ce projet a pour objectif d'apprendre à coder en
                 GDscript sur Godot et de comprendre les bases du Multiplayer
@@ -235,101 +314,83 @@
       </section>
 
       <section class="motivation" id="motivation">
-        <h1 class="about-title" id="header_moti">Lettre de motivation</h1>
-        <p class="para">
-          Je suis actuellement élève en Terminale générale, spécialités Maths et
-          NSI avec les options de Maths expertes et Japonais et suis passionné
-          depuis très jeune par les jeux vidéo et les différents univers et
-          style de jeux qu’ils proposent (combat, épopée, histoire, ...).
+        <h1 class="about-title" id="header_moti" data-i18n="moti_title">
+          Mes Motivations
+        </h1>
+        <p class="para" data-i18n="moti_p1">
+          Je suis actuellement étudiant en première année de Game Design &
+          Programming à ISART Digital. Passionné depuis toujours par les jeux
+          vidéo et la richesse de leurs univers (combat, épopée, histoire...),
+          j'ai orienté mon parcours vers la conception vidéoludique.
         </p>
-        <p class="para">
-          Passionné par la conception et création de jeux vidéo, en parallèle de
-          mes études, j’apprends par moi-même différents types de langage (html,
-          unity, javascript, python, unreal engine, C#). Et je suis également
-          curieux d’autres matières comme les sciences, la physique quantique et
-          la culture Japonaise.
+        <p class="para" data-i18n="moti_p2">
+          En parallèle de ma formation, je développe mes compétences en
+          autodidacte sur différents langages et moteurs (C#, Unity, Python,
+          Unreal Engine, JavaScript). Ma curiosité s'étend également aux
+          sciences, à la physique quantique et à la culture japonaise.
         </p>
-        <p class="para">
-          Voulant pouvoir exercer un métier passion, je me suis renseigné dès la
-          seconde sur les différents métiers des jeux vidéo et me suis rendu
-          dans différentes portes ouvertes des écoles de jeu vidéo. Cela a
-          confirmé mon intérêt pour le métier de Game développeur gameplay, qui
-          pour moi sera le moyen de participer au mieux à la réalisation du jeu
-          dans sa globalité et à bien comprendre l’ambition souhaitée par le
-          Game design.
+        <p class="para" data-i18n="moti_p3">
+          Mon ambition est d'exercer le métier de Gameplay Programmer. Ce rôle
+          représente pour moi l'opportunité de combiner technique et design, en
+          participant concrètement à la réalisation du jeu et en donnant vie aux
+          intentions du Game Design.
         </p>
-        <p class="para">
-          C’est donc en ce sens que j’ai pris l’option NSI, afin de progresser
-          dans le codage et la méthodologie d’analyse, en plus de mes
-          apprentissages personnels sur différentes techniques.
+        <p class="para" data-i18n="moti_p4">
+          J'ai pu confirmer cette vocation à travers divers projets et
+          expériences, notamment lors de la Summer School d'ISART Digital en
+          juillet 2024. Aujourd'hui, je m'investis pleinement dans mes études et
+          mes projets, avec la volonté de progresser constamment et de
+          contribuer à la création d'expériences de jeu innovantes.
         </p>
-        <p class="para">
-          Pour me persuader définitivement que c’était la voix que je voulais
-          emprunter pour mon avenir professionnel, j’ai réalisé un stage au sein
-          l’ISART (summer school code et jeu vidéo 2D juillet 2024) qui m’a
-          complètement convaincu.
-        </p>
-        <p class="para">
-          C’est pour cela que je souhaite intégrer votre établissement
-          d’excellence, et ainsi pouvoir exercer un métier passion où je serai
-          enthousiaste chaque matin.
-        </p>
-        <p class="para">
-          Ayant participé à la porte ouverte l’année dernière et cette année,
-          l’ambiance, les différents univers du jeu vidéo (création, art,
-          programmation ...) étant réunis et les discussions avec les étudiants
-          tous épanouis, m’ont persuadé que c’était au sein de votre
-          établissement que je souhaitais étudier. De plus la manière de
-          travailler en mode projet m’attire beaucoup et les opportunités à
-          l’étranger sont plus qu’attrayantes.
-        </p>
-        <h2>Langages de programmation</h2>
+        <h2 data-i18n="moti_lang_prog">Langages de programmation</h2>
         <div class="logo-language-div">
+          <i class="devicons devicons-scriptcs"></i>
+          <i class="devicons devicons-unity_small"></i>
           <i class="devicons devicons-python"></i>
-          <i class="devicons devicons-javascript"></i>
-          <i class="devicons devicons-html5"></i>
-          <i class="devicons devicons-css3_full"></i>
           <i class="devicons devicons-sqllite"></i>
 
           <i class="devicons devicons-nodejs"></i>
           <i class="devicons devicons-react"></i>
         </div>
-        <h2>Autre languages</h2>
+        <h2 data-i18n="moti_lang_other">Autre languages</h2>
         <div class="logo-language-div">
-          <i class="devicons devicons-scriptcs"></i>
           <i class="devicons devicons-photoshop"></i>
-          <i class="devicons devicons-unity_small"></i>
+          <i class="devicons devicons-javascript"></i>
+          <i class="devicons devicons-html5"></i>
+          <i class="devicons devicons-css3_full"></i>
         </div>
       </section>
 
       <section class="CV" id="CV">
         <div>
-          <h1 class="CV">CV</h1>
+          <h1 class="CV" data-i18n="cv_title">CV</h1>
+          <div class="cv-download-container">
+            <a
+              href="assets/CV.pdf"
+              download="CV_Romain_Chevalier.pdf"
+              class="cta-button"
+              data-i18n="cv_download_btn"
+              >Télécharger mon CV (PDF)</a
+            >
+          </div>
+          <br />
           <img src="assets/CV.jpg" class="CV_img" />
-        </div>
-      </section>
-
-      <section class="recommandation" id="recommandation">
-        <div class="recommandation">
-          <h1 id="header_reco">Lettre de recommandation</h1>
-          <img
-            src="assets/recommandation_romain.jpg"
-            alt="recommandation"
-            class="recommandation_img"
-          />
         </div>
       </section>
 
       <section>
         <div class="contact" id="contact">
-          <h1>Contact</h1>
-          <p>
+          <h1 data-i18n="contact_title">Contact</h1>
+          <p data-i18n="contact_email">
             Vous pouvez me joindre par mail à l'adresse suivante :
             romain.chevalier40@gmail.com
           </p>
-          <p>Mon numéro de téléphone est : 06 09 13 48 80</p>
+          <p data-i18n="contact_phone">
+            Mon numéro de téléphone est : 06 09 13 48 80
+          </p>
         </div>
       </section>
     </main>
+    <script src="js/script.js"></script>
   </body>
 </html>

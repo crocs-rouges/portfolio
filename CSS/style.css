@@ -64,6 +64,22 @@ body {
     color: var(--primary-color);
 }
 
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+}
+
 .main-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -164,17 +180,35 @@ body {
     color: var(--text-color);
 }
 
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.skill-category {
+    flex: 1;
+    min-width: 250px;
+}
+
+.skill-cat-title {
+    color: var(--primary-color);
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
 .logo-language-div{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    gap: 1px;
-    position: relative;
-    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .devicons{
-    font-size: 60px; /* Changez la taille si nécessaire */
+    font-size: 50px; /* Changez la taille si nécessaire */
     color: #3776AB; /* Bleu officiel Python */
+    transition: all 0.3s ease;
 }
 .devicons:hover{
     animation: changecolor-icons .7s;
@@ -244,6 +278,7 @@ body {
     height: 100%;
     background-color: #112240;
     border-radius: 4px;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
 }
 
 .project-title {
@@ -293,6 +328,29 @@ body {
 .CV_img{
     max-width: 100%;
     min-width: 80%;
+}
+
+.cv-download-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    padding: 1.25rem 1.75rem;
+    font-size: 14px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    line-height: 1;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.cta-button:hover {
+    background-color: rgba(100, 255, 218, 0.1);
 }
 
 .CV{
