@@ -13,6 +13,25 @@ export class GridController {
     this.billboards = [];
     this.logicPads = [];
     this.currentLang = localStorage.getItem('lang') || 'fr';
+    this.activeBillboard = null; // Track billboard player is near
+    this.isModalOpen = false;
+
+    this.history = [];
+    this.redoStack = [];
+
+    // Modal elements
+    this.modal = document.getElementById('project-modal');
+    this.modalClose = document.getElementById('modal-close');
+    this.modalTitle = document.getElementById('modal-title');
+    this.modalBody = document.getElementById('modal-body');
+    this.modalGallery = document.getElementById('modal-gallery');
+
+    if (this.modalClose) {
+      this.modalClose.addEventListener('click', () => this.closeModal());
+    }
+    window.addEventListener('click', (e) => {
+      if (e.target === this.modal) this.closeModal();
+    });
 
     // Player setup
     this.player = new THREE.Group();
@@ -68,16 +87,102 @@ export class GridController {
 
   initProjects() {
     const projectData = [
-      { id: 'shmup', titleKey: 'p_shmup_title', descKey: 'p_shmup_desc', image: 'assets/SHMUP/special feature.jpg', x: 3, z: 3 },
-      { id: 'zelda', titleKey: 'p_zelda_title', descKey: 'p_zelda_desc', image: 'assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg', x: -3, z: 3 },
-      { id: 'puissance4', titleKey: 'p_puissance4_title', descKey: 'p_puissance4_desc', image: "assets/puissance/Capture d'écran 2024-11-30 160129.png", x: 3, z: -3 },
-      { id: 'mario', titleKey: 'p_mario_title', descKey: 'p_mario_desc', image: "assets/mario_python/Capture d'écran 2024-11-11 193851.png", x: -3, z: -3 },
-      { id: 'unreal', titleKey: 'p_unreal_title', descKey: 'p_unreal_desc', image: "assets/unreal/Capture d'écran 2024-12-03 180842.png", x: 6, z: 0 },
-      { id: 'portfolio', titleKey: 'p_portfolio_title', descKey: 'p_portfolio_desc', image: "assets/porfolio-images/Capture d'écran 2024-12-02 222438.png", x: -6, z: 0 },
-      { id: 'yt', titleKey: 'p_yt_title', descKey: 'p_yt_desc', image: "assets/yt_schedule/Capture d’écran 2024-12-02 091005.png", x: 0, z: 6 },
-      { id: 'short', titleKey: 'p_short_title', descKey: 'p_short_desc', image: "assets/short_creation/VideoClipperPro.png", x: 0, z: -6 },
-      { id: 'cloud', titleKey: 'p_cloud_title', descKey: 'p_cloud_desc1', image: "assets/cloud/cloud.png", x: 6, z: 6 },
-      { id: 'isart', titleKey: 'p_isart_title', descKey: 'p_isart_desc1', image: "assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg", x: -6, z: -6 }
+      { 
+        id: 'shmup', 
+        titleKey: 'p_shmup_title', 
+        descKey: 'p_shmup_desc', 
+        image: 'assets/SHMUP/special feature.jpg', 
+        gallery: ['assets/SHMUP/special feature.jpg'],
+        x: 3, z: 3 
+      },
+      { 
+        id: 'zelda', 
+        titleKey: 'p_zelda_title', 
+        descKey: 'p_zelda_desc', 
+        image: 'assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg', 
+        gallery: ['assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg'],
+        x: -3, z: 3 
+      },
+      { 
+        id: 'puissance4', 
+        titleKey: 'p_puissance4_title', 
+        descKey: 'p_puissance4_desc', 
+        image: "assets/puissance/Capture d'écran 2024-11-30 160129.png", 
+        gallery: ["assets/puissance/Capture d'écran 2024-11-30 160129.png"],
+        x: 3, z: -3 
+      },
+      { 
+        id: 'mario', 
+        titleKey: 'p_mario_title', 
+        descKey: 'p_mario_desc', 
+        image: "assets/mario_python/Capture d'écran 2024-11-11 193851.png", 
+        gallery: [
+          "assets/mario_python/Capture d'écran 2024-11-11 193851.png",
+          "assets/mario_python/Capture d'écran 2024-11-11 193118.png",
+          "assets/mario_python/Capture d'écran 2024-11-11 193750.png",
+          "assets/mario_python/Capture d'écran 2024-11-11 193808.png",
+          "assets/mario_python/Capture d'écran 2024-11-11 193915.png"
+        ],
+        x: -3, z: -3 
+      },
+      { 
+        id: 'unreal', 
+        titleKey: 'p_unreal_title', 
+        descKey: 'p_unreal_desc', 
+        image: "assets/unreal/Capture d'écran 2024-12-03 180842.png", 
+        gallery: [
+          "assets/unreal/Capture d'écran 2024-12-03 180842.png",
+          "assets/unreal/Capture d'écran 2024-12-03 181059.png"
+        ],
+        x: 6, z: 0 
+      },
+      { 
+        id: 'portfolio', 
+        titleKey: 'p_portfolio_title', 
+        descKey: 'p_portfolio_desc', 
+        image: "assets/porfolio-images/Capture d'écran 2024-12-02 222438.png", 
+        gallery: [
+          "assets/porfolio-images/Capture d'écran 2024-12-02 222438.png",
+          "assets/porfolio-images/Capture d'écran 2024-12-02 222448.png",
+          "assets/porfolio-images/Capture d'écran 2024-12-02 222457.png"
+        ],
+        x: -6, z: 0 
+      },
+      { 
+        id: 'yt', 
+        titleKey: 'p_yt_title', 
+        descKey: 'p_yt_desc', 
+        image: "assets/yt_schedule/Capture d’écran 2024-12-02 091005.png", 
+        gallery: [
+          "assets/yt_schedule/Capture d’écran 2024-12-02 091005.png",
+          "assets/yt_schedule/2024-11-28 19-57-12.00_03_53_17.Still001.jpg"
+        ],
+        x: 0, z: 6 
+      },
+      { 
+        id: 'short', 
+        titleKey: 'p_short_title', 
+        descKey: 'p_short_desc', 
+        image: "assets/short_creation/VideoClipperPro.png", 
+        gallery: ["assets/short_creation/VideoClipperPro.png"],
+        x: 0, z: -6 
+      },
+      { 
+        id: 'cloud', 
+        titleKey: 'p_cloud_title', 
+        descKey: 'p_cloud_desc1', 
+        image: "assets/cloud/cloud.png", 
+        gallery: ["assets/cloud/cloud.png"],
+        x: 6, z: 6 
+      },
+      { 
+        id: 'isart', 
+        titleKey: 'p_isart_title', 
+        descKey: 'p_isart_desc1', 
+        image: "assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg", 
+        gallery: ["assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg"],
+        x: -6, z: -6 
+      }
     ];
 
     projectData.forEach(data => {
@@ -144,6 +249,8 @@ export class GridController {
       {x: 0, z: 3}, {x: 0, z: -3}, {x: 3, z: 0}, {x: -3, z: 0}
     ];
     walls.forEach(w => this.createWall(w.x, w.z));
+
+    this.initialState = this.saveState();
   }
 
   createBlock(x, z, color) {
@@ -219,7 +326,35 @@ export class GridController {
   }
 
   handleKeyDown(e) {
+    if (this.isModalOpen) {
+      if (e.key === 'Escape') this.closeModal();
+      return;
+    }
+
     if (this.isMoving) return;
+
+    // Undo/Redo/Reset
+    const isCtrl = e.ctrlKey || e.metaKey;
+    if (e.key.toLowerCase() === 'u' || (isCtrl && e.key.toLowerCase() === 'z')) {
+      this.undo();
+      return;
+    }
+    if (e.key.toLowerCase() === 'y' || (isCtrl && e.key.toLowerCase() === 'y')) {
+      this.redo();
+      return;
+    }
+    if (e.key.toLowerCase() === 'r') {
+      this.reset();
+      return;
+    }
+
+    // Trigger project modal
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (this.activeBillboard && !this.activeBillboard.isLocked) {
+        this.openModal(this.activeBillboard);
+      }
+      return;
+    }
 
     const move = { x: 0, z: 0 };
     if (e.key === 'ArrowUp' || e.key === 'w') move.z = -1;
@@ -232,9 +367,160 @@ export class GridController {
     }
   }
 
+  saveState() {
+    const blocks = this.objects
+      .filter(obj => obj.userData.type === 'block')
+      .map(block => ({
+        mesh: block,
+        x: block.position.x,
+        z: block.position.z
+      }));
+
+    return {
+      player: {
+        x: this.player.position.x,
+        z: this.player.position.z,
+        rotationY: this.player.rotation.y
+      },
+      blocks: blocks
+    };
+  }
+
+  undo() {
+    if (this.history.length === 0 || this.isMoving) return;
+    this.redoStack.push(this.saveState());
+    const state = this.history.pop();
+    this.restoreState(state);
+  }
+
+  redo() {
+    if (this.redoStack.length === 0 || this.isMoving) return;
+    this.history.push(this.saveState());
+    const state = this.redoStack.pop();
+    this.restoreState(state);
+  }
+
+  reset() {
+    if (this.isMoving) return;
+    this.restoreState(this.initialState);
+    this.history = [];
+    this.redoStack = [];
+  }
+
+  restoreState(state) {
+    this.isMoving = true;
+    
+    let totalAnims = state.blocks.length + 1;
+    let completedAnims = 0;
+    const checkAllDone = () => {
+      completedAnims++;
+      if (completedAnims === totalAnims) {
+        this.isMoving = false;
+        // Re-check logic pads after all objects moved
+        this.resetLogicPads();
+        this.checkLogicPads();
+      }
+    };
+
+    // Restore player
+    gsap.to(this.player.position, {
+      x: state.player.x,
+      z: state.player.z,
+      duration: 0.3,
+      onComplete: () => {
+        this.physicsWorld.updateBody(this.player);
+        checkAllDone();
+      }
+    });
+    gsap.to(this.player.rotation, {
+      y: state.player.rotationY,
+      duration: 0.3
+    });
+
+    // Restore blocks
+    state.blocks.forEach(b => {
+      gsap.to(b.mesh.position, {
+        x: b.x,
+        z: b.z,
+        duration: 0.3,
+        onComplete: () => {
+          this.physicsWorld.updateBody(b.mesh);
+          checkAllDone();
+        }
+      });
+    });
+  }
+
+  resetLogicPads() {
+    this.logicPads.forEach(pad => {
+      pad.userData.isActive = false;
+      if (pad.userData.padMesh) {
+        pad.userData.padMesh.material.emissive.set(0x000000);
+        pad.userData.padMesh.material.emissiveIntensity = 0;
+      }
+      if (pad.userData.associatedBillboard) {
+        pad.userData.associatedBillboard.lock();
+      }
+    });
+  }
+
+  openModal(billboard) {
+    if (!billboard || billboard.isLocked) return;
+    
+    this.isModalOpen = true;
+    const data = billboard.data;
+    const lang = this.currentLang;
+    const projectTranslations = (lang === 'fr' ? billboard.translations.fr : billboard.translations.en) || {};
+
+    this.modalTitle.textContent = projectTranslations[data.titleKey] || 'Project';
+    
+    // Build body (handle multiple descriptions)
+    let bodyHtml = '';
+    const descKeys = [data.descKey, 'p_' + data.id + '_desc1', 'p_' + data.id + '_desc2', 'p_' + data.id + '_desc3'];
+    const seenDescs = new Set();
+    
+    descKeys.forEach(key => {
+      const text = projectTranslations[key];
+      if (text && !seenDescs.has(text)) {
+        bodyHtml += `<p>${text}</p>`;
+        seenDescs.add(text);
+      }
+    });
+    this.modalBody.innerHTML = bodyHtml;
+
+    // Build gallery
+    this.modalGallery.innerHTML = '';
+    if (data.gallery && data.gallery.length > 0) {
+      data.gallery.forEach(imgSrc => {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.className = 'gallery-item';
+        img.alt = data.id;
+        img.onclick = () => window.open(imgSrc, '_blank');
+        this.modalGallery.appendChild(img);
+      });
+    } else if (data.image) {
+      const img = document.createElement('img');
+      img.src = data.image;
+      img.className = 'gallery-item';
+      img.alt = data.id;
+      img.onclick = () => window.open(data.image, '_blank');
+      this.modalGallery.appendChild(img);
+    }
+
+    this.modal.classList.add('active');
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.modal.classList.remove('active');
+  }
+
   tryMove(dx, dz) {
-    const targetX = this.player.position.x + dx * this.gridSize;
-    const targetZ = this.player.position.z + dz * this.gridSize;
+    if (this.isMoving) return;
+
+    const targetX = Math.round(this.player.position.x + dx * this.gridSize);
+    const targetZ = Math.round(this.player.position.z + dz * this.gridSize);
 
     // Rotate player towards direction
     const targetRotation = Math.atan2(dx, dz);
@@ -244,26 +530,33 @@ export class GridController {
       ease: "power2.out"
     });
 
-    const occupant = this.physicsWorld.getObjectAt(targetX, targetZ);
+    // Use excludeMesh: this.player to avoid self-collision
+    const occupant = this.physicsWorld.getObjectAt(targetX, targetZ, 0.4, this.player);
 
     if (!occupant) {
       // Empty cell, move player
+      this.history.push(this.saveState());
+      this.redoStack = [];
       this.movePlayer(targetX, targetZ);
     } else if (occupant.mesh.userData.type === 'block') {
       // It's a block, check if we can push it
-      const blockTargetX = targetX + dx * this.gridSize;
-      const blockTargetZ = targetZ + dz * this.gridSize;
+      const blockTargetX = Math.round(targetX + dx * this.gridSize);
+      const blockTargetZ = Math.round(targetZ + dz * this.gridSize);
 
-      const blockPathOccupant = this.physicsWorld.getObjectAt(blockTargetX, blockTargetZ);
+      // Check if block's target is empty
+      const blockPathOccupant = this.physicsWorld.getObjectAt(blockTargetX, blockTargetZ, 0.4, occupant.mesh);
 
       if (!blockPathOccupant) {
         // We can push the block
+        this.history.push(this.saveState());
+        this.redoStack = [];
         this.isMoving = true;
         let animationsComplete = 0;
         const checkBothComplete = () => {
           animationsComplete++;
           if (animationsComplete === 2) {
             this.isMoving = false;
+            this.checkLogicPads();
           }
         };
 
@@ -271,7 +564,6 @@ export class GridController {
         this.movePlayer(targetX, targetZ, checkBothComplete);
       }
     }
-    // If it's a wall or a block we can't push, do nothing
   }
 
   movePlayer(tx, tz, onCompleteCallback) {
@@ -311,16 +603,33 @@ export class GridController {
       this.billboards.forEach(billboard => billboard.updateLanguage(newLang));
     }
 
+    let nearestBillboard = null;
+    let minDist = Infinity;
+
     this.billboards.forEach(billboard => {
       billboard.update(camera);
       
-      // Proximity check (adjacent cell)
       const dist = this.player.position.distanceTo(billboard.position);
       if (dist < 1.5) {
         billboard.show();
+        if (dist < minDist) {
+          minDist = dist;
+          nearestBillboard = billboard;
+        }
       } else {
         billboard.hide();
       }
     });
+
+    this.activeBillboard = nearestBillboard;
+
+    // Optional: Add visual hint to open if unlocked
+    if (this.activeBillboard && !this.activeBillboard.isLocked && !this.isModalOpen) {
+      const openLabel = this.currentLang === 'fr' ? 'OUVRIR' : 'OPEN';
+      const prompt = `\n\n<span style="color: var(--primary-color); font-family: 'SF Mono', monospace; font-size: 12px; display: block; text-align: center; margin-top: 10px;">[ENTER / SPACE] ${openLabel}</span>`;
+      if (!this.activeBillboard.infoElement.innerHTML.includes(openLabel)) {
+        this.activeBillboard.infoElement.innerHTML += prompt;
+      }
+    }
   }
 }
