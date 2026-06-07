@@ -69,10 +69,7 @@ export class GridController {
   }
 
   createBlock(x, z, color) {
-    const mesh = new THREE.Mesh(
-      new THREE.BoxGeometry(0.8, 0.8, 0.8),
-      new THREE.MeshStandardMaterial({ color: color })
-    );
+    const mesh = AssetFactory.createDataCrate(color);
     mesh.position.set(x, 0.4, z);
     mesh.userData.type = 'block';
     this.scene.add(mesh);
