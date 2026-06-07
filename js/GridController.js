@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ProjectBillboard } from './ProjectBillboard.js';
+import { AssetFactory } from './AssetFactory.js';
 
 export class GridController {
   constructor(scene, physicsWorld) {
@@ -13,15 +14,12 @@ export class GridController {
     this.currentLang = localStorage.getItem('lang') || 'fr';
 
     // Player setup
-    this.player = new THREE.Mesh(
-      new THREE.BoxGeometry(0.8, 1.8, 0.8),
-      new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-    );
-    this.player.position.set(0, 0.9, 0);
+    this.player = AssetFactory.createRobot();
+    this.player.position.set(0, 0.6, 0); // Robot is ~1.2m high, centered at 0.6
     this.player.userData.type = 'player';
     this.scene.add(this.player);
     this.objects.push(this.player);
-    this.physicsWorld.addBox(this.player, 0, true);
+    this.physicsWorld.addBox(this.player, 0, true, 0.6, 1.2, 0.6);
 
     // Initial test blocks
     this.createBlock(2, 2, 0xff0000);
@@ -68,6 +66,30 @@ export class GridController {
       this.objects.push(base);
       this.physicsWorld.addBox(base, 0, false);
     });
+  }
+
+  createBlock(x, z, color) {
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(0.8, 0.8, 0.8),
+      new THREE.MeshStandardMaterial({ color: color })
+    );
+    mesh.position.set(x, 0.4, z);
+    mesh.userData.type = 'block';
+    this.scene.add(mesh);
+    this.objects.push(mesh);
+    this.physicsWorld.addBox(mesh, 1, false);
+  }
+
+  createWall(x, z) {
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(1, 1.5, 1),
+      new THREE.MeshStandardMaterial({ color: 0x444444 })
+    );
+    mesh.position.set(x, 0.75, z);
+    mesh.userData.type = 'wall';
+    this.scene.add(mesh);
+    this.objects.push(mesh);
+    this.physicsWorld.addBox(mesh, 0, false);
   }
 
   dispose() {

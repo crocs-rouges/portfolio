@@ -8,9 +8,23 @@ export class PhysicsWorld {
     this.bodies = new Map(); // Map Three.js mesh to Cannon.js body
   }
 
-  addBox(mesh, mass = 0, isTrigger = false) {
-    const box = mesh.geometry.parameters;
-    const shape = new CANNON.Box(new CANNON.Vec3(box.width / 2, box.height / 2, box.depth / 2));
+  addBox(mesh, mass = 0, isTrigger = false, w, h, d) {
+    let width, height, depth;
+    if (w !== undefined && h !== undefined && d !== undefined) {
+      width = w;
+      height = h;
+      depth = d;
+    } else if (mesh.geometry && mesh.geometry.parameters) {
+      const params = mesh.geometry.parameters;
+      width = params.width;
+      height = params.height;
+      depth = params.depth;
+    } else {
+      // Fallback or handle error
+      width = 1; height = 1; depth = 1;
+    }
+
+    const shape = new CANNON.Box(new CANNON.Vec3(width / 2, height / 2, depth / 2));
     const body = new CANNON.Body({
       mass: mass,
       position: new CANNON.Vec3(mesh.position.x, mesh.position.y, mesh.position.z),
