@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GridController } from './GridController.js';
 
 export class SceneManager {
   constructor() {
@@ -12,7 +13,16 @@ export class SceneManager {
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.set(5, 5, 5);
     this.camera.lookAt(0, 0, 0);
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7);
+    this.scene.add(directionalLight);
     
+    this.gridController = new GridController(this.scene);
+
     this.resizeHandler = this.onResize.bind(this);
     this.onResize();
     window.addEventListener('resize', this.resizeHandler);
