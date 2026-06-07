@@ -1,6 +1,9 @@
-import * as THREE from 'three';
-import * as CANNON from 'cannon-es';
-import gsap from 'gsap';
+import { SceneManager } from './SceneManager.js';
 
-console.log('Logic Crypt initialized');
-console.log('Three.js version:', THREE.REVISION);
+const sceneManager = new SceneManager();
+
+function animate() {
+  requestAnimationFrame(animate);
+  sceneManager.update();
+}
+animate();
