@@ -11,6 +11,7 @@ export class GridController {
     this.isMoving = false;
     this.objects = []; // Track all objects for disposal
     this.billboards = [];
+    this.logicPads = [];
     this.currentLang = localStorage.getItem('lang') || 'fr';
 
     // Player setup
@@ -58,10 +59,6 @@ export class GridController {
       ease: "power1.inOut"
     });
 
-    // Initial test blocks
-    this.createBlock(2, 2, 0xff0000);
-    this.createBlock(-2, -2, 0x0000ff);
-    
     // Some walls for testing
     this.createWall(5, 0);
     this.createWall(5, 1);
@@ -102,6 +99,33 @@ export class GridController {
       this.scene.add(base);
       this.objects.push(base);
       this.physicsWorld.addBox(base, 0, false);
+
+      // Create Logic Pad
+      const pad = AssetFactory.createLogicPad();
+      // Position pad adjacent to billboard (towards center)
+      let px = data.x;
+      let pz = data.z;
+      if (Math.abs(data.x) >= Math.abs(data.z)) {
+        px -= Math.sign(data.x);
+      } else {
+        pz -= Math.sign(data.z);
+      }
+      
+      pad.position.set(px, 0.6, pz); // y=0.6 is grid center
+      pad.userData.associatedBillboard = billboard;
+      this.scene.add(pad);
+      this.objects.push(pad);
+      this.logicPads.push(pad);
+
+      // Create Data Crate (further away on same axis)
+      let cx = px;
+      let cz = pz;
+      if (Math.abs(data.x) >= Math.abs(data.z)) {
+        cx -= Math.sign(data.x);
+      } else {
+        cz -= Math.sign(data.z);
+      }
+      this.createBlock(cx, cz, 0x64ffda); // Theme color
     });
   }
 
@@ -112,6 +136,24 @@ export class GridController {
     this.scene.add(mesh);
     this.objects.push(mesh);
     this.physicsWorld.addBox(mesh, 1, false);
+  }
+
+  checkLogicPads() {
+    this.logicPads.forEach(pad => {
+      if (pad.userData.isActive) return;
+
+      const occupant = this.physicsWorld.getObjectAt(pad.position.x, pad.position.z);
+      if (occupant && occupant.mesh.userData.type === 'block') {
+        // Win!
+        pad.userData.isActive = true;
+        pad.userData.padMesh.material.emissive.set(0x00ff00);
+        pad.userData.padMesh.material.emissiveIntensity = 2;
+        
+        if (pad.userData.associatedBillboard) {
+          pad.userData.associatedBillboard.unlock();
+        }
+      }
+    });
   }
 
   createWall(x, z) {
@@ -141,6 +183,7 @@ export class GridController {
 
     this.billboards.forEach(b => b.dispose());
     this.billboards = [];
+    this.logicPads = [];
 
     for (const obj of this.objects) {
       gsap.killTweensOf(obj.position);
@@ -235,6 +278,7 @@ export class GridController {
       duration: 0.3,
       onComplete: () => {
         this.physicsWorld.updateBody(blockMesh);
+        this.checkLogicPads();
         if (onCompleteCallback) onCompleteCallback();
       }
     });

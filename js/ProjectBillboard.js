@@ -6,6 +6,7 @@ export class ProjectBillboard {
     this.scene = scene;
     this.data = projectData;
     this.position = position;
+    this.isLocked = true; // Projects start locked
     
     // Default language or currently selected one
     this.lang = localStorage.getItem('lang') || 'fr';
@@ -23,7 +24,7 @@ export class ProjectBillboard {
     // Billboard plane
     const geometry = new THREE.PlaneGeometry(1.2, 0.8);
     const material = new THREE.MeshStandardMaterial({ 
-      color: 0xffffff,
+      color: 0x222222, // Dark when locked
       side: THREE.DoubleSide,
       transparent: true,
       opacity: 0.9
@@ -31,7 +32,11 @@ export class ProjectBillboard {
     
     // Frame
     const frameGeo = new THREE.PlaneGeometry(1.3, 0.9);
-    const frameMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+    const frameMat = new THREE.MeshStandardMaterial({ 
+      color: 0x444444,
+      emissive: 0xff0000,
+      emissiveIntensity: 0.5
+    });
     const frame = new THREE.Mesh(frameGeo, frameMat);
     frame.position.z = -0.01;
     
@@ -40,16 +45,9 @@ export class ProjectBillboard {
     group.add(poster);
     group.add(frame);
 
-    // Load texture if image exists
-    if (this.data.image) {
-      const loader = new THREE.TextureLoader();
-      loader.load(this.data.image, (texture) => {
-        material.map = texture;
-        material.needsUpdate = true;
-      }, undefined, (err) => {
-        console.warn('Failed to load project image:', this.data.image);
-      });
-    }
+    // Save references for unlocking
+    group.userData.posterMaterial = material;
+    group.userData.frameMaterial = frameMat;
 
     group.userData.type = 'billboard';
     group.userData.projectId = this.data.id;
@@ -74,13 +72,25 @@ export class ProjectBillboard {
     el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     el.style.opacity = '0';
     
-    this.updateContent(this.infoElement, this.lang);
+    // Fix: pass 'el' directly because 'this.infoElement' is still undefined
+    this.updateContent(el, this.lang);
     
     document.body.appendChild(el);
     return el;
   }
 
   updateContent(element = this.infoElement, lang = this.lang) {
+    if (this.isLocked) {
+      const accessDenied = lang === 'fr' ? 'ACCÈS REFUSÉ' : 'ACCESS DENIED';
+      const restoreLogic = lang === 'fr' ? 'Rétablir la liaison logique pour déverrouiller.' : 'Restore logic link to unlock.';
+      
+      element.innerHTML = `
+        <h3 style="margin: 0 0 10px 0; color: #ff4d4d; font-size: 18px;">> ${accessDenied}</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.4; color: var(--text-color); font-family: 'SF Mono', monospace;">${restoreLogic}</p>
+      `;
+      return;
+    }
+
     const title = translations[lang][this.data.titleKey] || 'Project';
     const desc = translations[lang][this.data.descKey] || '';
     
@@ -88,6 +98,30 @@ export class ProjectBillboard {
       <h3 style="margin: 0 0 10px 0; color: var(--heading-color); font-size: 18px;">${title}</h3>
       <p style="margin: 0; font-size: 14px; line-height: 1.4; color: var(--text-color);">${desc}</p>
     `;
+  }
+
+  unlock() {
+    if (!this.isLocked) return;
+    this.isLocked = false;
+    
+    // Update visual state
+    const posterMat = this.mesh.userData.posterMaterial;
+    const frameMat = this.mesh.userData.frameMaterial;
+    
+    posterMat.color.set(0xffffff);
+    frameMat.emissive.set(0x00ff00);
+    frameMat.emissiveIntensity = 1;
+    
+    // Load texture now
+    if (this.data.image) {
+      const loader = new THREE.TextureLoader();
+      loader.load(this.data.image, (texture) => {
+        posterMat.map = texture;
+        posterMat.needsUpdate = true;
+      });
+    }
+    
+    this.updateContent();
   }
 
   update(camera) {

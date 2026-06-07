@@ -96,4 +96,26 @@ export class AssetFactory {
     
     return group;
   }
+
+  static createLogicPad() {
+    const group = new THREE.Group();
+    const padGeo = new THREE.PlaneGeometry(0.8, 0.8);
+    const padMat = new THREE.MeshStandardMaterial({ 
+      color: 0x444444, 
+      emissive: 0xff0000, 
+      emissiveIntensity: 1,
+      transparent: true,
+      opacity: 0.8,
+      side: THREE.DoubleSide
+    });
+    const pad = new THREE.Mesh(padGeo, padMat);
+    pad.rotation.x = -Math.PI / 2;
+    pad.position.y = -0.59; // Flat on the floor (relative to grid center y=0.6, floor is at -0.6)
+    
+    group.add(pad);
+    group.userData.type = 'logic_pad';
+    group.userData.isActive = false;
+    group.userData.padMesh = pad; // Ref for color changing
+    return group;
+  }
 }
