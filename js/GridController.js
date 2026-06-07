@@ -176,6 +176,14 @@ export class GridController {
     const targetX = this.player.position.x + dx * this.gridSize;
     const targetZ = this.player.position.z + dz * this.gridSize;
 
+    // Rotate player towards direction
+    const targetRotation = Math.atan2(dx, dz);
+    gsap.to(this.player.rotation, {
+      y: targetRotation,
+      duration: 0.2,
+      ease: "power2.out"
+    });
+
     const occupant = this.physicsWorld.getObjectAt(targetX, targetZ);
 
     if (!occupant) {
