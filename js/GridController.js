@@ -14,12 +14,49 @@ export class GridController {
     this.currentLang = localStorage.getItem('lang') || 'fr';
 
     // Player setup
-    this.player = AssetFactory.createRobot();
-    this.player.position.set(0, 0.6, 0); // Robot is ~1.2m high, centered at 0.6
+    this.player = new THREE.Group();
+    this.player.position.set(0, 0.6, 0);
     this.player.userData.type = 'player';
     this.scene.add(this.player);
     this.objects.push(this.player);
+
+    this.robotModel = AssetFactory.createRobot();
+    this.player.add(this.robotModel);
+    this.objects.push(this.robotModel);
+
+    // Shadow setup
+    const shadowGeo = new THREE.CircleGeometry(0.3, 32);
+    const shadowMat = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.3,
+      side: THREE.DoubleSide
+    });
+    this.shadow = new THREE.Mesh(shadowGeo, shadowMat);
+    this.shadow.rotation.x = -Math.PI / 2;
+    this.shadow.position.y = -0.59; // Floor is at -0.6 relative to group center (0.6)
+    this.player.add(this.shadow);
+    this.objects.push(this.shadow);
+
     this.physicsWorld.addBox(this.player, 0, true, 0.6, 1.2, 0.6);
+
+    // Hover animation
+    gsap.to(this.robotModel.position, {
+      y: "+=0.1",
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut"
+    });
+
+    gsap.to(this.shadow.scale, {
+      x: 0.8,
+      y: 0.8,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut"
+    });
 
     // Initial test blocks
     this.createBlock(2, 2, 0xff0000);
@@ -94,6 +131,12 @@ export class GridController {
     
     if (this.player) {
       gsap.killTweensOf(this.player.position);
+    }
+    if (this.robotModel) {
+      gsap.killTweensOf(this.robotModel.position);
+    }
+    if (this.shadow) {
+      gsap.killTweensOf(this.shadow.scale);
     }
 
     this.billboards.forEach(b => b.dispose());
