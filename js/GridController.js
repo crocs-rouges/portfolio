@@ -59,11 +59,6 @@ export class GridController {
       ease: "power1.inOut"
     });
 
-    // Some walls for testing
-    this.createWall(5, 0);
-    this.createWall(5, 1);
-    this.createWall(5, -1);
-
     // Project Billboards
     this.initProjects();
 
@@ -102,31 +97,53 @@ export class GridController {
 
       // Create Logic Pad
       const pad = AssetFactory.createLogicPad();
-      // Position pad adjacent to billboard (towards center)
+      // Staggered pad position: offset from billboard
       let px = data.x;
       let pz = data.z;
+      
+      // Move pad 1 unit towards center but with a side offset to increase difficulty
       if (Math.abs(data.x) >= Math.abs(data.z)) {
         px -= Math.sign(data.x);
+        pz += (data.z >= 0 ? 1 : -1); 
       } else {
         pz -= Math.sign(data.z);
+        px += (data.x >= 0 ? 1 : -1);
       }
       
-      pad.position.set(px, 0.6, pz); // y=0.6 is grid center
+      pad.position.set(px, 0.6, pz); 
       pad.userData.associatedBillboard = billboard;
       this.scene.add(pad);
       this.objects.push(pad);
       this.logicPads.push(pad);
 
-      // Create Data Crate (further away on same axis)
-      let cx = px;
-      let cz = pz;
-      if (Math.abs(data.x) >= Math.abs(data.z)) {
-        cx -= Math.sign(data.x);
-      } else {
-        cz -= Math.sign(data.z);
-      }
-      this.createBlock(cx, cz, 0x64ffda); // Theme color
+      // Create Data Crate at a more distant and non-obvious location
+      let cx = px - Math.sign(px) * 2;
+      let cz = pz - Math.sign(pz) * 2;
+      
+      // Further staggering based on coordinates
+      if (data.x === 0) cx += (data.z > 0 ? -3 : 3);
+      if (data.z === 0) cz += (data.x > 0 ? 3 : -3);
+      
+      this.createBlock(cx, cz, 0x64ffda); 
     });
+
+    // Add Boundary Walls
+    for (let i = -10; i <= 10; i++) {
+      this.createWall(i, -10);
+      this.createWall(i, 10);
+      this.createWall(-10, i);
+      this.createWall(10, i);
+    }
+
+    // Strategic walls for corridors and corners
+    const walls = [
+      {x: 2, z: 2}, {x: 2, z: 4}, {x: 4, z: 2},
+      {x: -2, z: 2}, {x: -2, z: 4}, {x: -4, z: 2},
+      {x: 2, z: -2}, {x: 2, z: -4}, {x: 4, z: -2},
+      {x: -2, z: -2}, {x: -2, z: -4}, {x: -4, z: -2},
+      {x: 0, z: 3}, {x: 0, z: -3}, {x: 3, z: 0}, {x: -3, z: 0}
+    ];
+    walls.forEach(w => this.createWall(w.x, w.z));
   }
 
   createBlock(x, z, color) {
