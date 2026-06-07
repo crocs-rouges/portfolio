@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GridController } from './GridController.js';
+import { PhysicsWorld } from './PhysicsWorld.js';
 
 export class SceneManager {
   constructor() {
@@ -14,14 +15,25 @@ export class SceneManager {
     this.camera.position.set(5, 5, 5);
     this.camera.lookAt(0, 0, 0);
 
+    // Physics
+    this.physicsWorld = new PhysicsWorld();
+
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     this.scene.add(ambientLight);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(5, 10, 7);
     this.scene.add(directionalLight);
+
+    // Ground
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(20, 20),
+      new THREE.MeshStandardMaterial({ color: 0x333333 })
+    );
+    ground.rotation.x = -Math.PI / 2;
+    this.scene.add(ground);
     
-    this.gridController = new GridController(this.scene);
+    this.gridController = new GridController(this.scene, this.physicsWorld);
 
     this.resizeHandler = this.onResize.bind(this);
     this.onResize();
@@ -35,11 +47,14 @@ export class SceneManager {
   }
 
   update() {
+    this.physicsWorld.step();
+    this.gridController.update();
     this.renderer.render(this.scene, this.camera);
   }
 
   dispose() {
     window.removeEventListener('resize', this.resizeHandler);
+    this.gridController.dispose(this.scene);
     this.renderer.dispose();
   }
 }
