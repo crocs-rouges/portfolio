@@ -58,6 +58,29 @@
         opacity: 0;
         visibility: hidden;
       }
+      .instruction-block {
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(0,0,0,0.3);
+        border-radius: 4px;
+        text-align: left;
+      }
+      .instruction-label {
+        font-family: 'SF Mono', monospace;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+      .instruction-text {
+        font-family: 'SF Mono', monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      #start-btn {
+        width: 100%;
+        cursor: pointer;
+      }
       #debug-info {
         position: fixed;
         top: 10px;
@@ -88,21 +111,17 @@
         <h1 data-i18n="hero_greeting">Bonjour, je suis</h1>
         <h2 class="big-heading">Romain Chevalier.</h2>
         <p data-i18n="hero_subtitle" style="margin: 20px 0; color: var(--text-color);">Bienvenue dans ma Crypte de la Logique interactive.</p>
-        <div style="margin: 30px 0; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 4px; text-align: left;">
-          <p style="font-family: 'SF Mono', monospace; font-size: 0.9rem; color: var(--primary-color); margin-bottom: 10px;">
-            > OBJECTIF_
+        <div class="instruction-block">
+          <p class="instruction-label" data-i18n="moti_objective_title">> OBJECTIF_</p>
+          <p class="instruction-text" data-i18n="moti_objective_desc">
+            Les projets sont verrouillés. Poussez les <strong>Caisses de Données</strong> sur les <strong>Dalles Logiques</strong> pour rétablir le courant et débloquer les informations.
           </p>
-          <p style="font-family: 'SF Mono', monospace; font-size: 0.85rem; line-height: 1.6; margin-bottom: 20px;">
-            Les projets sont verrouillés. Poussez les **Caisses de Données** sur les **Dalles Logiques** pour rétablir le courant et débloquer les informations.
-          </p>
-          <p style="font-family: 'SF Mono', monospace; font-size: 0.9rem; color: var(--primary-color); margin-bottom: 10px;">
-            > CONTROLES_
-          </p>
-          <p style="font-family: 'SF Mono', monospace; font-size: 0.85rem; line-height: 1.6;">
+          <p class="instruction-label" data-i18n="moti_controls_title">> CONTROLES_</p>
+          <p class="instruction-text" data-i18n="moti_controls_desc" style="margin-bottom: 0;">
             [Z Q S D] ou [Flèches] pour se déplacer<br>
           </p>
         </div>
-        <button id="start-btn" class="cta-button" style="width: 100%; cursor: pointer;">ENTRER DANS LA CRYPTE</button>
+        <button id="start-btn" class="cta-button" data-i18n="moti_start_btn">ENTRER DANS LA CRYPTE</button>
       </div>
     </div>
 
