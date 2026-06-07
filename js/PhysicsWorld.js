@@ -35,10 +35,13 @@ export class PhysicsWorld {
   }
 
   getObjectAt(x, z, radius = 0.1) {
-    const targetPos = new CANNON.Vec3(x, 0.9, z); // Assuming Y=0.9 for player/blocks
     for (const [mesh, body] of this.bodies) {
-      const dist = body.position.distanceTo(targetPos);
-      if (dist < radius) {
+      // Use 2D distance for grid-based checks
+      const dx = body.position.x - x;
+      const dz = body.position.z - z;
+      const distSq = dx * dx + dz * dz;
+      
+      if (distSq < radius * radius) {
         return { mesh, body };
       }
     }
@@ -47,5 +50,13 @@ export class PhysicsWorld {
 
   step() {
     this.world.fixedStep();
+  }
+
+  dispose() {
+    // Clear the map and remove all bodies from the world
+    for (const body of this.bodies.values()) {
+      this.world.removeBody(body);
+    }
+    this.bodies.clear();
   }
 }

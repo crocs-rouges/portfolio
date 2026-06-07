@@ -1,4 +1,4 @@
-const translations = {
+export const translations = {
     fr: {
         nav_about: "À propos",
         nav_projects: "Projets",

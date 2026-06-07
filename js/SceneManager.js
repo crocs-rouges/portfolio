@@ -26,12 +26,12 @@ export class SceneManager {
     this.scene.add(directionalLight);
 
     // Ground
-    const ground = new THREE.Mesh(
+    this.ground = new THREE.Mesh(
       new THREE.PlaneGeometry(20, 20),
       new THREE.MeshStandardMaterial({ color: 0x333333 })
     );
-    ground.rotation.x = -Math.PI / 2;
-    this.scene.add(ground);
+    this.ground.rotation.x = -Math.PI / 2;
+    this.scene.add(this.ground);
     
     this.gridController = new GridController(this.scene, this.physicsWorld);
 
@@ -48,13 +48,35 @@ export class SceneManager {
 
   update() {
     this.physicsWorld.step();
-    this.gridController.update();
+    this.gridController.update(this.camera);
     this.renderer.render(this.scene, this.camera);
   }
 
   dispose() {
     window.removeEventListener('resize', this.resizeHandler);
-    this.gridController.dispose(this.scene);
+    
+    this.gridController.dispose();
+    this.physicsWorld.dispose();
+
+    // Dispose of ground
+    this.scene.remove(this.ground);
+    this.ground.geometry.dispose();
+    this.ground.material.dispose();
+
+    // Dispose of lights and other scene objects
+    this.scene.traverse((object) => {
+      if (object.isMesh) {
+        if (object.geometry) object.geometry.dispose();
+        if (object.material) {
+          if (Array.isArray(object.material)) {
+            object.material.forEach(m => m.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      }
+    });
+
     this.renderer.dispose();
   }
 }

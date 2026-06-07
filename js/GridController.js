@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { ProjectBillboard } from './ProjectBillboard.js';
 
 export class GridController {
   constructor(scene, physicsWorld) {
@@ -7,6 +8,9 @@ export class GridController {
     this.physicsWorld = physicsWorld;
     this.gridSize = 1;
     this.isMoving = false;
+    this.objects = []; // Track all objects for disposal
+    this.billboards = [];
+    this.currentLang = localStorage.getItem('lang') || 'fr';
 
     // Player setup
     this.player = new THREE.Mesh(
@@ -16,6 +20,7 @@ export class GridController {
     this.player.position.set(0, 0.9, 0);
     this.player.userData.type = 'player';
     this.scene.add(this.player);
+    this.objects.push(this.player);
     this.physicsWorld.addBox(this.player, 0, true);
 
     // Initial test blocks
@@ -27,39 +32,68 @@ export class GridController {
     this.createWall(5, 1);
     this.createWall(5, -1);
 
+    // Project Billboards
+    this.initProjects();
+
     this._onKeyDown = (e) => this.handleKeyDown(e);
     window.addEventListener('keydown', this._onKeyDown);
   }
 
-  createBlock(x, z, color) {
-    const block = new THREE.Mesh(
-      new THREE.BoxGeometry(0.9, 0.9, 0.9),
-      new THREE.MeshStandardMaterial({ color: color })
-    );
-    block.position.set(x, 0.45, z);
-    block.userData.type = 'block';
-    this.scene.add(block);
-    this.physicsWorld.addBox(block, 0, true);
+  initProjects() {
+    const projectData = [
+      { id: 'shmup', titleKey: 'p_shmup_title', descKey: 'p_shmup_desc', image: 'assets/SHMUP/special feature.jpg', x: 3, z: 3 },
+      { id: 'zelda', titleKey: 'p_zelda_title', descKey: 'p_zelda_desc', image: 'assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg', x: -3, z: 3 },
+      { id: 'puissance4', titleKey: 'p_puissance4_title', descKey: 'p_puissance4_desc', image: "assets/puissance/Capture d'écran 2024-11-30 160129.png", x: 3, z: -3 },
+      { id: 'mario', titleKey: 'p_mario_title', descKey: 'p_mario_desc', image: "assets/mario_python/Capture d'écran 2024-11-11 193851.png", x: -3, z: -3 },
+      { id: 'unreal', titleKey: 'p_unreal_title', descKey: 'p_unreal_desc', image: "assets/unreal/Capture d'écran 2024-12-03 180842.png", x: 6, z: 0 },
+      { id: 'portfolio', titleKey: 'p_portfolio_title', descKey: 'p_portfolio_desc', image: "assets/porfolio-images/Capture d'écran 2024-12-02 222438.png", x: -6, z: 0 },
+      { id: 'yt', titleKey: 'p_yt_title', descKey: 'p_yt_desc', image: "assets/yt_schedule/Capture d’écran 2024-12-02 091005.png", x: 0, z: 6 },
+      { id: 'short', titleKey: 'p_short_title', descKey: 'p_short_desc', image: "assets/short_creation/VideoClipperPro.png", x: 0, z: -6 },
+      { id: 'cloud', titleKey: 'p_cloud_title', descKey: 'p_cloud_desc1', image: "assets/cloud/cloud.png", x: 6, z: 6 },
+      { id: 'isart', titleKey: 'p_isart_title', descKey: 'p_isart_desc1', image: "assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg", x: -6, z: -6 }
+    ];
+
+    projectData.forEach(data => {
+      const billboard = new ProjectBillboard(this.scene, data, new THREE.Vector3(data.x, 0, data.z));
+      this.billboards.push(billboard);
+      
+      // Add a physical base or marker for the billboard
+      const base = new THREE.Mesh(
+        new THREE.BoxGeometry(0.5, 0.2, 0.5),
+        new THREE.MeshStandardMaterial({ color: 0x888888 })
+      );
+      base.position.set(data.x, 0.1, data.z);
+      base.userData.type = 'billboard_base';
+      this.scene.add(base);
+      this.objects.push(base);
+      this.physicsWorld.addBox(base, 0, false);
+    });
   }
 
-  createWall(x, z) {
-    const wall = new THREE.Mesh(
-      new THREE.BoxGeometry(1, 2, 1),
-      new THREE.MeshStandardMaterial({ color: 0x555555 })
-    );
-    wall.position.set(x, 1, z);
-    wall.userData.type = 'wall';
-    this.scene.add(wall);
-    this.physicsWorld.addBox(wall, 0, false);
-  }
-
-  dispose(scene) {
+  dispose() {
     window.removeEventListener('keydown', this._onKeyDown);
+    
     if (this.player) {
-      scene.remove(this.player);
-      this.player.geometry.dispose();
-      this.player.material.dispose();
+      gsap.killTweensOf(this.player.position);
     }
+
+    this.billboards.forEach(b => b.dispose());
+    this.billboards = [];
+
+    for (const obj of this.objects) {
+      gsap.killTweensOf(obj.position);
+      this.scene.remove(obj);
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) {
+        if (Array.isArray(obj.material)) {
+          obj.material.forEach(m => m.dispose());
+        } else {
+          obj.material.dispose();
+        }
+      }
+    }
+    this.objects = [];
+    this.player = null;
   }
 
   handleKeyDown(e) {
@@ -136,7 +170,26 @@ export class GridController {
     });
   }
 
-  update() {
-    // Any per-frame logic for GridController
+  update(camera) {
+    if (!this.player) return;
+
+    // Check language once per frame for all billboards
+    const newLang = localStorage.getItem('lang') || 'fr';
+    if (newLang !== this.currentLang) {
+      this.currentLang = newLang;
+      this.billboards.forEach(billboard => billboard.updateLanguage(newLang));
+    }
+
+    this.billboards.forEach(billboard => {
+      billboard.update(camera);
+      
+      // Proximity check (adjacent cell)
+      const dist = this.player.position.distanceTo(billboard.position);
+      if (dist < 1.5) {
+        billboard.show();
+      } else {
+        billboard.hide();
+      }
+    });
   }
 }
