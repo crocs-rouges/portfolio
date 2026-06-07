@@ -1,54 +1,31 @@
-# Design Spec: Cryptes de la Logique - Interactive 3D Portfolio
+# Design Spec: Futuristic Data Crates (Sokoban Blocks)
 
-**Date:** 2026-06-07
-**Author:** Gemini CLI (Agent)
-**Status:** Draft
+## Overview
+Transform the basic red and blue cubes into stylized "Data Crates" that fit the low-poly futuristic aesthetic of the portfolio. These crates are the primary interactable elements in the Sokoban-style grid puzzles.
 
-## 1. Overview
-A playable 3D meta-portfolio where the user explores a "Logic Crypt". Navigation is gated by Sokoban-style puzzles using programming metaphors. This demonstrates both **Game Design** (mechanics, progression, UX) and **Game Programming** (Three.js, physics, state management).
+## Visual Design
+The crate will be an assembly of multiple meshes to create a detailed, low-poly look without complex textures.
 
-## 2. Technical Stack
-- **Engine:** Three.js (WebGL rendering).
-- **Physics:** Cannon-es (lightweight, robust for Sokoban logic).
-- **Logic:** Vanilla JavaScript or TypeScript.
-- **Animation:** GSAP (camera transitions and UI juice).
-- **Assets:** Low-poly models (GLTF/GLB) with baked lighting for performance.
+### Components
+1. **Core:** A slightly smaller cube than the grid size (0.7m for a 0.8m block) to allow for reinforcements.
+   - Material: Dark Grey Metallic (`color: 0x222222`, `metalness: 0.8`, `roughness: 0.2`).
+2. **Corner Guards:** 8 small cubes (0.2m) at each corner.
+   - Material: Light Grey Metallic (`color: 0x444444`, `metalness: 0.9`, `roughness: 0.1`).
+3. **Data Stripes:** Emissive strips on each side face.
+   - Material: Emissive material using the block's theme color (Red: `0xff0000`, Blue: `0x0000ff`).
+   - `emissiveIntensity`: 2.0 to 5.0 for a glowing effect.
 
-## 3. Core Mechanics
-### 3.1 Movement
-- Top-down / isometric view.
-- WASD or Arrow keys to move the character.
-- Character snaps to a grid for precise Sokoban alignment.
+## Implementation Plan
+### AssetFactory.js
+- Add `static createDataCrate(color)` method.
+- Return a `THREE.Group` containing the core, corner guards, and emissive strips.
 
-### 3.2 Sokoban Puzzles
-- **Blocks:** Styled as "Code Blocks" (e.g., `Update()`, `If/Else`, `Loop`, `Array`).
-- **Goal Slots:** Labeled "Execution Slots" or "Memory Addresses".
-- **Logic:** Pushing a specific block onto a specific slot "executes" the logic, opening doors or revealing content.
+### GridController.js
+- Update `createBlock(x, z, color)` to use `AssetFactory.createDataCrate(color)`.
+- Ensure the physics body still matches the overall block bounds (0.8m cube).
 
-## 4. World Structure
-### 4.1 The Central Hub
-- Starting point.
-- Three locked gates: **Projects**, **Skills/Experience**, **Contact**.
-
-### 4.2 The Room of Projects
-- **Puzzle:** Push the `void Update()` block to power the "Project Terminal".
-- **Display:** Once solved, 3D billboards appear. Walking near one zooms the camera and shows project details (Video/Image/Description) pulled from the current `translations` system.
-
-### 4.3 The Memory Chamber (Experience & Skills)
-- **Puzzle:** An array-indexing puzzle. Push three `Experience` blocks into slots marked `[0]`, `[1]`, and `[2]` in chronological order.
-- **Display:** A scrollable UI overlay showing the user's CV and education.
-
-### 4.4 The Contact Altar
-- Simple interaction to display email, phone, and social links.
-
-## 5. Visuals & Audio
-- **Aesthetic:** Dark crypt atmosphere with glowing neon "code" accents.
-- **Juice:** Screen shake on block collision, particle effects when a puzzle is solved.
-- **Sound:** Low ambient drone, mechanical "clunk" for block moves, success chime.
-
-## 6. Implementation Strategy
-1. Setup Three.js boilerplate + Physics grid.
-2. Implement basic character movement and grid-based Sokoban logic.
-3. Integrate low-poly assets and basic lighting.
-4. Create the state machine for transitions between Rooms.
-5. Link existing data (from `js/script.js`) into the 3D UI overlays.
+## Success Criteria
+- Red blocks look like futuristic red data crates.
+- Blue blocks look like futuristic blue data crates.
+- Pushing logic remains functional.
+- Aesthetic is consistent with the `createRobot` style.

@@ -7,6 +7,7 @@ export class ProjectBillboard {
     this.data = projectData;
     this.position = position;
     this.isLocked = true; // Projects start locked
+    this.translations = translations;
     
     // Default language or currently selected one
     this.lang = localStorage.getItem('lang') || 'fr';
