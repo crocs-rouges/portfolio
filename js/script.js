@@ -24,7 +24,9 @@ const translations = {
         skills_cat_engines: "Moteurs & Outils",
         
         projects_title: "Projets notables",
-        p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
+        projects_isart: "Projets ISART",
+        projects_perso: "Projets Perso",
+        p_shmup_title: "SHMUP (GDP1)",
         p_shmup_desc: "Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce projet de 2 mois, entièrement développé sur Godot en C#, est axé sur l'intégration d'effets de 'Juiciness' et une architecture de code rigoureuse.",
         p_puissance4_title: "Puissance 4",
         p_puissance4_desc: "Un jeu de Puissance 4 développé avec Pygame, incluant une adaptation automatique de la taille, gestion des erreurs et système de victoire, mode 2 joueurs avec un changement de couleurs.",
@@ -51,6 +53,12 @@ const translations = {
         p_godot_title: "Peach Multiplayer in Godot",
         p_godot_desc: "Un Remake de Super Mario World sur SNES avec Peach en caractère principale. Ce projet a pour objectif d'apprendre à coder en GDscript sur Godot et de comprendre les bases du Multiplayer local sur Godot.",
         
+        p_sokoban_title: "SOKOBAN (GDP1)",
+        p_sokoban_desc: "Réinterprétation du Sokoban sur le thème du casino, développée en C# sur Godot. Le jeu intègre une mécanique de dé roulant, soutenue par une architecture propre (Grid Manager, Undo/Redo via pattern Command, Pathfinding A*) et un fort accent sur le Game Feel (\"Juiciness\").",
+        p_mobile_title: "Mobile Mini Game OFG (GDP1)",
+        p_mobile_desc: "One Finger Game réalisé en C# sur Godot, la difficulté de ce mini a été de reproduire le jeu de base duquel on devait s'inspirer (MUCHO PARTY) un jeu mobile regroupant plein de mini jeux différents. La durée du projet était de seulement 1 mois. Le cahier des charges nous demandait de faire un jeu 2 joueurs jouable sur un seul téléphone soit en split screen, soit en full screen sur lequel les deux joueurs pouvaient interagir.",
+        
+
         moti_title: "Mes Motivations",
         moti_p1: "Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers (combat, épopée, histoire...), j'ai orienté mon parcours vers la conception vidéoludique.",
         moti_p2: "En parallèle de ma formation, je développe mes compétences en autodidacte sur différents langages et moteurs (C#, Unity, Python, Unreal Engine, JavaScript). Ma curiosité s'étend également aux sciences, à la physique quantique et à la culture japonaise.",
@@ -90,7 +98,9 @@ const translations = {
         skills_cat_engines: "Engines & Tools",
         
         projects_title: "Notable Projects",
-        p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
+        projects_isart: "ISART Projects",
+        projects_perso: "Personal Projects",
+        p_shmup_title: "SHMUP (GDP1)",
         p_shmup_desc: "Shoot 'em up created during my first year at ISART Digital. This 2-month project, fully developed on Godot using C#, focuses on implementing 'Juiciness' effects and rigorous code architecture.",
         p_puissance4_title: "Connect 4",
         p_puissance4_desc: "A Connect 4 game developed with Pygame, including automatic size adaptation, error management and victory system, 2-player mode with color change.",
@@ -117,6 +127,12 @@ const translations = {
         p_godot_title: "Peach Multiplayer in Godot",
         p_godot_desc: "A Remake of Super Mario World on SNES with Peach as the main character. This project aims to learn how to code in GDscript on Godot and understand the basics of local Multiplayer on Godot.",
         
+        p_sokoban_title: "SOKOBAN (GDP1)",
+        p_sokoban_desc: "Reinterpretation of Sokoban with a casino theme, developed in C# on Godot. The game features a rolling dice mechanic, supported by a clean architecture (Grid Manager, Undo/Redo via Command pattern, A* Pathfinding) and a strong focus on Game Feel (\"Juiciness\").",
+        p_mobile_title: "Mobile Mini Game OFG (GDP1)",
+        p_mobile_desc: "One Finger Game developed in C# on Godot, the main challenge was to recreate the base game we were inspired by (MUCHO PARTY), a mobile game grouping many different mini-games. The project duration was only 1 month. The specifications required us to make a 2-player game playable on a single phone, either in split screen or in full screen where both players could interact.",
+        
+
         moti_title: "My Motivations",
         moti_p1: "I am currently a first-year student in Game Design & Programming at ISART Digital. Passionate about video games and the richness of their universes (combat, epic, story...) since always, I oriented my path towards video game design.",
         moti_p2: "In parallel with my training, I am developing my skills as an autodidact on different languages and engines (C#, Unity, Python, Unreal Engine, JavaScript). My curiosity also extends to sciences, quantum physics, and Japanese culture.",
