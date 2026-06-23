@@ -29,6 +29,8 @@
           <ul class="nav-links">
             <li><a href="#about" data-i18n="nav_about">About</a></li>
             <li><a href="#software" data-i18n="nav_software">Software</a></li>
+            <li><a href="#art" data-i18n="nav_art">Art</a></li>
+            <li><a href="#video" data-i18n="nav_video">Video</a></li>
             <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
           </ul>
           
@@ -55,15 +57,22 @@
       
       <!-- HERO -->
       <section class="hero-section" id="hero">
-        <p class="hero-intro" data-i18n="hero_intro">hi, romain here.</p>
-        <h1 class="hero-title" data-i18n="hero_title">Game Designer & Programmer.</h1>
-        <h2 class="hero-subtitle" data-i18n="hero_subtitle">I build interactive digital worlds.</h2>
-        <p class="hero-description" data-i18n="hero_desc_minimal">
-          Étudiant à ISART Digital. Passionné par l'architecture logicielle, la création d'univers immersifs et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.
-        </p>
-        <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary">
-          <i data-feather="mail" class="icon-small"></i> <span data-i18n="btn_say_hi">Say hi!</span>
-        </a>
+        <div class="hero-content">
+          <div class="hero-ascii" aria-hidden="true" style="min-width: 300px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+            <canvas id="ascii-canvas" style="cursor: crosshair; touch-action: none;"></canvas>
+          </div>
+          <div class="hero-text">
+            <p class="hero-intro" data-i18n="hero_intro">hi, romain here.</p>
+            <h1 class="hero-title" data-i18n="hero_title">Game Designer & Programmer.</h1>
+            <h2 class="hero-subtitle" data-i18n="hero_subtitle">I build interactive digital worlds.</h2>
+            <p class="hero-description" data-i18n="hero_desc_minimal">
+              Étudiant à ISART Digital. Passionné par l'architecture logicielle, la création d'univers immersifs et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.
+            </p>
+            <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary">
+              <i data-feather="mail" class="icon-small"></i> <span data-i18n="btn_say_hi">Say hi!</span>
+            </a>
+          </div>
+        </div>
       </section>
 
       <!-- ABOUT -->
@@ -239,6 +248,62 @@
         </div>
       </section>
 
+      <!-- ART GALLERY -->
+      <section class="section" id="art">
+        <h2 class="numbered-heading">
+          <span class="slash">/</span> art gallery
+        </h2>
+        <p style="margin-top:-20px; margin-bottom: 40px; color: var(--slate); font-size: 1.1rem; max-width: 600px;" data-i18n="art_desc">
+          A collection of my digital and traditional artwork, exploring different styles and mediums.
+        </p>
+        <div class="gallery-grid">
+          <!-- Placeholders Art -->
+          <div class="gallery-card">
+            <div class="placeholder-img" style="aspect-ratio: 3/4;">Illustration 1</div>
+          </div>
+          <div class="gallery-card">
+            <div class="placeholder-img" style="aspect-ratio: 1/1;">Concept Art</div>
+          </div>
+          <div class="gallery-card">
+            <div class="placeholder-img" style="aspect-ratio: 4/3;">Character Design</div>
+          </div>
+          <div class="gallery-card">
+            <div class="placeholder-img" style="aspect-ratio: 3/4;">Sketch</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIDEO GALLERY -->
+      <section class="section" id="video">
+        <h2 class="numbered-heading">
+          <span class="slash">/</span> video gallery
+        </h2>
+        <p style="margin-top:-20px; margin-bottom: 40px; color: var(--slate); font-size: 1.1rem; max-width: 600px;" data-i18n="video_desc">
+          My video edits, motion design, and gameplay trailers.
+        </p>
+        <div class="video-grid">
+          <!-- Placeholders Video -->
+          <div class="video-card">
+            <div class="video-placeholder">
+              <i data-feather="play-circle"></i>
+            </div>
+            <div class="video-info">
+              <h3>Gameplay Trailer</h3>
+              <p>Promotional video for my latest game project.</p>
+            </div>
+          </div>
+          <div class="video-card">
+            <div class="video-placeholder">
+              <i data-feather="play-circle"></i>
+            </div>
+            <div class="video-info">
+              <h3>Showreel 2024</h3>
+              <p>A compilation of my best editing and motion works.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- CONTACT -->
       <section class="section" id="contact" style="text-align: center; max-width: 600px; margin: 0 auto 100px;">
         <p class="hero-intro" style="margin-bottom: 20px;" data-i18n="contact_overline">04. What's Next?</p>
@@ -255,6 +320,7 @@
     <script>
       feather.replace();
     </script>
+    <script src="src/assets/asciiData.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

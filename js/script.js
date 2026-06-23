@@ -147,4 +147,206 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lastScrollTop = scrollTop;
     });
+    // ==========================================
+    // 4. ASCII PORTRAIT LOGIC
+    // ==========================================
+    const initAsciiPortrait = () => {
+        const canvas = document.getElementById("ascii-canvas");
+        if (!canvas) return;
+
+        const calculateSize = (width) => {
+            if (width <= 480) return Math.min(220, width - 40);
+            if (width <= 768) return Math.min(280, width - 60);
+            return 400; // Will use largest available
+        };
+
+        let size = calculateSize(window.innerWidth);
+        let particles = [];
+        let dataReady = false;
+        let animationId;
+        const mouse = { x: -1000, y: -1000, active: false };
+        const mouseTarget = { x: -1000, y: -1000 };
+        let startTime = 0;
+
+        const createParticlesFromRaw = (rawParticles, isMobileSize) => {
+            const fontSize = isMobileSize ? 5 : 7;
+            return rawParticles.map((p) => ({
+                x: p.x + (Math.random() - 0.5) * 400,
+                y: p.y + (Math.random() - 0.5) * 400,
+                targetX: p.x,
+                targetY: p.y,
+                vx: 0,
+                vy: 0,
+                char: p.char,
+                fontSize: fontSize,
+                baseAlpha: p.alpha,
+                currentAlpha: 0,
+                delay: Math.random() * 0.4,
+                shimmer: Math.random() * Math.PI * 2,
+            }));
+        };
+
+        const setupCanvas = () => {
+            const isMobileSize = size <= 280;
+            let dataSize = "280";
+            if (size <= 220) dataSize = "220";
+            else if (size <= 280) dataSize = "280";
+            else dataSize = "280";
+
+            const rawData = asciiData[dataSize] || asciiData[Object.keys(asciiData)[0]];
+            if (rawData) {
+                particles = createParticlesFromRaw(rawData, isMobileSize);
+                dataReady = true;
+                startTime = performance.now();
+            }
+
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = size * dpr;
+            canvas.height = size * dpr;
+            canvas.style.width = `${size}px`;
+            canvas.style.height = `${size}px`;
+
+            const ctx = canvas.getContext("2d");
+            ctx.scale(dpr, dpr);
+            return ctx;
+        };
+
+        let ctx = setupCanvas();
+
+        window.addEventListener("resize", () => {
+            size = calculateSize(window.innerWidth);
+            ctx = setupCanvas();
+        });
+
+        const draw = () => {
+            animationId = requestAnimationFrame(draw);
+            ctx.clearRect(0, 0, size, size);
+
+            if (!dataReady || particles.length === 0) return;
+
+            const elapsed = (performance.now() - startTime) / 1000;
+
+            mouse.x += (mouseTarget.x - mouse.x) * 0.15;
+            mouse.y += (mouseTarget.y - mouse.y) * 0.15;
+
+            const isMobileSize = size <= 280;
+            const fontSize = isMobileSize ? 5 : 7;
+            ctx.font = `${fontSize}px monospace`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            // Grab the CSS variable color for dynamic theme support
+            const style = getComputedStyle(document.body);
+            let colorStr = style.getPropertyValue('--green').trim() || '#eb6f92'; 
+            // the variable in Gazi layout is --green, which we set to the Rose Pine highlight
+
+            // A tiny helper to parse hex and use alpha
+            const hexToRgb = (hex) => {
+                let r = 0, g = 0, b = 0;
+                if (hex.length == 4) {
+                    r = parseInt(hex[1]+hex[1], 16);
+                    g = parseInt(hex[2]+hex[2], 16);
+                    b = parseInt(hex[3]+hex[3], 16);
+                } else if (hex.length == 7) {
+                    r = parseInt(hex.substring(1,3), 16);
+                    g = parseInt(hex.substring(3,5), 16);
+                    b = parseInt(hex.substring(5,7), 16);
+                }
+                return `${r}, ${g}, ${b}`;
+            };
+            let rgbColor = colorStr.startsWith('#') ? hexToRgb(colorStr) : '235, 111, 146';
+
+            particles.forEach((p) => {
+                const particleTime = elapsed - p.delay;
+                if (particleTime < 0) return;
+
+                const fadeProgress = Math.min(particleTime / 1.5, 1);
+                const easedFade = 1 - Math.pow(1 - fadeProgress, 2);
+                
+                const isActive = mouse.active || particleTime < 3.0;
+                const shimmerVal = isActive ? Math.sin(elapsed * 2 + p.shimmer) * 0.1 : 0;
+                p.currentAlpha = Math.max(0, p.baseAlpha * easedFade + shimmerVal);
+
+                const moveProgress = Math.min(particleTime / 2.5, 1);
+                const easedMove = 1 - Math.pow(1 - moveProgress, 3);
+
+                if (mouse.active) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = size * 0.2;
+
+                    if (dist < maxDist && dist > 0) {
+                        const force = (1 - dist / maxDist) * 4;
+                        p.vx += (dx / dist) * force;
+                        p.vy += (dy / dist) * force;
+                    }
+                }
+
+                const dx = p.targetX - p.x;
+                const dy = p.targetY - p.y;
+
+                const pullStrength = 0.01 + easedMove * 0.08;
+                p.vx += dx * pullStrength;
+                p.vy += dy * pullStrength;
+
+                if (isActive) {
+                    const breathX = Math.sin(elapsed * 0.5 + p.targetY * 0.1) * 0.15;
+                    const breathY = Math.cos(elapsed * 0.5 + p.targetX * 0.1) * 0.15;
+                    p.vx += breathX;
+                    p.vy += breathY;
+                    p.vx *= 0.92;
+                    p.vy *= 0.92;
+                } else {
+                    p.vx *= 0.85;
+                    p.vy *= 0.85;
+                    
+                    if (particleTime > 4.0 && Math.abs(dx) < 0.01 && Math.abs(dy) < 0.01) {
+                        p.x = p.targetX;
+                        p.y = p.targetY;
+                        p.vx = 0;
+                        p.vy = 0;
+                    }
+                }
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                ctx.fillStyle = `rgba(${rgbColor}, ${p.currentAlpha})`;
+                ctx.fillText(p.char, p.x, p.y);
+            });
+        };
+
+        const handleMouseMove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseTarget.x = e.clientX - rect.left;
+            mouseTarget.y = e.clientY - rect.top;
+            mouse.active = true;
+        };
+
+        const handleTouchMove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            mouseTarget.x = touch.clientX - rect.left;
+            mouseTarget.y = touch.clientY - rect.top;
+            mouse.active = true;
+            if (e.cancelable) e.preventDefault();
+        };
+
+        const handleLeave = () => {
+            mouse.active = false;
+            mouseTarget.x = -1000;
+            mouseTarget.y = -1000;
+        };
+
+        canvas.addEventListener("mousemove", handleMouseMove);
+        canvas.addEventListener("mouseleave", handleLeave);
+        canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+        canvas.addEventListener("touchend", handleLeave);
+
+        draw();
+    };
+
+    initAsciiPortrait();
+
 });
