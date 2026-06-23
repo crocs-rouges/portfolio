@@ -45,6 +45,7 @@ sysinfo.txt
 crashlytics-build.properties
 .utmp
 .utmp/
+docs/
 
 # =========================
 # Gemini CLI
