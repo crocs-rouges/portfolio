@@ -58,6 +58,9 @@ const translations = {
         p_mobile_title: "Mobile Mini Game OFG (GDP1)",
         p_mobile_desc: "One Finger Game réalisé en C# sur Godot, la difficulté de ce mini a été de reproduire le jeu de base duquel on devait s'inspirer (MUCHO PARTY) un jeu mobile regroupant plein de mini jeux différents. La durée du projet était de seulement 1 mois. Le cahier des charges nous demandait de faire un jeu 2 joueurs jouable sur un seul téléphone soit en split screen, soit en full screen sur lequel les deux joueurs pouvaient interagir.",
         
+        p_rider_title: "Rider Skate",
+        p_rider_desc: "Jeu d'arcade mobile 2.5D alliant la fluidité de Rider et la technicité du skate. Développé sur Unity 6 (URP), le jeu exploite une physique 2D avec des visuels 3D. L'architecture inclut un système de tricks basé sur des ScriptableObjects, des rails dynamiques via splines, et une forte attention au \"Game Feel\".",
+        
 
         moti_title: "Mes Motivations",
         moti_p1: "Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers (combat, épopée, histoire...), j'ai orienté mon parcours vers la conception vidéoludique.",
@@ -131,6 +134,9 @@ const translations = {
         p_sokoban_desc: "Reinterpretation of Sokoban with a casino theme, developed in C# on Godot. The game features a rolling dice mechanic, supported by a clean architecture (Grid Manager, Undo/Redo via Command pattern, A* Pathfinding) and a strong focus on Game Feel (\"Juiciness\").",
         p_mobile_title: "Mobile Mini Game OFG (GDP1)",
         p_mobile_desc: "One Finger Game developed in C# on Godot, the main challenge was to recreate the base game we were inspired by (MUCHO PARTY), a mobile game grouping many different mini-games. The project duration was only 1 month. The specifications required us to make a 2-player game playable on a single phone, either in split screen or in full screen where both players could interact.",
+        
+        p_rider_title: "Rider Skate",
+        p_rider_desc: "A 2.5D mobile arcade game combining the fluidity of Rider with the technicality of skateboarding. Developed in Unity 6 (URP), the game leverages 2D physics with 3D visuals. The architecture features a trick system based on ScriptableObjects, dynamic rails using splines, and a strong focus on Game Feel.",
         
 
         moti_title: "My Motivations",
