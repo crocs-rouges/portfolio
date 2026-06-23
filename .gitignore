@@ -1,0 +1,84 @@
+# =========================
+# Unity Engine
+# =========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Logs/
+UserSettings/
+MemoryCaptures/
+!/[Aa]ssets/**/*.meta
+[Aa]ssets/Plugins/Editor/JetBrains*
+.vs/
+.plastic/
+.workspace
+.wktree
+.selector
+.changes
+.gradle/
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.boop
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+*.app
+crashlytics-build.properties
+.utmp
+.utmp/
+
+# =========================
+# Gemini CLI
+# =========================
+.gemini/
+.tmp.driveupload/
+.tmp.drivedownload/
+.agents
+.agents/
+
+# =========================
+# IDEs (VS Code & VS 2022)
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+[Dd]ebug/
+[Rr]elease/
+[Xx]64/
+[Bb]in/
+[Oo]bj/
+
+# =========================
+# Version Control Added
+# =========================
+.git/
+.qodo
+.qodo/
