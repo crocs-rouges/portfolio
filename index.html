@@ -3,252 +3,258 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Romain Chevalier - Portfolio</title>
+    <title>Romain Chevalier</title>
     
-    <!-- Google Fonts: Outfit -->
+    <!-- Google Fonts: Inter & Fira Code & Press Start 2P (for Game Mode) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons for Folder/Github icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
     
     <link rel="stylesheet" type="text/css" href="CSS/style.css" />
-    <link rel="stylesheet" href="CSS/devicons.css" />
-    <link rel="stylesheet" href="CSS/devicon.min.css" />
   </head>
   <body>
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursor-follower"></div>
-
-    <!-- Interactive Background Canvas -->
-    <canvas id="bg-canvas"></canvas>
 
     <header class="header">
       <nav class="nav-container">
-        <a href="#" class="logo">RC.</a>
-        <ul class="nav-links">
-          <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-          <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
-          <li><a href="#CV" data-i18n="nav_cv">CV</a></li>
-          <li><a href="#motivation" data-i18n="nav_motivation">Motivations</a></li>
-          <li><a href="#recommandation" data-i18n="nav_recommendation">Recommandation</a></li>
-          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-          <li><button id="language-toggle" class="lang-btn" aria-label="Changer la langue">EN</button></li>
-        </ul>
+        <a href="#" class="logo">Romain Chevalier</a>
+        
+        <div class="nav-right">
+          <button id="game-mode-toggle" class="game-mode-btn">
+            <span class="game-dot"></span> <span data-i18n="game_mode_btn">GAME MODE</span>
+          </button>
+          
+          <ul class="nav-links">
+            <li><a href="#about" data-i18n="nav_about">About</a></li>
+            <li><a href="#software" data-i18n="nav_software">Software</a></li>
+            <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+          
+          <button id="language-toggle" class="lang-btn" aria-label="Changer la langue">EN</button>
+        </div>
       </nav>
     </header>
 
-    <!-- MAIN -->
+    <!-- Social links fixed on the left (typical of this design) -->
+    <div class="social-side-left">
+      <ul>
+        <li><a href="#" aria-label="GitHub"><i data-feather="github"></i></a></li>
+        <li><a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a></li>
+        <li><a href="mailto:romain.chevalier40@gmail.com" aria-label="Email"><i data-feather="mail"></i></a></li>
+      </ul>
+    </div>
+
+    <!-- Email fixed on the right -->
+    <div class="social-side-right">
+      <a href="mailto:romain.chevalier40@gmail.com" class="email-link">romain.chevalier40@gmail.com</a>
+    </div>
+
     <main class="main-container">
-      <section class="hero-section reveal" id="hero">
-        <div class="hero-content">
-          <h1 class="small-heading" data-i18n="hero_greeting">Bonjour, je suis</h1>
-          <h2 class="big-heading glow-text">Romain Chevalier.</h2>
-          <h3 class="subtitle" data-i18n="hero_subtitle">passionné par la conception et la création de jeux vidéo.</h3>
-          <p class="description" data-i18n="hero_desc">
-            Je suis actuellement élève en première année en game design et programming à ISART DIGITAL. Passionné par la technique et la création d'univers immersifs, je développe mes compétences sur Unity, Unreal Engine et divers langages de programmation.
-          </p>
-        </div>
+      
+      <!-- HERO -->
+      <section class="hero-section" id="hero">
+        <p class="hero-intro" data-i18n="hero_intro">hi, romain here.</p>
+        <h1 class="hero-title" data-i18n="hero_title">Game Designer & Programmer.</h1>
+        <h2 class="hero-subtitle" data-i18n="hero_subtitle">I build interactive digital worlds.</h2>
+        <p class="hero-description" data-i18n="hero_desc_minimal">
+          Étudiant à ISART Digital. Passionné par l'architecture logicielle, la création d'univers immersifs et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.
+        </p>
+        <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary">
+          <i data-feather="mail" class="icon-small"></i> <span data-i18n="btn_say_hi">Say hi!</span>
+        </a>
       </section>
 
-      <!-- ABOUT ME -->
-      <section class="about section reveal" id="about">
-        <div class="glass-panel">
-          <h1 class="about-title" data-i18n="about_title">About me</h1>
-          <h2 class="about-subtitle" data-i18n="about_job_title">Métier souhaité</h2>
-          <p class="about-description" data-i18n="about_job_desc">
-            Je souhaite exercer le métier de Game développeur gameplay, qui pour moi sera le moyen de participer au mieux à la réalisation du jeu dans sa globalité et à bien comprendre l’ambition souhaitée par le Game design.
-          </p>
-          
-          <h2 class="about-subtitle mt-40" data-i18n="about_softskills">Softskills</h2>
-          <ul class="softskills-list">
-            <li data-i18n="about_softskill_1">Je suis passionné par l'univers du jeu vidéo et notamment la réalisation et la création de jeux vidéo. J'aime comprendre comment sont faites certaines mécaniques de jeu, (le codage) et toute la partie game design.</li>
-            <li data-i18n="about_softskill_2">Je suis curieux dans plein de domaines tels que la science, la physique quantique et l'informatique quantique ainsi que l'IA et son développement. J'aime également la culture du japon, c'est pour cela que j'apprends le japonais depuis 3 ans.</li>
-            <li data-i18n="about_softskill_3">Je suis persévérant, je cherche toujours une solution à un problème même si cela peut me prendre des semaines de recherches.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- SKILLS -->
-      <section class="logo-language section reveal" id="logo-language">
-        <h2 class="section-title" data-i18n="skills_title">Compétences</h2>
-        <div class="skills-container">
-          <div class="skill-category glass-panel">
-            <h3 class="skill-cat-title" data-i18n="skills_cat_languages">Langages</h3>
-            <div class="logo-language-div">
-              <i class="devicons devicons-scriptcs" title="C#" aria-hidden="true"></i>
-              <i class="devicons devicons-python" title="Python" aria-hidden="true"></i>
-              <i class="devicons devicons-javascript" title="JavaScript" aria-hidden="true"></i>
-              <i class="devicons devicons-sqllite" title="SQL" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="skill-category glass-panel">
-            <h3 class="skill-cat-title" data-i18n="skills_cat_engines">Moteurs & Outils</h3>
-            <div class="logo-language-div">
-              <i class="devicons devicons-unity_small" title="Unity" aria-hidden="true"></i>
-              <i class="devicons devicons-photoshop" title="Photoshop" aria-hidden="true"></i>
-              <i class="devicons devicons-git" title="Git" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROJECTS (Bento Grid) -->
-      <section class="section reveal" id="projects">
-        <h2 class="section-title" data-i18n="projects_title">Projets notables</h2>
+      <!-- ABOUT -->
+      <section class="section" id="about">
+        <h2 class="numbered-heading"><span class="slash">/</span> <span data-i18n="about_title">about me</span></h2>
         
-        <div class="bento-grid">
+        <div class="about-content">
+          <div class="about-text">
+            <p data-i18n="moti_p1">Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers, j'ai orienté mon parcours vers la conception vidéoludique.</p>
+            <p data-i18n="moti_p2">En parallèle de ma formation, je développe mes compétences en autodidacte sur différents langages et moteurs. Mon ambition est d'exercer le métier de Gameplay Programmer.</p>
+            
+            <p class="tech-intro" data-i18n="tech_intro">Here are some technologies I have been working with:</p>
+            <ul class="skills-list">
+              <li>C#</li>
+              <li>Python</li>
+              <li>Unity</li>
+              <li>Godot</li>
+              <li>Unreal Engine</li>
+              <li>JavaScript</li>
+            </ul>
+          </div>
           
-          <!-- Large Showcase Project -->
-          <div class="project-card bento-large glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/SHMUP/special feature.jpg" alt="Capture d'écran du jeu AEGIS OVERDRIVE" loading="lazy" />
-              <div class="project-overlay"></div>
+          <div class="about-pic">
+            <div class="wrapper">
+              <!-- Placeholder for profile image -->
+              <div class="img-placeholder">
+                <i data-feather="user" class="placeholder-icon"></i>
+              </div>
             </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_shmup_title">AEGIS OVERDRIVE (SHMUP)</h3>
-              <p class="project-description" data-i18n="p_shmup_desc">Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce projet de 2 mois, entièrement développé sur Godot en C#, est axé sur l'intégration d'effets de 'Juiciness' et une architecture de code rigoureuse.</p>
-            </div>
-          </div>
-
-          <!-- Wide Project -->
-          <div class="project-card bento-wide glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg" alt="Remake de Zelda Link's Awakening" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_zelda_title">Remake Zelda</h3>
-              <p class="project-description" data-i18n="p_zelda_desc">Réalisation de Link's Awakening sur Unity avec système de combat, inventaire et sauvegarde JSON, système d'inventaire et de swap d'armes à la Zelda.</p>
-            </div>
-          </div>
-
-          <!-- Standard Projects -->
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/puissance/Capture d'écran 2024-11-30 160129.png" alt="Jeu Puissance 4 développé en Python" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_puissance4_title">Puissance 4</h3>
-              <p class="project-description" data-i18n="p_puissance4_desc">Un jeu de Puissance 4 développé avec Pygame, incluant une adaptation automatique de la taille, gestion des erreurs et système de victoire.</p>
-            </div>
-          </div>
-
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/mario_python/Capture d'écran 2024-11-11 193851.png" alt="Jeu Mario 2D en Python" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_mario_title">Mario en 2D</h3>
-              <p class="project-description" data-i18n="p_mario_desc">Réalisation d'un niveau de Mario en utilisant des tableaux 2D, avec un système de mouvement innovant basé sur la manipulation de matrices.</p>
-            </div>
-          </div>
-
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/yt_schedule/Capture d’écran 2024-12-02 091005.png" alt="Script Youtube Uploader" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_yt_title">Youtube Uploader</h3>
-              <p class="project-description" data-i18n="p_yt_desc">Script Python permettant de mettre en ligne des vidéos via l'API officielle de YouTube et Google Cloud.</p>
-            </div>
-          </div>
-
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/short_creation/VideoClipperPro.png" alt="Application Short Creation" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_short_title">Short Création</h3>
-              <p class="project-description" data-i18n="p_short_desc">Application pour couper de longues vidéos au format 9/16 avec Tkinter, Python et CUDA (multiprocessing GPU).</p>
-            </div>
-          </div>
-
-          <!-- Wide Project -->
-          <div class="project-card bento-wide glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg" alt="Projet Summer School ISART" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_isart_title">ISART Summer School</h3>
-              <p class="project-description" data-i18n="p_isart_desc1">Réalisation d'un jeu Unity 2D top-down en visual scripting. Le but est de vaincre des ennemis avec un arc.</p>
-            </div>
-          </div>
-
-          <!-- Standard Projects -->
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/unreal/Capture d'écran 2024-12-03 180842.png" alt="Projet Unreal Engine escalade" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_unreal_title">Unreal Engine Project</h3>
-              <p class="project-description" data-i18n="p_unreal_desc">Création d'un système de vie et d'un personnage avec mécaniques d'escalade via Blueprints.</p>
-            </div>
-          </div>
-
-          <div class="project-card bento-standard glass-panel">
-            <div class="project-img-wrapper">
-              <img class="project-image" src="assets/mario Godot/mario godot.png" alt="Remake multijoueur Super Mario World sur Godot" loading="lazy" />
-              <div class="project-overlay"></div>
-            </div>
-            <div class="project-content">
-              <h3 class="project-title" data-i18n="p_godot_title">Peach Multiplayer</h3>
-              <p class="project-description" data-i18n="p_godot_desc">Remake de Super Mario World SNES avec Peach. Objectif : GDscript et bases du multijoueur local sur Godot.</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- MOTIVATIONS -->
-      <section class="motivation section reveal" id="motivation">
-        <div class="glass-panel">
-          <h1 class="section-title" id="header_moti" data-i18n="moti_title">Mes Motivations</h1>
-          <p class="para" data-i18n="moti_p1">Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers, j'ai orienté mon parcours vers la conception vidéoludique.</p>
-          <p class="para" data-i18n="moti_p2">En parallèle de ma formation, je développe mes compétences en autodidacte sur différents langages et moteurs (C#, Unity, Python, Unreal Engine, JavaScript). Ma curiosité s'étend également aux sciences, à la physique quantique et à la culture japonaise.</p>
-          <p class="para" data-i18n="moti_p3">Mon ambition est d'exercer le métier de Gameplay Programmer. Ce rôle représente pour moi l'opportunité de combiner technique et design, en participant concrètement à la réalisation du jeu et en donnant vie aux intentions du Game Design.</p>
-          <p class="para" data-i18n="moti_p4">J'ai pu confirmer cette vocation à travers divers projets et expériences, notamment lors de la Summer School d'ISART Digital en juillet 2024. Aujourd'hui, je m'investis pleinement dans mes études et mes projets.</p>
-          
-          <h2 class="mt-40 mb-20" data-i18n="moti_lang_prog">Langages de programmation</h2>
-          <div class="logo-language-div">
-            <i class="devicons devicons-scriptcs" aria-hidden="true"></i>
-            <i class="devicons devicons-unity_small" aria-hidden="true"></i>
-            <i class="devicons devicons-python" aria-hidden="true"></i>
-            <i class="devicons devicons-sqllite" aria-hidden="true"></i>
-            <i class="devicons devicons-nodejs" aria-hidden="true"></i>
-            <i class="devicons devicons-react" aria-hidden="true"></i>
           </div>
         </div>
       </section>
 
-      <!-- CV -->
-      <section class="CV section reveal" id="CV">
-        <div class="glass-panel text-center">
-          <h1 class="section-title text-center" data-i18n="cv_title">CV</h1>
-          <div class="cv-download-container">
-            <a href="assets/CV.pdf" download="CV_Romain_Chevalier.pdf" class="cta-button" data-i18n="cv_download_btn">
-              <span>Télécharger mon CV (PDF)</span>
-            </a>
+      <!-- SOFTWARE (Projects) -->
+      <section class="section" id="software">
+        <h2 class="numbered-heading"><span class="slash">/</span> <span data-i18n="software_title">software</span></h2>
+        
+        <!-- FEATURED PROJECT -->
+        <div class="featured-project">
+          <div class="featured-img-container">
+            <img src="assets/SHMUP/special feature.jpg" alt="AEGIS OVERDRIVE" loading="lazy">
           </div>
-          <img src="assets/CV.jpg" alt="Aperçu du CV de Romain Chevalier" class="CV_img glass-border" loading="lazy" />
+          <div class="featured-content">
+            <p class="project-overline" data-i18n="featured_overline">Featured Project</p>
+            <h3 class="project-title" data-i18n="p_shmup_title">AEGIS OVERDRIVE (SHMUP)</h3>
+            <div class="project-description">
+              <p data-i18n="p_shmup_desc">Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce projet de 2 mois, entièrement développé sur Godot en C#, est axé sur l'intégration d'effets de 'Juiciness' et une architecture de code rigoureuse.</p>
+            </div>
+            <ul class="project-tech-list">
+              <li>Godot</li>
+              <li>C#</li>
+              <li>Juiciness</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" aria-label="GitHub Link"><i data-feather="github"></i></a>
+              <a href="#" aria-label="External Link"><i data-feather="external-link"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTHER PROJECTS (Folder Grid) -->
+        <div class="projects-grid">
+          
+          <!-- Card 1 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="github"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_zelda_title">Remake Zelda</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_zelda_desc">Réalisation de Link's Awakening sur Unity avec système de combat, inventaire et sauvegarde JSON, système d'inventaire et de swap d'armes à la Zelda.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Unity</li>
+              <li>C#</li>
+              <li>JSON</li>
+            </ul>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="github"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_puissance4_title">Puissance 4</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_puissance4_desc">Un jeu de Puissance 4 développé avec Pygame, incluant une adaptation automatique de la taille, gestion des erreurs et système de victoire.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Python</li>
+              <li>Pygame</li>
+            </ul>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="github"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_mario_title">Mario en 2D</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_mario_desc">Réalisation d'un niveau de Mario en utilisant des tableaux 2D, avec un système de mouvement innovant basé sur la manipulation de matrices.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Python</li>
+              <li>Logic</li>
+            </ul>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="external-link"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_godot_title">Peach Multiplayer</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_godot_desc">Remake de Super Mario World sur SNES avec Peach. Apprentissage du GDscript et des bases du Multiplayer local sur Godot.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Godot</li>
+              <li>GDscript</li>
+            </ul>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="github"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_yt_title">Youtube Uploader</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_yt_desc_short">Script Python pour l'upload via l'API officielle.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Python</li>
+              <li>API</li>
+            </ul>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="folder-card">
+            <div class="folder-header">
+              <div class="folder-icon"><i data-feather="folder"></i></div>
+              <div class="folder-links">
+                <a href="#"><i data-feather="github"></i></a>
+              </div>
+            </div>
+            <h3 class="folder-title" data-i18n="p_unreal_title">Unreal Engine Project</h3>
+            <div class="folder-desc">
+              <p data-i18n="p_unreal_desc_short">Système de vie et mécanique d'escalade via Blueprints.</p>
+            </div>
+            <ul class="folder-tech">
+              <li>Unreal Engine</li>
+              <li>Blueprints</li>
+            </ul>
+          </div>
+
         </div>
       </section>
 
       <!-- CONTACT -->
-      <section class="section reveal" id="contact">
-        <div class="contact glass-panel text-center">
-          <h1 class="section-title text-center" data-i18n="contact_title">Contact</h1>
-          <p data-i18n="contact_email" class="contact-text">Vous pouvez me joindre par mail à l'adresse suivante : <a href="mailto:romain.chevalier40@gmail.com" class="glow-link">romain.chevalier40@gmail.com</a></p>
-          <p data-i18n="contact_phone" class="contact-text mt-20">Mon numéro de téléphone est : <strong>06 09 13 48 80</strong></p>
-        </div>
+      <section class="section" id="contact" style="text-align: center; max-width: 600px; margin: 0 auto 100px;">
+        <p class="hero-intro" style="margin-bottom: 20px;" data-i18n="contact_overline">04. What's Next?</p>
+        <h2 class="hero-title" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px;" data-i18n="contact_title">Get In Touch</h2>
+        <p class="hero-description" data-i18n="contact_text" style="margin-bottom: 40px;">
+          Si mon profil correspond à vos recherches ou si vous souhaitez échanger autour du Game Dev, n'hésitez pas à me contacter. Je suis toujours ouvert à de nouvelles opportunités.
+        </p>
+        <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary" data-i18n="btn_say_hi">Say hi!</a>
       </section>
+
     </main>
 
+    <!-- Initialize Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
     <script src="js/script.js"></script>
   </body>
 </html>
