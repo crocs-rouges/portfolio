@@ -1,4 +1,4 @@
-export const translations = {
+const translations = {
     fr: {
         nav_about: "À propos",
         nav_projects: "Projets",
@@ -63,13 +63,7 @@ export const translations = {
         cv_download_btn: "Télécharger mon CV (PDF)",
         contact_title: "Contact",
         contact_email: "Email : romain.chevalier40@gmail.com",
-        contact_phone: "Téléphone : 06 09 13 48 80",
-        
-        moti_objective_title: "> OBJECTIF_",
-        moti_objective_desc: "Les projets sont verrouillés. Poussez les <strong>Caisses de Données</strong> sur les <strong>Dalles Logiques</strong> pour rétablir le courant et débloquer les informations.",
-        moti_controls_title: "> CONTROLES_",
-        moti_controls_desc: "[Z Q S D] ou [Flèches] pour se déplacer",
-        moti_start_btn: "ENTRER DANS LA CRYPTE"
+        contact_phone: "Téléphone : 06 09 13 48 80"
     },
     en: {
         nav_about: "About",
@@ -135,13 +129,7 @@ export const translations = {
         cv_download_btn: "Download my CV (PDF)",
         contact_title: "Contact",
         contact_email: "Email: romain.chevalier40@gmail.com",
-        contact_phone: "Phone: 06 09 13 48 80",
-        
-        moti_objective_title: "> OBJECTIVE_",
-        moti_objective_desc: "Projects are locked. Push <strong>Data Crates</strong> onto <strong>Logic Plates</strong> to restore power and unlock information.",
-        moti_controls_title: "> CONTROLS_",
-        moti_controls_desc: "[W A S D] or [Arrows] to move",
-        moti_start_btn: "ENTER THE CRYPT"
+        contact_phone: "Phone: 06 09 13 48 80"
     }
 };
 
@@ -162,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             if (translations[lang] && translations[lang][key]) {
-                element.innerHTML = translations[lang][key];
+                element.textContent = translations[lang][key];
             }
         });
     }

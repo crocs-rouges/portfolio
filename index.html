@@ -3,257 +3,395 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Romain Chevalier - Portfolio 3D</title>
+    <title>Romain Chevalier - Portfolio</title>
     <link rel="stylesheet" type="text/css" href="CSS/style.css" />
     <link rel="stylesheet" href="CSS/devicons.css" />
     <link rel="stylesheet" href="CSS/devicon.min.css" />
-    <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background-color: #0a192f;
-      }
-      #bg-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        display: block;
-        background: #000; /* Black before Three.js loads */
-      }
-      #ui-layer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 100;
-        pointer-events: none;
-        width: 100%;
-        height: 100%;
-      }
-      #ui-layer * {
-        pointer-events: auto;
-      }
-      #instructions {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        background: rgba(10, 25, 47, 0.95);
-        padding: 40px;
-        border-radius: 8px;
-        border: 2px solid var(--primary-color);
-        backdrop-filter: blur(10px);
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-        max-width: 600px;
-        width: 90%;
-        box-shadow: 0 0 30px rgba(100, 255, 218, 0.2);
-      }
-      #instructions.hidden {
-        opacity: 0;
-        visibility: hidden;
-      }
-      .instruction-block {
-        margin: 30px 0;
-        padding: 20px;
-        background: rgba(0,0,0,0.3);
-        border-radius: 4px;
-        text-align: left;
-      }
-      .instruction-label {
-        font-family: 'SF Mono', monospace;
-        font-size: 0.9rem;
-        color: var(--primary-color);
-        margin-bottom: 10px;
-      }
-      .instruction-text {
-        font-family: 'SF Mono', monospace;
-        font-size: 0.85rem;
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-      #start-btn {
-        width: 100%;
-        cursor: pointer;
-      }
-      #debug-info {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        color: red;
-        font-family: monospace;
-        z-index: 9999;
-        pointer-events: none;
-      }
-
-      /* Project Modal Styles */
-      #project-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(2, 12, 27, 0.85);
-        backdrop-filter: blur(8px);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      #project-modal.active {
-        display: flex;
-        opacity: 1;
-      }
-      .modal-content {
-        background: var(--bg-color);
-        width: 90%;
-        max-width: 900px;
-        max-height: 85vh;
-        overflow-y: auto;
-        position: relative;
-        padding: 40px;
-        border-radius: 8px;
-        border: 1px solid var(--primary-color);
-        box-shadow: 0 20px 50px rgba(2, 12, 27, 0.7);
-        color: var(--text-color);
-      }
-      .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: none;
-        border: none;
-        color: var(--primary-color);
-        font-size: 2rem;
-        cursor: pointer;
-        padding: 5px;
-        line-height: 1;
-        transition: transform 0.2s ease;
-      }
-      .modal-close:hover {
-        transform: scale(1.1);
-      }
-      .modal-title {
-        color: var(--heading-color);
-        font-size: 2rem;
-        margin-bottom: 20px;
-        font-weight: 600;
-      }
-      .modal-body {
-        font-size: 1.1rem;
-        line-height: 1.6;
-      }
-      .modal-body p {
-        margin-bottom: 20px;
-      }
-      .modal-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-      }
-      .gallery-item {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 4px;
-        border: 1px solid rgba(100, 255, 218, 0.2);
-        cursor: pointer;
-        transition: border-color 0.3s ease;
-      }
-      .gallery-item:hover {
-        border-color: var(--primary-color);
-      }
-
-      /* Custom scrollbar for modal */
-      .modal-content::-webkit-scrollbar {
-        width: 8px;
-      }
-      .modal-content::-webkit-scrollbar-track {
-        background: var(--bg-color);
-      }
-      .modal-content::-webkit-scrollbar-thumb {
-        background: #112240;
-        border-radius: 4px;
-      }
-      .modal-content::-webkit-scrollbar-thumb:hover {
-        background: #233554;
-      }
-    </style>
   </head>
   <body>
-    <div id="debug-info"></div>
-    <canvas id="bg-canvas"></canvas>
-
-    <div id="ui-layer">
-      <!-- ... rest of ui ... -->
-      <header class="header">
-        <nav class="nav-container">
-          <a href="#" class="logo">RC.</a>
-          <ul class="nav-links">
-            <li><button id="language-toggle" class="lang-btn">EN</button></li>
-          </ul>
-        </nav>
-      </header>
-
-      <div id="project-modal">
-        <div class="modal-content">
-          <button class="modal-close" id="modal-close">&times;</button>
-          <h2 class="modal-title" id="modal-title">Project Title</h2>
-          <div class="modal-body" id="modal-body">
-            <!-- Description goes here -->
-          </div>
-          <div class="modal-gallery" id="modal-gallery">
-            <!-- Images go here -->
-          </div>
-        </div>
-      </div>
-      
-      <div id="instructions">
-        <h1 data-i18n="hero_greeting">Bonjour, je suis</h1>
+    <header class="header">
+      <nav class="nav-container">
+        <a href="#" class="logo">RC.</a>
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+          <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
+          <li><a href="#CV" data-i18n="nav_cv">CV</a></li>
+          <li>
+            <a href="#motivation" data-i18n="nav_motivation">Motivations</a>
+          </li>
+          <li>
+            <a href="#recommandation" data-i18n="nav_recommendation"
+              >Lettre de recommandation</a
+            >
+          </li>
+          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+          <li><button id="language-toggle" class="lang-btn">EN</button></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- MAIN -->
+    <main class="main-container">
+      <section class="hero-section" id="hero">
+        <h1 class="small-heading" data-i18n="hero_greeting">
+          Bonjour, je suis
+        </h1>
         <h2 class="big-heading">Romain Chevalier.</h2>
-        <p data-i18n="hero_subtitle" style="margin: 20px 0; color: var(--text-color);">Bienvenue dans ma Crypte de la Logique interactive.</p>
-        <div class="instruction-block">
-          <p class="instruction-label" data-i18n="moti_objective_title">> OBJECTIF_</p>
-          <p class="instruction-text" data-i18n="moti_objective_desc">
-            Les projets sont verrouillés. Poussez les <strong>Caisses de Données</strong> sur les <strong>Dalles Logiques</strong> pour rétablir le courant et débloquer les informations.
+        <h3 class="subtitle" data-i18n="hero_subtitle">
+          passionné par la conception et la création de jeux vidéo.
+        </h3>
+        <p class="description" data-i18n="hero_desc">
+          Je suis actuellement élève en première année en game design et
+          programming à ISART DIGITAL, en parallel j'apprend le japonais depuis
+          4 ans. Depuis très jeune passioné par les jeux vidéo et les différents
+          univers et style de jeux qu’ils proposent (combat, épopée, histoire,
+          ...).
+        </p>
+      </section>
+      <!-- ABOUT ME -->
+      <section class="about" id="about">
+        <h1 class="about-title" data-i18n="about_title">About me</h1>
+        <h2 class="about-subtitle" data-i18n="about_job_title">
+          Métier souhaité
+        </h2>
+        <p class="about-description" data-i18n="about_job_desc">
+          je souhaite éxercer le métier de Game développeur gameplay, qui pour
+          moi sera le moyen de participer au mieux à la réalisation du jeu dans
+          sa globalité et à bien comprendre l’ambition souhaitée par le Game
+          design.
+        </p>
+        <h2 class="about-subtitle" data-i18n="about_softskills">Softskills</h2>
+        <p data-i18n="about_softskill_1">
+          - Je suis passionné par l`univers du jeu vidéo et notamment la
+          réalisation et la création de jeux vidéo. J`aime comprendre comment
+          sont faites certaines mécaniques de jeu, (le codage) et toute la
+          partie game design.
+        </p>
+        <p data-i18n="about_softskill_2">
+          - Je suis curieux dans plein de domaines tels que la science, la
+          physique quantique et l`informatique quantique ainsi que l`IA et son
+          développement. J`aime également la culture du japon , c`est pour cela
+          que j`apprends le japonais depuis 3 ans.
+        </p>
+        <p data-i18n="about_softskill_3">
+          - Je suis persévérant, je cherche toujours une solution à un problème
+          même si cela peut me prendre des semaines de recherches.
+        </p>
+      </section>
+
+      <section class="logo-language" id="logo-language">
+        <h2 class="about-subtitle" data-i18n="skills_title">Compétences</h2>
+
+        <div class="skills-container">
+          <div class="skill-category">
+            <h3 class="skill-cat-title" data-i18n="skills_cat_languages">
+              Langages
+            </h3>
+            <div class="logo-language-div">
+              <i class="devicons devicons-scriptcs" title="C#"></i>
+              <i class="devicons devicons-python" title="Python"></i>
+              <i class="devicons devicons-javascript" title="JavaScript"></i>
+              <i class="devicons devicons-sqllite" title="SQL"></i>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3 class="skill-cat-title" data-i18n="skills_cat_engines">
+              Moteurs & Outils
+            </h3>
+            <div class="logo-language-div">
+              <i class="devicons devicons-unity_small" title="Unity"></i>
+              <i class="devicons devicons-photoshop" title="Photoshop"></i>
+              <i class="devicons devicons-git" title="Git"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <h2 class="section-title" data-i18n="projects_title">
+          Projets notables
+        </h2>
+        <div class="project-card">
+          <div class="project-content">
+            <h3 class="project-title" data-i18n="p_shmup_title">
+              AEGIS OVERDRIVE (SHMUP)
+            </h3>
+            <img class="project-image" src="assets\SHMUP\special feature.jpg" />
+            <p class="project-description" data-i18n="p_shmup_desc">
+              Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce
+              projet de 2 mois, entièrement développé sur Godot en C#, est axé
+              sur l'intégration d'effets de 'Juiciness' et une architecture de
+              code rigoureuse.
+            </p>
+          </div>
+        </div>
+        <div class="project-grid">
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_zelda_title">
+                Remake Zelda
+              </h3>
+              <img
+                class="project-image"
+                src="assets/zelda/2024-12-03 18-27-17.00_00_32_17.Still001.jpg"
+              />
+              <p class="project-description" data-i18n="p_zelda_desc">
+                Réalisation de Link's Awakening sur Unity avec système de
+                combat, inventaire et sauvegarde JSON, système d'inventaire et
+                de swap d'armes à la Zelda.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_yt_title">
+                Youtube Uploader
+              </h3>
+              <img
+                class="project-image"
+                src="assets/yt_schedule/Capture d’écran 2024-12-02 091005.png"
+              />
+              <p class="project-description" data-i18n="p_yt_desc">
+                Ce code est un script python qui permet de mettre en ligne des
+                vidéos sur youtube. Il utilise l'api officielle de youtube et un
+                projet google cloud pour se connecter directement au compte
+                youtube de l'utilisateur et pouvoir uploader des vidéos.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_short_title">
+                Short Création
+              </h3>
+              <img
+                class="project-image"
+                src="assets/short_creation/VideoClipperPro.png"
+              />
+              <p class="project-description" data-i18n="p_short_desc">
+                Projet d'application servant à couper de longues vidéos en
+                petites vidéos au format 9/16 avec tkinter, python et cuda pour
+                utiliser la puissance des GPU nvidia et le multiprocessing.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_puissance4_title">
+                Puissance 4
+              </h3>
+              <img
+                class="project-image"
+                src="assets/puissance/Capture d'écran 2024-11-30 160129.png"
+              />
+              <p class="project-description" data-i18n="p_puissance4_desc">
+                Un jeu de Puissance 4 développé avec Pygame, incluant une
+                adaptation automatique de la taille, gestion des erreurs et
+                système de victoire, mode 2 joueurs avec un changement de
+                couleurs.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_mario_title">
+                Mario en 2D
+              </h3>
+              <img
+                class="project-image"
+                src="assets/mario_python/Capture d'écran 2024-11-11 193851.png"
+              />
+              <p class="project-description" data-i18n="p_mario_desc">
+                Réalisation d'un niveau de Mario en utilisant des tableaux 2D,
+                avec un système de mouvement innovant basé sur la manipulation
+                de matrices ainsi que la génération de tableaux 2D par
+                compréhension d'images.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_isart_title">
+                ISART Summer School Project
+              </h3>
+              <img
+                class="project-image"
+                src="assets/isart-summer/2024-11-28 19-57-12.00_00_17_03.Still002.jpg"
+              />
+              <p class="project-description" data-i18n="p_isart_desc1">
+                Réalisation d'un jeu sur unity en 2D top down en visual
+                scripting.
+              </p>
+              <p data-i18n="p_isart_desc2">
+                Le but du jeu est de battre tous les ennemis et affronter le
+                grand méchant avec des pierres et un arc.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_cloud_title">
+                Cloud File Explorer
+              </h3>
+              <img class="project-image" src="assets/cloud/cloud.png" />
+              <p class="project-description" data-i18n="p_cloud_desc1">
+                Projet d'application de sauvegarde de dossiers sécurisés par
+                login, contenant des documents.
+              </p>
+              <p data-i18n="p_cloud_desc2">
+                Réalisé en groupe dans le cadre scolaire.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_portfolio_title">
+                Le Portfolio
+              </h3>
+              <img
+                class="project-image"
+                src="assets/porfolio-images/Capture d'écran 2024-12-02 222438.png"
+              />
+              <p class="project-description" data-i18n="p_portfolio_desc">
+                Réalisation d'un portfolio pour montrer mes réalisations et mes
+                compétences.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_unreal_title">
+                Unreal Engine Project
+              </h3>
+              <img
+                class="project-image"
+                src="assets/unreal/Capture d'écran 2024-12-03 180842.png"
+              />
+              <p class="project-description" data-i18n="p_unreal_desc">
+                Projet débuté en 2022 pour découvrir le blueprint. Ce projet se
+                concentre sur la création d'un système de barre de vie(nombre de
+                coeurs) et d'un personnage qui fait de l'escalade sur tout type
+                de structures.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_tiktok_title">
+                TikTok Creation Upload
+              </h3>
+              <img class="project-image" src=".png" />
+              <p class="project-description" data-i18n="p_tiktok_desc">
+                C'est un script python qui va à l'aide de hashtags télécharger
+                des vidéos tiktok et programmer des publications sur une durée
+                de 10 jours.
+              </p>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-content">
+              <h3 class="project-title" data-i18n="p_godot_title">
+                Peach Multiplayer in Godot
+              </h3>
+              <img
+                class="project-image"
+                src="assets/mario Godot/mario godot.png"
+              />
+              <p class="project-description" data-i18n="p_godot_desc">
+                Un Remake de Super Mario World sur SNES avec Peach en caractère
+                principale. Ce projet a pour objectif d'apprendre à coder en
+                GDscript sur Godot et de comprendre les bases du Multiplayer
+                local sur Godot.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="motivation" id="motivation">
+        <h1 class="about-title" id="header_moti" data-i18n="moti_title">
+          Mes Motivations
+        </h1>
+        <p class="para" data-i18n="moti_p1">
+          Je suis actuellement étudiant en première année de Game Design &
+          Programming à ISART Digital. Passionné depuis toujours par les jeux
+          vidéo et la richesse de leurs univers (combat, épopée, histoire...),
+          j'ai orienté mon parcours vers la conception vidéoludique.
+        </p>
+        <p class="para" data-i18n="moti_p2">
+          En parallèle de ma formation, je développe mes compétences en
+          autodidacte sur différents langages et moteurs (C#, Unity, Python,
+          Unreal Engine, JavaScript). Ma curiosité s'étend également aux
+          sciences, à la physique quantique et à la culture japonaise.
+        </p>
+        <p class="para" data-i18n="moti_p3">
+          Mon ambition est d'exercer le métier de Gameplay Programmer. Ce rôle
+          représente pour moi l'opportunité de combiner technique et design, en
+          participant concrètement à la réalisation du jeu et en donnant vie aux
+          intentions du Game Design.
+        </p>
+        <p class="para" data-i18n="moti_p4">
+          J'ai pu confirmer cette vocation à travers divers projets et
+          expériences, notamment lors de la Summer School d'ISART Digital en
+          juillet 2024. Aujourd'hui, je m'investis pleinement dans mes études et
+          mes projets, avec la volonté de progresser constamment et de
+          contribuer à la création d'expériences de jeu innovantes.
+        </p>
+        <h2 data-i18n="moti_lang_prog">Langages de programmation</h2>
+        <div class="logo-language-div">
+          <i class="devicons devicons-scriptcs"></i>
+          <i class="devicons devicons-unity_small"></i>
+          <i class="devicons devicons-python"></i>
+          <i class="devicons devicons-sqllite"></i>
+
+          <i class="devicons devicons-nodejs"></i>
+          <i class="devicons devicons-react"></i>
+        </div>
+        
+        <h2 data-i18n="moti_lang_other">Autre languages</h2>
+        <div class="logo-language-div">
+          <i class="devicons devicons-photoshop"></i>
+          <i class="devicons devicons-javascript"></i>
+          <i class="devicons devicons-html5"></i>
+          <i class="devicons devicons-css3_full"></i>
+        </div>
+      </section>
+
+      <section class="CV" id="CV">
+        <div>
+          <h1 class="CV" data-i18n="cv_title">CV</h1>
+          <div class="cv-download-container">
+            <a
+              href="assets/CV.pdf"
+              download="CV_Romain_Chevalier.pdf"
+              class="cta-button"
+              data-i18n="cv_download_btn"
+              >Télécharger mon CV (PDF)</a
+            >
+          </div>
+          <br />
+          <img src="assets/CV.jpg" class="CV_img" />
+        </div>
+      </section>
+
+      <section>
+        <div class="contact" id="contact">
+          <h1 data-i18n="contact_title">Contact</h1>
+          <p data-i18n="contact_email">
+            Vous pouvez me joindre par mail à l'adresse suivante :
+            romain.chevalier40@gmail.com
           </p>
-          <p class="instruction-label" data-i18n="moti_controls_title">> CONTROLES_</p>
-          <p class="instruction-text" data-i18n="moti_controls_desc" style="margin-bottom: 0;">
-            [Z Q S D] ou [Flèches] pour se déplacer<br>
-            [R] Réinitialiser | [U] Annuler | [Y] Rétablir
+          <p data-i18n="contact_phone">
+            Mon numéro de téléphone est : 06 09 13 48 80
           </p>
         </div>
-        <button id="start-btn" class="cta-button" data-i18n="moti_start_btn">ENTRER DANS LA CRYPTE</button>
-      </div>
-    </div>
-
-    <script type="module" src="js/main.js"></script>
-    <script>
-      window.onerror = function(msg, url, lineNo, columnNo, error) {
-        const debug = document.getElementById('debug-info');
-        if (debug) {
-          debug.innerHTML += `ERROR: ${msg} at ${lineNo}:${columnNo}<br>`;
-        }
-        return false;
-      };
-      
-      // Force initial visibility check
-      window.addEventListener('load', () => {
-        console.log("Portfolio loaded, canvas ready.");
-      });
-
-      document.getElementById('start-btn').addEventListener('click', function() {
-        document.getElementById('instructions').classList.add('hidden');
-        console.log("Game started, instructions hidden.");
-      });
-    </script>
+      </section>
+    </main>
+    <script src="js/script.js"></script>
   </body>
 </html>
