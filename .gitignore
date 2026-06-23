@@ -45,11 +45,15 @@ sysinfo.txt
 crashlytics-build.properties
 .utmp
 .utmp/
+docs/
+*.editorconfig
+.editorconfig
 
 # =========================
 # Gemini CLI
 # =========================
 .gemini/
+GEMINI.md
 .tmp.driveupload/
 .tmp.drivedownload/
 .agents
