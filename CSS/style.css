@@ -99,10 +99,27 @@ a {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--lightest-slate);
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--green);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .nav-links a:hover {
     color: var(--green);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 .lang-btn {
@@ -347,6 +364,8 @@ section {
 
 .btn-primary:hover {
     background-color: rgba(100, 255, 218, 0.1);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 5px 15px rgba(2, 12, 27, 0.5);
 }
 
 .icon-small {
@@ -480,6 +499,12 @@ section {
     overflow: hidden;
     background-color: var(--green);
     box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.featured-img-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -15px rgba(2,12,27,0.8);
 }
 
 .featured-img-container img {
@@ -605,7 +630,8 @@ section {
 }
 
 .folder-card:hover {
-    transform: translateY(-7px);
+    transform: translateY(-7px) scale(1.02);
+    box-shadow: 0 20px 40px -15px rgba(2,12,27,0.8);
 }
 
 .folder-header {
@@ -800,6 +826,46 @@ body.game-mode .game-dot {
 .video-info p {
     color: var(--slate);
     font-size: 0.9rem;
+}
+
+/* 
+   =================================================
+   ANIMATIONS & JUICINESS
+   =================================================
+*/
+
+/* Scroll Reveal */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Delay Utilities */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* Staggered Items for Lists and Grids */
+.stagger-container .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.stagger-container.visible .stagger-item {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* 

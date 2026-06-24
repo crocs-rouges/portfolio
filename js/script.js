@@ -37,9 +37,9 @@ const translations = {
         p_unreal_title: "Unreal Engine Project",
         p_unreal_desc_short: "Création d'un système de vie et de mécaniques d'escalade via les Blueprints d'Unreal Engine.",
         p_sokoban_title: "SOKOBAN (GDP1)",
-        p_sokoban_desc: "Réinterprétation du Sokoban sur le thème du casino. Intègre une mécanique de dé roulant, architecture propre (Command pattern, A*) et Juiciness.",
+        p_sokoban_desc: "Made in GDP1. Réinterprétation du Sokoban sur le thème du casino. Intègre une mécanique de dé roulant, architecture propre (Command pattern, A*) et Juiciness.",
         p_mobile_title: "Mobile Mini Game OFG",
-        p_mobile_desc: "One Finger Game inspiré de MUCHO PARTY. Un jeu 2 joueurs sur un seul téléphone (split screen ou full screen partagé), réalisé en 1 mois.",
+        p_mobile_desc: "Réalisé en GDP1. One Finger Game inspiré de MUCHO PARTY. Un jeu 2 joueurs sur un seul téléphone (split screen ou full screen partagé), réalisé en 1 mois.",
         p_rider_title: "Rider Skate",
         p_rider_desc: "Jeu d'arcade mobile 2.5D alliant la fluidité de Rider et la technicité du skate. Physique 2D avec visuels 3D, système de tricks et rails dynamiques.",
         view_all_projects: "Voir tous les projets",
@@ -83,9 +83,9 @@ const translations = {
         p_unreal_title: "Unreal Engine Project",
         p_unreal_desc_short: "Creation of a health system and climbing mechanics via Unreal Engine Blueprints.",
         p_sokoban_title: "SOKOBAN (GDP1)",
-        p_sokoban_desc: "Casino-themed reinterpretation of Sokoban. Features a rolling dice mechanic, clean architecture (Command pattern, A*), and Juiciness.",
+        p_sokoban_desc: "Made in GDP1. Casino-themed reinterpretation of Sokoban. Features a rolling dice mechanic, clean architecture (Command pattern, A*), and Juiciness.",
         p_mobile_title: "Mobile Mini Game OFG",
-        p_mobile_desc: "One Finger Game inspired by MUCHO PARTY. A 2-player game on a single phone (split or shared full screen), developed in 1 month.",
+        p_mobile_desc: "Made in GDP1. One Finger Game inspired by MUCHO PARTY. A 2-player game on a single phone (split or shared full screen), developed in 1 month.",
         p_rider_title: "Rider Skate",
         p_rider_desc: "2.5D mobile arcade game combining Rider's fluidity and skateboarding techniques. 2D physics with 3D visuals, trick system, and dynamic rails.",
         view_all_projects: "View All Projects",
@@ -362,5 +362,46 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     initAsciiPortrait();
+    // ==========================================
+    // 5. SCROLL ANIMATIONS & JUICINESS
+    // ==========================================
+    const setupAnimations = () => {
+        // Initial setup for Hero section elements to stagger in
+        const heroElements = document.querySelectorAll('.hero-intro, .hero-title, .hero-subtitle, .hero-description, .btn-primary');
+        heroElements.forEach((el, index) => {
+            el.classList.add('reveal-up');
+            el.style.transitionDelay = `${index * 0.1}s`;
+            // Trigger reflow to apply classes instantly
+            void el.offsetWidth;
+            el.classList.add('visible');
+        });
+
+        // Intersection Observer for other elements
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with .reveal-up that are not hero elements
+        const revealElements = document.querySelectorAll('.reveal-up:not(.visible)');
+        revealElements.forEach(el => observer.observe(el));
+
+        // Observe stagger containers
+        const staggerContainers = document.querySelectorAll('.stagger-container');
+        staggerContainers.forEach(container => observer.observe(container));
+    };
+
+    // Run setup after a small delay to allow initial rendering
+    setTimeout(setupAnimations, 100);
 
 });
