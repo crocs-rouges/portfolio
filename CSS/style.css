@@ -528,6 +528,24 @@ section {
     color: var(--lightest-slate);
 }
 
+.featured-project.alt .featured-img-container {
+    grid-column: 6 / -1;
+}
+
+.featured-project.alt .featured-content {
+    grid-column: 1 / 7;
+    text-align: left;
+}
+
+.featured-project.alt .project-tech-list,
+.featured-project.alt .project-links {
+    justify-content: flex-start;
+}
+
+.featured-project.alt .project-tech-list li {
+    margin: 0 20px 5px 0;
+}
+
 .project-links a {
     padding: 10px;
 }
