@@ -25,7 +25,7 @@
         <div class="ambient-glow"></div>
         <div class="crt-overlay"></div>
         <div class="xp-bar-container"><div class="xp-bar-fill"></div></div>
-        
+
         <header class="header">
             <nav class="nav-container">
                 <a href="#" class="logo">Romain Chevalier</a>
@@ -340,7 +340,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.1s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/SOKOBAN/TitleCard.png');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/SOKOBAN/TitleCard.png&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -374,7 +379,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.2s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/One_Button_Game/Gameplay.png');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/One_Button_Game/Gameplay.png&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -408,7 +418,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.3s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/Rider_Skate/Gameplay.png');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/Rider_Skate/Gameplay.png&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -442,7 +457,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.4s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/Proto_Zelda_Unreal/Project_Screen.png');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/Proto_Zelda_Unreal/Project_Screen.png&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -474,7 +494,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.5s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/Short_Creation/Video_Clipper_Pro.png');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/Short_Creation/Video_Clipper_Pro.png&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -508,7 +533,12 @@
                         class="folder-card stagger-item"
                         style="transition-delay: 0.6s"
                     >
-                        <div class="folder-bg" style="background-image: url('assets/Projects/Isart_Summer/Gameplay.jpg');"></div>
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/Isart_Summer/Gameplay.jpg&quot;);
+                            "
+                        ></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -542,7 +572,7 @@
             <!-- ART GALLERY -->
             <section class="section" id="art">
                 <h2 class="numbered-heading reveal-up">
-                    <span class="slash">/</span> art gallery
+                    <span class="slash">/</span> <span data-i18n="art_title">art gallery</span>
                 </h2>
                 <p
                     style="
@@ -559,42 +589,139 @@
                 </p>
 
                 <div class="gallery-filters reveal-up">
-                    <button class="filter-btn active" data-filter="all">Tout</button>
-                    <button class="filter-btn" data-filter="art">Dessin</button>
-                    <button class="filter-btn" data-filter="photo">Photographie</button>
+                    <button class="filter-btn active" data-filter="all" data-i18n="filter_all">
+                        Tout
+                    </button>
+                    <button class="filter-btn" data-filter="art" data-i18n="filter_art">Dessin</button>
+                    <button class="filter-btn" data-filter="photo" data-i18n="filter_photo">
+                        Photographie
+                    </button>
                 </div>
 
-                <div class="gallery-grid stagger-container" id="art-gallery-grid">
+                <div
+                    class="gallery-grid stagger-container"
+                    id="art-gallery-grid"
+                >
                     <!-- Artwork -->
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.1s">
-                        <img src="assets/art/City.jpg" alt="City" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.1s"
+                    >
+                        <img
+                            src="assets/art/City.jpg"
+                            alt="City"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.2s">
-                        <img src="assets/art/Fort Boyard.jpg" alt="Fort Boyard" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.2s"
+                    >
+                        <img
+                            src="assets/art/Fort Boyard.jpg"
+                            alt="Fort Boyard"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.3s">
-                        <img src="assets/art/Gwen@0,25x.png" alt="Gwen" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="art"
+                        style="transition-delay: 0.3s"
+                    >
+                        <img
+                            src="assets/art/Gwen@0,25x.png"
+                            alt="Gwen"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.4s">
-                        <img src="assets/art/House.jpg" alt="House" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.4s"
+                    >
+                        <img
+                            src="assets/art/House.jpg"
+                            alt="House"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.5s">
-                        <img src="assets/art/Kiara.jpg" alt="Kiara" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="art"
+                        style="transition-delay: 0.5s"
+                    >
+                        <img
+                            src="assets/art/Kiara.jpg"
+                            alt="Kiara"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.6s">
-                        <img src="assets/art/Music_Girl.jpg" alt="Music Girl" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="art"
+                        style="transition-delay: 0.6s"
+                    >
+                        <img
+                            src="assets/art/Music_Girl.jpg"
+                            alt="Music Girl"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.7s">
-                        <img src="assets/art/Nature1.jpg" alt="Nature 1" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.7s"
+                    >
+                        <img
+                            src="assets/art/Nature1.jpg"
+                            alt="Nature 1"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.8s">
-                        <img src="assets/art/Nature2.jpg" alt="Nature 2" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.8s"
+                    >
+                        <img
+                            src="assets/art/Nature2.jpg"
+                            alt="Nature 2"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.9s">
-                        <img src="assets/art/PC.jpg" alt="PC" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="photo"
+                        style="transition-delay: 0.9s"
+                    >
+                        <img
+                            src="assets/art/PC.jpg"
+                            alt="PC"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
-                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 1.0s">
-                        <img src="assets/art/Walking_Girl.jpg" alt="Walking Girl" class="gallery-img" loading="lazy" />
+                    <div
+                        class="gallery-card stagger-item"
+                        data-category="art"
+                        style="transition-delay: 1s"
+                    >
+                        <img
+                            src="assets/art/Walking_Girl.jpg"
+                            alt="Walking Girl"
+                            class="gallery-img"
+                            loading="lazy"
+                        />
                     </div>
                 </div>
             </section>
@@ -602,7 +729,7 @@
             <!-- VIDEO GALLERY -->
             <section class="section" id="video">
                 <h2 class="numbered-heading reveal-up">
-                    <span class="slash">/</span> video gallery
+                    <span class="slash">/</span> <span data-i18n="video_title">video gallery</span>
                 </h2>
                 <p
                     style="
@@ -623,12 +750,19 @@
                         data-type="youtube"
                         data-src="https://www.youtube.com/embed/oznwVu8Eul4?autoplay=1"
                     >
-                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/oznwVu8Eul4/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/oznwVu8Eul4/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="video-info">
-                            <h3>Project Trailer 1</h3>
-                            <p>Présentation du projet.</p>
+                            <h3 data-i18n="v_trailer1_title">Project Trailer 1</h3>
+                            <p data-i18n="v_trailer1_desc">Présentation du projet.</p>
                         </div>
                     </div>
                     <div
@@ -637,12 +771,19 @@
                         data-type="youtube"
                         data-src="https://www.youtube.com/embed/stYrd2LLf94?autoplay=1"
                     >
-                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/stYrd2LLf94/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/stYrd2LLf94/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="video-info">
-                            <h3>Project Trailer 2</h3>
-                            <p>Gameplay footage.</p>
+                            <h3 data-i18n="v_trailer2_title">Project Trailer 2</h3>
+                            <p data-i18n="v_trailer2_desc">Gameplay footage.</p>
                         </div>
                     </div>
                     <div
@@ -651,12 +792,21 @@
                         data-type="youtube"
                         data-src="https://www.youtube.com/embed/PX2R_gI4D14?autoplay=1"
                     >
-                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/PX2R_gI4D14/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/PX2R_gI4D14/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="video-info">
-                            <h3>SHMUP Walkthrough</h3>
-                            <p>Aperçu complet du gameplay de Aegis Overdrive.</p>
+                            <h3 data-i18n="v_shmup_title">SHMUP Walkthrough</h3>
+                            <p data-i18n="v_shmup_desc">
+                                Aperçu complet du gameplay de Aegis Overdrive.
+                            </p>
                         </div>
                     </div>
                 </div>

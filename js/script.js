@@ -5,6 +5,8 @@ const translations = {
     fr: {
         nav_about: "About",
         nav_software: "Software",
+        nav_art: "Art",
+        nav_video: "Vidéo",
         nav_contact: "Contact",
         game_mode_btn: "GAME MODE",
         
@@ -42,7 +44,26 @@ const translations = {
         p_mobile_desc: "Réalisé en GDP1. One Finger Game inspiré de MUCHO PARTY. Un jeu 2 joueurs sur un seul téléphone (split screen ou full screen partagé), réalisé en 1 mois.",
         p_rider_title: "Rider Skate",
         p_rider_desc: "Jeu d'arcade mobile 2.5D alliant la fluidité de Rider et la technicité du skate. Physique 2D avec visuels 3D, système de tricks et rails dynamiques.",
+        p_short_title: "Short Création",
+        p_short_desc: "Application servant à couper de longues vidéos en petits formats 9/16, utilisant la puissance des GPU NVIDIA et le multiprocessing.",
+        p_isart_title: "ISART Summer School Project",
+        p_isart_desc1: "Jeu 2D top-down réalisé en visual scripting. Le but est de vaincre tous les ennemis et d'affronter le boss avec des pierres et un arc.",
         view_all_projects: "Voir tous les projets",
+        
+        art_title: "art gallery",
+        art_desc: "Une collection de mes œuvres numériques et traditionnelles, explorant différents styles et médiums.",
+        filter_all: "Tout",
+        filter_art: "Dessin",
+        filter_photo: "Photographie",
+        
+        video_title: "video gallery",
+        video_desc: "Mes montages vidéo, motion design et trailers de gameplay.",
+        v_trailer1_title: "Project Trailer 1",
+        v_trailer1_desc: "Présentation du projet.",
+        v_trailer2_title: "Project Trailer 2",
+        v_trailer2_desc: "Gameplay footage.",
+        v_shmup_title: "SHMUP Walkthrough",
+        v_shmup_desc: "Aperçu complet du gameplay de Aegis Overdrive.",
         
         contact_overline: "04. Et ensuite ?",
         contact_title: "Get In Touch",
@@ -51,6 +72,8 @@ const translations = {
     en: {
         nav_about: "About",
         nav_software: "Software",
+        nav_art: "Art",
+        nav_video: "Video",
         nav_contact: "Contact",
         game_mode_btn: "GAME MODE",
         
@@ -88,7 +111,26 @@ const translations = {
         p_mobile_desc: "Made in GDP1. One Finger Game inspired by MUCHO PARTY. A 2-player game on a single phone (split or shared full screen), developed in 1 month.",
         p_rider_title: "Rider Skate",
         p_rider_desc: "2.5D mobile arcade game combining Rider's fluidity and skateboarding techniques. 2D physics with 3D visuals, trick system, and dynamic rails.",
+        p_short_title: "Short Creation Engine",
+        p_short_desc: "Application used to cut long videos into small 9:16 formats, utilizing the power of NVIDIA GPUs and multiprocessing.",
+        p_isart_title: "ISART Summer School Project",
+        p_isart_desc1: "Top-down 2D game made with visual scripting. The goal is to defeat all enemies and face the boss using stones and a bow.",
         view_all_projects: "View All Projects",
+        
+        art_title: "art gallery",
+        art_desc: "A collection of my digital and traditional artwork, exploring different styles and mediums.",
+        filter_all: "All",
+        filter_art: "Drawing",
+        filter_photo: "Photography",
+        
+        video_title: "video gallery",
+        video_desc: "My video edits, motion design, and gameplay trailers.",
+        v_trailer1_title: "Project Trailer 1",
+        v_trailer1_desc: "Project presentation.",
+        v_trailer2_title: "Project Trailer 2",
+        v_trailer2_desc: "Gameplay footage.",
+        v_shmup_title: "SHMUP Walkthrough",
+        v_shmup_desc: "Complete gameplay overview of Aegis Overdrive.",
         
         contact_overline: "04. What's Next?",
         contact_title: "Get In Touch",
