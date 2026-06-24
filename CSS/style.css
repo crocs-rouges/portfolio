@@ -644,11 +644,35 @@ section {
     border-radius: var(--border-radius);
     padding: 2rem 1.75rem;
     height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
-    cursor: default;
+    transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.2s ease;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+
+.folder-card > * {
+    transform: translateZ(30px);
+    position: relative; /* needed for z-index/translateZ in some browsers */
+}
+
+.tilt-glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+.folder-card:hover .tilt-glare {
+    opacity: 1;
 }
 
 .folder-card:hover {
@@ -857,42 +881,55 @@ body.game-mode .game-dot {
 */
 
 /* Custom Cursor */
-.cursor-dot, .cursor-outline {
+#cursor, #cursor-follower {
     position: fixed;
     top: 0; left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 9999;
     pointer-events: none;
+    z-index: 9999;
 }
 
-.cursor-dot {
+#cursor {
     width: 6px; height: 6px;
     background-color: var(--green);
-    transition: transform 0.15s ease-out;
+    border-radius: 50%;
+    margin: -3px 0 0 -3px; /* Center dot */
+    transition: transform 0.1s ease-out, background-color 0.2s ease;
 }
 
-.cursor-outline {
+#cursor-follower {
     width: 30px; height: 30px;
     border: 1px solid var(--green);
-    transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+    border-radius: 50%;
+    margin: -15px 0 0 -15px; /* Center circle */
+    transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.cursor-hover .cursor-outline {
+body.hovering #cursor-follower {
     width: 50px; height: 50px;
-    background-color: rgba(100, 255, 218, 0.1);
+    margin: -25px 0 0 -25px;
+    background-color: rgba(235, 111, 146, 0.1);
     border-color: transparent;
 }
-.cursor-hover .cursor-dot {
-    transform: translate(-50%, -50%) scale(1.5);
+body.hovering #cursor {
+    transform: scale(1.5);
 }
 
-body.game-mode .cursor-dot {
+body.game-mode #cursor {
     border-radius: 0;
     width: 10px; height: 10px;
+    margin: -5px 0 0 -5px;
 }
-body.game-mode .cursor-outline {
+body.game-mode #cursor-follower {
     border-radius: 0;
+}
+
+/* Background Canvas */
+#bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* Ambient Glow */
@@ -941,6 +978,26 @@ body.game-mode .crt-overlay {
     0% { transform: scale(1, 0.01) translate3d(0, 0, 0); filter: brightness(3); }
     50% { transform: scale(1, 0.01) translate3d(0, 0, 0); filter: brightness(3); }
     100% { transform: scale(1, 1) translate3d(0, 0, 0); filter: brightness(1); }
+}
+
+/* Screen Shake Effect */
+@keyframes letter-shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.letter-shake {
+    display: inline-block;
+    animation: letter-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
 }
 
 /* XP Bar */

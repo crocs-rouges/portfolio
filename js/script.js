@@ -104,6 +104,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const langToggle = document.getElementById('language-toggle');
     let currentLang = localStorage.getItem('lang') || 'fr';
 
+    function applyMatrixDecodeEffect(element, finalString) {
+        // Only run if it's a hero element
+        if (!element.classList.contains('hero-intro') && 
+            !element.classList.contains('hero-title') && 
+            !element.classList.contains('hero-subtitle') && 
+            !element.classList.contains('hero-description')) {
+            element.innerHTML = finalString;
+            return;
+        }
+
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        let iterations = 0;
+        const isLongText = finalString.length > 50;
+        const speed = isLongText ? 15 : 30; 
+        const charsPerIter = isLongText ? 2.5 : 1;
+        
+        let interval = setInterval(() => {
+            let currentString = "";
+            let lockedCount = Math.floor(iterations * charsPerIter);
+            for (let i = 0; i < finalString.length; i++) {
+                if (i < lockedCount) {
+                    currentString += finalString[i];
+                } else if (finalString[i] === ' ' || finalString[i] === '\n') {
+                    currentString += finalString[i];
+                } else {
+                    currentString += chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+            element.textContent = currentString;
+            
+            if (lockedCount >= finalString.length) {
+                clearInterval(interval);
+                element.innerHTML = finalString; 
+            }
+            iterations++;
+        }, speed);
+    }
+
     function setLanguage(lang) {
         document.documentElement.lang = lang;
         langToggle.textContent = lang === 'fr' ? 'EN' : 'FR';
@@ -116,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (element.tagName === 'A' && element.children.length === 0) {
                      element.textContent = translations[lang][key];
                 } else {
-                    element.innerHTML = translations[lang][key];
+                    applyMatrixDecodeEffect(element, translations[lang][key]);
                 }
             }
         });
@@ -131,12 +169,96 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 2. GAME MODE LOGIC
     // ==========================================
+    function triggerLocalTextShake() {
+        // Disabled in favor of canvas particle explosion
+    }
+
+    function explodeHeroText(clickX, clickY) {
+        if (window.explodingLetters && window.explodingLetters.length > 0) return; // already exploding
+
+        const textContainer = document.querySelector('.hero-text');
+        if (!textContainer) return;
+        
+        const textElements = document.querySelectorAll('.hero-intro, .hero-title, .hero-subtitle, .hero-description');
+        const letters = [];
+        
+        // Extract exact coordinates of each letter without modifying DOM
+        textElements.forEach(el => {
+            const style = window.getComputedStyle(el);
+            const color = style.color;
+            const font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+            
+            function getTextNodes(node) {
+                let nodes = [];
+                if (node.nodeType === Node.TEXT_NODE) {
+                    nodes.push(node);
+                } else {
+                    for (let child of node.childNodes) {
+                        nodes = nodes.concat(getTextNodes(child));
+                    }
+                }
+                return nodes;
+            }
+            
+            const textNodes = getTextNodes(el);
+            textNodes.forEach(node => {
+                const text = node.textContent;
+                for (let i = 0; i < text.length; i++) {
+                    if (text[i].trim() === '') continue; // skip whitespace
+                    
+                    const range = document.createRange();
+                    try {
+                        range.setStart(node, i);
+                        range.setEnd(node, i + 1);
+                        const rect = range.getBoundingClientRect();
+                        
+                        if (rect.width > 0 && rect.height > 0) {
+                            letters.push({
+                                char: text[i],
+                                x: rect.left,
+                                y: rect.top + rect.height * 0.8, // approximate baseline
+                                targetX: rect.left,
+                                targetY: rect.top + rect.height * 0.8,
+                                color: color,
+                                font: font
+                            });
+                        }
+                    } catch (e) {
+                        // ignore range errors
+                    }
+                }
+            });
+        });
+        
+        // Hide DOM text
+        textContainer.style.transition = 'none';
+        textContainer.style.opacity = '0';
+        
+        // Initialize explosion physics
+        const now = performance.now() / 1000;
+        window.explodingLetters = letters.map(l => {
+            const dx = l.x - clickX;
+            const dy = l.y - clickY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            // Strong force originating from click
+            const force = Math.max(0, 1 - dist / 800) * 45;
+            return {
+                ...l,
+                vx: (dx / (dist || 1)) * force + (Math.random() - 0.5) * 15,
+                vy: (dy / (dist || 1)) * force + (Math.random() - 0.5) * 15,
+                explodedAt: now,
+                repositioned: false
+            };
+        });
+    }
+
     const gameModeBtn = document.getElementById('game-mode-toggle');
     const body = document.body;
     let isGameMode = false;
 
     gameModeBtn.addEventListener('click', () => {
         isGameMode = !isGameMode;
+        triggerLocalTextShake();
         if (isGameMode) {
             body.classList.add('game-mode');
         } else {
@@ -326,6 +448,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.x += p.vx;
                 p.y += p.vy;
 
+                if (p.explodedAt !== undefined) {
+                    const timeSinceExplode = elapsed - p.explodedAt;
+                    if (timeSinceExplode > 0.1 && timeSinceExplode < 0.6) {
+                        // Disappear instantly
+                        if (timeSinceExplode > 0.55 && timeSinceExplode < 0.58 && !p.repositioned) {
+                            p.x = p.targetX + (Math.random() - 0.5) * 400;
+                            p.y = p.targetY + (Math.random() - 0.5) * 400;
+                            p.vx = 0;
+                            p.vy = 0;
+                            p.repositioned = true;
+                        }
+                        return; // skip rendering
+                    }
+                    if (timeSinceExplode >= 0.6) {
+                        if (timeSinceExplode > 2.0) {
+                            p.explodedAt = undefined;
+                            p.repositioned = false;
+                        } else {
+                            const progress = Math.min((timeSinceExplode - 0.6) / 1.0, 1);
+                            p.currentAlpha = p.baseAlpha * progress;
+                        }
+                    }
+                }
+
                 ctx.fillStyle = `rgba(${rgbColor}, ${p.currentAlpha})`;
                 ctx.fillText(p.char, p.x, p.y);
             });
@@ -364,15 +510,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
+            // Explode the adjacent HTML text in the global canvas!
+            explodeHeroText(e.clientX, e.clientY);
+            
+            const now = (performance.now() - startTime) / 1000;
             particles.forEach((p) => {
                 const dx = p.x - clickX;
                 const dy = p.y - clickY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < size * 0.4) {
-                    const force = (1 - dist / (size * 0.4)) * 30;
+                if (dist < size * 0.5) {
+                    const force = (1 - dist / (size * 0.5)) * 40;
                     p.vx += (dx / dist) * force;
                     p.vy += (dy / dist) * force;
                 }
+                p.explodedAt = now;
+                p.repositioned = false;
             });
         });
 
@@ -437,38 +589,355 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Custom Cursor & Ambient Glow
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
-    const ambientGlow = document.querySelector('.ambient-glow');
+    // Custom Cursor
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursor-follower');
+    
+    // Check if device supports hover (ignore mobile)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    if (!isTouchDevice && cursor && cursorFollower) {
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
 
-    window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-
-        if (cursorDot) {
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-        }
-        if (cursorOutline) {
-            cursorOutline.style.left = `${posX}px`;
-            cursorOutline.style.top = `${posY}px`;
-        }
-        if (ambientGlow) {
-            ambientGlow.style.left = `${posX}px`;
-            ambientGlow.style.top = `${posY}px`;
-        }
-    });
-
-    // Cursor Hover Effects
-    const interactables = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            document.body.classList.add('cursor-hover');
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Instantly move the small dot
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            
+            // Move ambient glow if it exists
+            const ambientGlow = document.querySelector('.ambient-glow');
+            if(ambientGlow) {
+                ambientGlow.style.left = `${mouseX}px`;
+                ambientGlow.style.top = `${mouseY}px`;
+            }
         });
-        el.addEventListener('mouseleave', () => {
-            document.body.classList.remove('cursor-hover');
+
+        // Smooth follow for the larger circle
+        function animateFollower() {
+            let dx = mouseX - followerX;
+            let dy = mouseY - followerY;
+            
+            followerX += dx * 0.15; // Easing factor
+            followerY += dy * 0.15;
+            
+            cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        // Add hover effect to interactive elements
+        const interactives = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
         });
-    });
+    }
+
+    // ==========================================
+    // 7. INTERACTIVE CANVAS BACKGROUND
+    // ==========================================
+    const bgCanvas = document.getElementById('bg-canvas');
+    if (bgCanvas && !isTouchDevice) {
+        const ctx = bgCanvas.getContext('2d');
+        let width, height;
+        let bgParticles = [];
+        
+        // Mouse interaction
+        let bgMouse = {
+            x: null,
+            y: null,
+            radius: 150
+        };
+
+        window.addEventListener('mousemove', (event) => {
+            bgMouse.x = event.clientX;
+            bgMouse.y = event.clientY;
+        });
+        
+        // 5. ✨ Particules au Clic (Click Sparks)
+        window.addEventListener('mousedown', (e) => {
+            if (!window.clickSparks) window.clickSparks = [];
+            const count = 12 + Math.random() * 8;
+            const colors = ['#eb6f92', '#9ccfd8', '#f6c177', '#c4a7e7']; // Rose Pine theme colors
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 2 + Math.random() * 5;
+                window.clickSparks.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    vx: Math.cos(angle) * velocity,
+                    vy: Math.sin(angle) * velocity,
+                    life: 1.0,
+                    decay: 0.015 + Math.random() * 0.03,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: 1 + Math.random() * 3
+                });
+            }
+        });
+
+        // Resize canvas
+        function resizeBg() {
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
+            initBgParticles();
+        }
+        window.addEventListener('resize', resizeBg);
+
+        // Particle Class
+        class BgParticle {
+            constructor(x, y, dx, dy, size) {
+                this.x = x;
+                this.y = y;
+                this.dx = dx;
+                this.dy = dy;
+                this.size = size;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(235, 111, 146, 0.5)'; // Using theme green (pinkish)
+                ctx.fill();
+            }
+
+            update() {
+                // Bounce off edges
+                if (this.x > width || this.x < 0) this.dx = -this.dx;
+                if (this.y > height || this.y < 0) this.dy = -this.dy;
+
+                // Move
+                this.x += this.dx;
+                this.y += this.dy;
+
+                // Mouse interactivity (Repel)
+                if(bgMouse.x != null) {
+                    let dx = bgMouse.x - this.x;
+                    let dy = bgMouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    let forceDirectionX = dx / distance;
+                    let forceDirectionY = dy / distance;
+                    
+                    const maxDistance = bgMouse.radius;
+                    let force = (maxDistance - distance) / maxDistance;
+                    if (force < 0) force = 0;
+                    
+                    let directionX = forceDirectionX * force * this.density;
+                    let directionY = forceDirectionY * force * this.density;
+
+                    if (distance < bgMouse.radius) {
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    } else {
+                        if (this.x !== this.baseX) {
+                            let dx = this.x - this.baseX;
+                            this.x -= dx / 10;
+                        }
+                        if (this.y !== this.baseY) {
+                            let dy = this.y - this.baseY;
+                            this.y -= dy / 10;
+                        }
+                    }
+                }
+
+                this.draw();
+            }
+        }
+
+        function initBgParticles() {
+            bgParticles = [];
+            let numberOfParticles = (width * height) / 9000; // Density
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let dx = (Math.random() - 0.5) * 1;
+                let dy = (Math.random() - 0.5) * 1;
+                bgParticles.push(new BgParticle(x, y, dx, dy, size));
+            }
+        }
+
+        // Draw connecting lines
+        function connectBg() {
+            let opacityValue = 1;
+            for (let a = 0; a < bgParticles.length; a++) {
+                for (let b = a; b < bgParticles.length; b++) {
+                    let distance = ((bgParticles[a].x - bgParticles[b].x) * (bgParticles[a].x - bgParticles[b].x))
+                                 + ((bgParticles[a].y - bgParticles[b].y) * (bgParticles[a].y - bgParticles[b].y));
+                    if (distance < (width / 7) * (height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.2})`; // Theme green
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(bgParticles[a].x, bgParticles[a].y);
+                        ctx.lineTo(bgParticles[b].x, bgParticles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateBg() {
+            requestAnimationFrame(animateBg);
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < bgParticles.length; i++) {
+                bgParticles[i].update();
+            }
+            connectBg();
+            
+            // Draw Exploding Hero Text (if active)
+            if (window.explodingLetters && window.explodingLetters.length > 0) {
+                const now = performance.now() / 1000;
+                let allDone = true;
+                
+                window.explodingLetters.forEach(l => {
+                    const timeSince = now - l.explodedAt;
+                    let currentAlpha = 1;
+                    
+                    if (timeSince < 0.15) {
+                        // Flying outwards
+                        currentAlpha = 1;
+                        allDone = false;
+                    } else if (timeSince < 0.6) {
+                        // Disappeared
+                        currentAlpha = 0;
+                        if (!l.repositioned && timeSince > 0.55) {
+                            l.x = l.targetX + (Math.random() - 0.5) * 400;
+                            l.y = l.targetY + (Math.random() - 0.5) * 400;
+                            l.vx = 0;
+                            l.vy = 0;
+                            l.repositioned = true;
+                        }
+                        allDone = false;
+                    } else if (timeSince < 2.0) {
+                        // Rebuilding
+                        const buildProgress = Math.min((timeSince - 0.6) / 1.4, 1);
+                        currentAlpha = 1 - Math.pow(1 - buildProgress, 2); // ease out
+                        
+                        // Physics pull
+                        const dx = l.targetX - l.x;
+                        const dy = l.targetY - l.y;
+                        l.vx += dx * 0.04;
+                        l.vy += dy * 0.04;
+                        l.vx *= 0.85;
+                        l.vy *= 0.85;
+                        allDone = false;
+                    } else {
+                        // Done
+                        currentAlpha = 1;
+                        l.x = l.targetX;
+                        l.y = l.targetY;
+                    }
+                    
+                    l.x += l.vx;
+                    l.y += l.vy;
+                    
+                    if (currentAlpha > 0) {
+                        ctx.font = l.font;
+                        ctx.fillStyle = l.color;
+                        ctx.globalAlpha = currentAlpha;
+                        ctx.fillText(l.char, l.x, l.y);
+                        ctx.globalAlpha = 1; // reset
+                    }
+                });
+                
+                // Cleanup when animation finished
+                if (allDone) {
+                    window.explodingLetters = [];
+                    const textContainer = document.querySelector('.hero-text');
+                    if (textContainer) {
+                        textContainer.style.transition = 'opacity 0.5s ease';
+                        textContainer.style.opacity = '1';
+                    }
+                }
+            }
+            
+            // Draw Sparks
+            if (window.clickSparks && window.clickSparks.length > 0) {
+                for (let i = window.clickSparks.length - 1; i >= 0; i--) {
+                    let s = window.clickSparks[i];
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    // Physics
+                    s.vy += 0.15; // gravity
+                    s.vx *= 0.96; // friction
+                    s.vy *= 0.96; // friction
+                    s.life -= s.decay;
+                    
+                    if (s.life <= 0) {
+                        window.clickSparks.splice(i, 1);
+                        continue;
+                    }
+                    
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                    ctx.fillStyle = s.color;
+                    ctx.globalAlpha = s.life;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+
+        resizeBg();
+        animateBg();
+        
+        // Mouse out event to release particles
+        window.addEventListener('mouseout', () => {
+            bgMouse.x = null;
+            bgMouse.y = null;
+        });
+    }
+
+    // ==========================================
+    // 8. 3D PARALLAX TILT EFFECT
+    // ==========================================
+    if (!isTouchDevice) {
+        const tiltCards = document.querySelectorAll('.folder-card');
+        
+        tiltCards.forEach(card => {
+            // Create glare element
+            const glare = document.createElement('div');
+            glare.classList.add('tilt-glare');
+            card.appendChild(glare);
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0s';
+                glare.style.transition = 'opacity 0.3s ease';
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Calculate rotation (max 10 degrees)
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Move glare
+                const glareX = (x / rect.width) * 100;
+                const glareY = (y / rect.height) * 100;
+                glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform 0.4s ease-out';
+                glare.style.transition = 'opacity 0.4s ease';
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                glare.style.background = `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+            });
+        });
+    }
 
 });
