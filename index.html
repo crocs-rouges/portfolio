@@ -1,473 +1,829 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Romain Chevalier</title>
-    
-    <!-- Google Fonts: Inter & Fira Code & Press Start 2P (for Game Mode) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <!-- Feather Icons for Folder/Github icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
-    
-    <link rel="stylesheet" type="text/css" href="CSS/style.css" />
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Romain Chevalier</title>
 
-    <header class="header">
-      <nav class="nav-container">
-        <a href="#" class="logo">Romain Chevalier</a>
-        
-        <div class="nav-right">
-          <button id="game-mode-toggle" class="game-mode-btn">
-            <span class="game-dot"></span> <span data-i18n="game_mode_btn">GAME MODE</span>
-          </button>
-          
-          <ul class="nav-links">
-            <li><a href="#about" data-i18n="nav_about">About</a></li>
-            <li><a href="#software" data-i18n="nav_software">Software</a></li>
-            <li><a href="#art" data-i18n="nav_art">Art</a></li>
-            <li><a href="#video" data-i18n="nav_video">Video</a></li>
-            <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
-          </ul>
-          
-          <button id="language-toggle" class="lang-btn" aria-label="Changer la langue">EN</button>
-        </div>
-      </nav>
-    </header>
+        <!-- Google Fonts: Inter & Fira Code & Press Start 2P (for Game Mode) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap"
+            rel="stylesheet"
+        />
 
-    <!-- Social links fixed on the left (typical of this design) -->
-    <div class="social-side-left">
-      <ul>
-        <li><a href="#" aria-label="GitHub"><i data-feather="github"></i></a></li>
-        <li><a href="#" aria-label="LinkedIn"><i data-feather="linkedin"></i></a></li>
-        <li><a href="mailto:romain.chevalier40@gmail.com" aria-label="Email"><i data-feather="mail"></i></a></li>
-      </ul>
-    </div>
+        <!-- Feather Icons for Folder/Github icons -->
+        <script src="https://unpkg.com/feather-icons"></script>
 
-    <!-- Email fixed on the right -->
-    <div class="social-side-right">
-      <a href="mailto:romain.chevalier40@gmail.com" class="email-link">romain.chevalier40@gmail.com</a>
-    </div>
+        <link rel="stylesheet" type="text/css" href="CSS/style.css" />
+    </head>
+    <body>
+        <header class="header">
+            <nav class="nav-container">
+                <a href="#" class="logo">Romain Chevalier</a>
 
-    <main class="main-container">
-      
-      <!-- HERO -->
-      <section class="hero-section" id="hero">
-        <div class="hero-content">
-          <div class="hero-ascii" aria-hidden="true" style="min-width: 300px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-            <canvas id="ascii-canvas" style="cursor: crosshair; touch-action: none;"></canvas>
-          </div>
-          <div class="hero-text">
-            <p class="hero-intro" data-i18n="hero_intro">hi, romain here.</p>
-            <h1 class="hero-title" data-i18n="hero_title">Game Designer & Programmer.</h1>
-            <h2 class="hero-subtitle" data-i18n="hero_subtitle">I build interactive digital worlds.</h2>
-            <p class="hero-description" data-i18n="hero_desc_minimal">
-              Étudiant à ISART Digital. Passionné par l'architecture logicielle, la création d'univers immersifs et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.
-            </p>
-            <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary">
-              <i data-feather="mail" class="icon-small"></i> <span data-i18n="btn_say_hi">Say hi!</span>
-            </a>
-          </div>
-        </div>
-      </section>
+                <div class="nav-right">
+                    <button id="game-mode-toggle" class="game-mode-btn">
+                        <span class="game-dot"></span>
+                        <span data-i18n="game_mode_btn">GAME MODE</span>
+                    </button>
 
-      <!-- ABOUT -->
-      <section class="section" id="about">
-        <h2 class="numbered-heading"><span class="slash">/</span> <span data-i18n="about_title">about me</span></h2>
-        
-        <div class="about-content">
-          <div class="about-text">
-            <p data-i18n="moti_p1">Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers, j'ai orienté mon parcours vers la conception vidéoludique.</p>
-            <p data-i18n="moti_p2">En parallèle de ma formation, je développe mes compétences en autodidacte sur différents langages et moteurs. Mon ambition est d'exercer le métier de Gameplay Programmer.</p>
-            
-            <p class="tech-intro" data-i18n="tech_intro">Here are some technologies I have been working with:</p>
-            <ul class="skills-list">
-              <li>C#</li>
-              <li>Python</li>
-              <li>Unity</li>
-              <li>Godot</li>
-              <li>Unreal Engine</li>
-              <li>JavaScript</li>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="#about" data-i18n="nav_about">About</a>
+                        </li>
+                        <li>
+                            <a href="#software" data-i18n="nav_software"
+                                >Software</a
+                            >
+                        </li>
+                        <li><a href="#art" data-i18n="nav_art">Art</a></li>
+                        <li>
+                            <a href="#video" data-i18n="nav_video">Video</a>
+                        </li>
+                        <li>
+                            <a href="#contact" data-i18n="nav_contact"
+                                >Contact</a
+                            >
+                        </li>
+                    </ul>
+
+                    <button
+                        id="language-toggle"
+                        class="lang-btn"
+                        aria-label="Changer la langue"
+                    >
+                        EN
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Social links fixed on the left (typical of this design) -->
+        <div class="social-side-left">
+            <ul>
+                <li>
+                    <a
+                        href="https://github.com/crocs-rouges"
+                        target="_blank"
+                        aria-label="GitHub"
+                        ><i data-feather="github"></i
+                    ></a>
+                </li>
+                <li>
+                    <a href="#" aria-label="LinkedIn"
+                        ><i data-feather="linkedin"></i
+                    ></a>
+                </li>
+                <li>
+                    <a
+                        href="mailto:romain.chevalier40@gmail.com"
+                        aria-label="Email"
+                        ><i data-feather="mail"></i
+                    ></a>
+                </li>
             </ul>
-          </div>
-          
-          <div class="about-pic">
-            <div class="wrapper">
-              <img src="public/about_me.jpg" alt="Romain Chevalier" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SOFTWARE (Projects) -->
-      <section class="section" id="software">
-        <h2 class="numbered-heading"><span class="slash">/</span> <span data-i18n="software_title">software</span></h2>
-        
-        <!-- FEATURED PROJECT 1: ZELDA -->
-        <div class="featured-project">
-          <div class="featured-img-container">
-            <img src="assets/Zelda_LA_Unity/Gameplay.jpg" alt="Zelda Remake" loading="lazy">
-          </div>
-          <div class="featured-content">
-            <p class="project-overline" data-i18n="featured_overline">Featured Project</p>
-            <h3 class="project-title" data-i18n="p_zelda_title">Remake Zelda</h3>
-            <div class="project-description">
-              <p data-i18n="p_zelda_desc">Réalisation de Link's Awakening sur Unity avec système de combat, inventaire et sauvegarde JSON, système d'inventaire et de swap d'armes à la Zelda.</p>
-            </div>
-            <ul class="project-tech-list">
-              <li>Unity</li>
-              <li>C#</li>
-              <li>JSON</li>
-            </ul>
-            <div class="project-links">
-              <a href="#" aria-label="GitHub Link"><i data-feather="github"></i></a>
-            </div>
-          </div>
         </div>
 
-        <!-- FEATURED PROJECT 2: SHMUP -->
-        <div class="featured-project alt">
-          <div class="featured-img-container">
-            <img src="assets/SHMUP/special feature.jpg" alt="AEGIS OVERDRIVE" loading="lazy">
-          </div>
-          <div class="featured-content">
-            <p class="project-overline" data-i18n="featured_overline">Featured Project</p>
-            <h3 class="project-title" data-i18n="p_shmup_title">AEGIS OVERDRIVE (SHMUP)</h3>
-            <div class="project-description">
-              <p data-i18n="p_shmup_desc">Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce projet de 2 mois, entièrement développé sur Godot en C#, est axé sur l'intégration d'effets de 'Juiciness' et une architecture de code rigoureuse.</p>
-            </div>
-            <ul class="project-tech-list">
-              <li>Godot</li>
-              <li>C#</li>
-              <li>Juiciness</li>
-            </ul>
-            <div class="project-links">
-              <a href="#" aria-label="GitHub Link"><i data-feather="github"></i></a>
-              <a href="#" aria-label="External Link"><i data-feather="external-link"></i></a>
-            </div>
-          </div>
+        <!-- Email fixed on the right -->
+        <div class="social-side-right">
+            <a href="mailto:romain.chevalier40@gmail.com" class="email-link"
+                >romain.chevalier40@gmail.com</a
+            >
         </div>
 
-        <!-- OTHER PROJECTS (Folder Grid) -->
-        <div class="projects-grid">
-          
-          <!-- Card 1 (Removed Zelda) -->
-          <!-- Card 2 -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_puissance4_title">Puissance 4</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_puissance4_desc">Un jeu de Puissance 4 développé avec Pygame, incluant une adaptation automatique de la taille, gestion des erreurs et système de victoire.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Python</li>
-              <li>Pygame</li>
-            </ul>
-          </div>
+        <main class="main-container">
+            <!-- HERO -->
+            <section class="hero-section" id="hero">
+                <div class="hero-content">
+                    <div
+                        class="hero-ascii"
+                        aria-hidden="true"
+                        style="
+                            min-width: 300px;
+                            min-height: 300px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        "
+                    >
+                        <canvas
+                            id="ascii-canvas"
+                            style="cursor: crosshair; touch-action: none"
+                        ></canvas>
+                    </div>
+                    <div class="hero-text">
+                        <p class="hero-intro" data-i18n="hero_intro">
+                            hi, romain here.
+                        </p>
+                        <h1 class="hero-title" data-i18n="hero_title">
+                            Game Designer & Programmer.
+                        </h1>
+                        <h2 class="hero-subtitle" data-i18n="hero_subtitle">
+                            I build interactive digital worlds.
+                        </h2>
+                        <p
+                            class="hero-description"
+                            data-i18n="hero_desc_minimal"
+                        >
+                            Étudiant à ISART Digital. Passionné par
+                            l'architecture logicielle, la création d'univers
+                            immersifs et le Gameplay Programming. Je code
+                            principalement en C# (Unity/Godot) et Python.
+                        </p>
+                        <a
+                            href="mailto:romain.chevalier40@gmail.com"
+                            class="btn-primary"
+                        >
+                            <i data-feather="mail" class="icon-small"></i>
+                            <span data-i18n="btn_say_hi">Say hi!</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
 
-          <!-- Card 3 -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_mario_title">Mario en 2D</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_mario_desc">Réalisation d'un niveau de Mario en utilisant des tableaux 2D, avec un système de mouvement innovant basé sur la manipulation de matrices.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Python</li>
-              <li>Logic</li>
-            </ul>
-          </div>
+            <!-- ABOUT -->
+            <section class="section" id="about">
+                <h2 class="numbered-heading">
+                    <span class="slash">/</span>
+                    <span data-i18n="about_title">about me</span>
+                </h2>
 
-          <!-- Card 4 -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="external-link"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_godot_title">Peach Multiplayer</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_godot_desc">Remake de Super Mario World sur SNES avec Peach. Apprentissage du GDscript et des bases du Multiplayer local sur Godot.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Godot</li>
-              <li>GDscript</li>
-            </ul>
-          </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p data-i18n="moti_p1">
+                            Je suis actuellement étudiant en première année de
+                            Game Design & Programming à ISART Digital. Passionné
+                            depuis toujours par les jeux vidéo et la richesse de
+                            leurs univers, j'ai orienté mon parcours vers la
+                            conception vidéoludique.
+                        </p>
+                        <p data-i18n="moti_p2">
+                            En parallèle de ma formation, je développe mes
+                            compétences en autodidacte sur différents langages
+                            et moteurs. Mon ambition est d'exercer le métier de
+                            Gameplay Programmer.
+                        </p>
 
-          <!-- Card 5 -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_yt_title">Youtube Uploader</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_yt_desc_short">Script Python pour l'upload via l'API officielle.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Python</li>
-              <li>API</li>
-            </ul>
-          </div>
+                        <p class="tech-intro" data-i18n="tech_intro">
+                            Here are some technologies I have been working with:
+                        </p>
+                        <ul class="skills-list">
+                            <li>C#</li>
+                            <li>Python</li>
+                            <li>Unity</li>
+                            <li>Godot</li>
+                            <li>Unreal Engine</li>
+                            <li>JavaScript</li>
+                        </ul>
+                    </div>
 
-          <!-- Card 6 -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_unreal_title">Unreal Engine Project</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_unreal_desc_short">Système de vie et mécanique d'escalade via Blueprints.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Unreal Engine</li>
-              <li>Blueprints</li>
-            </ul>
-          </div>
+                    <div class="about-pic">
+                        <div class="wrapper">
+                            <img
+                                src="public/about_me.jpg"
+                                alt="Romain Chevalier"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-          <!-- Card 7: SOKOBAN -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_sokoban_title">SOKOBAN (GDP1)</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_sokoban_desc">Réinterprétation du Sokoban sur le thème du casino. Intègre une mécanique de dé roulant, architecture propre (Command pattern, A*) et Juiciness.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Godot</li>
-              <li>C#</li>
-            </ul>
-          </div>
+            <!-- SOFTWARE (Projects) -->
+            <section class="section" id="software">
+                <div class="section-header-row">
+                    <h2 class="numbered-heading">
+                        <span class="slash">/</span>
+                        <span data-i18n="software_title">software</span>
+                    </h2>
+                    <a href="https://github.com/crocs-rouges" target="_blank" class="view-all-link" data-i18n="view_all_projects">View All Projects &rarr;</a>
+                </div>
 
-          <!-- Card 8: Mobile Mini Game -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_mobile_title">Mobile Mini Game OFG</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_mobile_desc">One Finger Game inspiré de MUCHO PARTY. Un jeu 2 joueurs sur un seul téléphone (split screen ou full screen partagé), réalisé en 1 mois.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Godot</li>
-              <li>C#</li>
-            </ul>
-          </div>
+                <!-- FEATURED PROJECT 1: ZELDA -->
+                <div class="featured-project">
+                    <div class="featured-img-container">
+                        <img
+                            src="assets/Zelda_LA_Unity/Gameplay.jpg"
+                            alt="Zelda Remake"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="featured-content">
+                        <p
+                            class="project-overline"
+                            data-i18n="featured_overline"
+                        >
+                            Featured Project
+                        </p>
+                        <h3 class="project-title" data-i18n="p_zelda_title">
+                            Remake Zelda
+                        </h3>
+                        <div class="project-description">
+                            <p data-i18n="p_zelda_desc">
+                                Réalisation de Link's Awakening sur Unity avec
+                                système de combat, inventaire et sauvegarde
+                                JSON, système d'inventaire et de swap d'armes à
+                                la Zelda.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Unity</li>
+                            <li>C#</li>
+                            <li>JSON</li>
+                        </ul>
+                        <div class="project-links">
+                            <a
+                                href="https://github.com/crocs-rouges"
+                                target="_blank"
+                                aria-label="GitHub Link"
+                                ><i data-feather="github"></i
+                            ></a>
+                        </div>
+                    </div>
+                </div>
 
-          <!-- Card 9: Rider Skate -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_rider_title">Rider Skate</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_rider_desc">Jeu d'arcade mobile 2.5D alliant la fluidité de Rider et la technicité du skate. Physique 2D avec visuels 3D, système de tricks et rails dynamiques.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Unity 6</li>
-              <li>C#</li>
-            </ul>
-          </div>
+                <!-- FEATURED PROJECT 2: SHMUP -->
+                <div class="featured-project alt">
+                    <div class="featured-img-container">
+                        <img
+                            src="assets/SHMUP/special feature.jpg"
+                            alt="AEGIS OVERDRIVE"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="featured-content">
+                        <p
+                            class="project-overline"
+                            data-i18n="featured_overline"
+                        >
+                            Featured Project
+                        </p>
+                        <h3 class="project-title" data-i18n="p_shmup_title">
+                            AEGIS OVERDRIVE (SHMUP)
+                        </h3>
+                        <div class="project-description">
+                            <p data-i18n="p_shmup_desc">
+                                Shoot 'em up réalisé lors de ma première année à
+                                ISART Digital. Ce projet de 2 mois, entièrement
+                                développé sur Godot en C#, est axé sur
+                                l'intégration d'effets de 'Juiciness' et une
+                                architecture de code rigoureuse.
+                            </p>
+                        </div>
+                        <ul class="project-tech-list">
+                            <li>Godot</li>
+                            <li>C#</li>
+                            <li>Juiciness</li>
+                        </ul>
+                        <div class="project-links">
+                            <a
+                                href="https://github.com/crocs-rouges/SHMUP"
+                                target="_blank"
+                                aria-label="GitHub Link"
+                                ><i data-feather="github"></i
+                            ></a>
+                            <a href="#" aria-label="External Link"
+                                ><i data-feather="external-link"></i
+                            ></a>
+                        </div>
+                    </div>
+                </div>
 
-          <!-- Card 10: Short Creation -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_short_title">Short Création</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_short_desc">Application servant à couper de longues vidéos en petits formats 9/16, utilisant la puissance des GPU NVIDIA et le multiprocessing.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Python</li>
-              <li>Tkinter</li>
-              <li>CUDA</li>
-            </ul>
-          </div>
+                <!-- OTHER PROJECTS (Folder Grid) -->
+                <div class="projects-grid">
+                    <!-- Card 1 (Removed Zelda) -->
+                    <!-- Card 7: SOKOBAN -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/SOKOBAN-basic-prototype"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_sokoban_title">
+                            SOKOBAN (GDP1)
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_sokoban_desc">
+                                Réalisé en GDP1. Réinterprétation du Sokoban sur
+                                le thème du casino. Intègre une mécanique de dé
+                                roulant, architecture propre (Command pattern,
+                                A*) et Juiciness.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Godot</li>
+                            <li>C#</li>
+                        </ul>
+                    </div>
 
-          <!-- Card 11: ISART Summer School -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_isart_title">ISART Summer School Project</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_isart_desc1">Jeu 2D top-down réalisé en visual scripting. Le but est de vaincre tous les ennemis et d'affronter le boss avec des pierres et un arc.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Unity</li>
-              <li>Visual Scripting</li>
-            </ul>
-          </div>
+                    <!-- Card 8: Mobile Mini Game -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/One-Button-Game"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_mobile_title">
+                            Mobile Mini Game OFG
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_mobile_desc">
+                                Réalisé en GDP1. One Finger Game inspiré de
+                                MUCHO PARTY. Un jeu 2 joueurs sur un seul
+                                téléphone (split screen ou full screen partagé),
+                                réalisé en 1 mois.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Godot</li>
+                            <li>C#</li>
+                        </ul>
+                    </div>
 
-          <!-- Card 12: Cloud File Explorer -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_cloud_title">Cloud File Explorer</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_cloud_desc1">Application de sauvegarde de documents dans des dossiers sécurisés par login. Projet de groupe.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>App</li>
-              <li>Security</li>
-            </ul>
-          </div>
+                    <!-- Card 9: Rider Skate -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_rider_title">
+                            Rider Skate
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_rider_desc">
+                                Jeu d'arcade mobile 2.5D alliant la fluidité de
+                                Rider et la technicité du skate. Physique 2D
+                                avec visuels 3D, système de tricks et rails
+                                dynamiques.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Unity 6</li>
+                            <li>C#</li>
+                        </ul>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/puissance-4"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_puissance4_title">
+                            Puissance 4
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_puissance4_desc">
+                                Un jeu de Puissance 4 développé avec Pygame,
+                                incluant une adaptation automatique de la
+                                taille, gestion des erreurs et système de
+                                victoire.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Python</li>
+                            <li>Pygame</li>
+                        </ul>
+                    </div>
 
-          <!-- Card 13: Le Portfolio -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_portfolio_title">Le Portfolio</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_portfolio_desc">Réalisation d'un portfolio moderne pour montrer mes réalisations, mes compétences et mes ambitions.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>JS</li>
-            </ul>
-          </div>
+                    <!-- Card 3 -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/mario_in_python"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_mario_title">
+                            Python Mario
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_mario_desc">
+                                Réalisation d'un niveau de Mario en utilisant
+                                des tableaux 2D, avec un système de mouvement
+                                innovant basé sur la manipulation de matrices.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Python</li>
+                            <li>Logic</li>
+                        </ul>
+                    </div>
 
-          <!-- Card 14: TikTok Creation Upload -->
-          <div class="folder-card">
-            <div class="folder-header">
-              <div class="folder-icon"><i data-feather="folder"></i></div>
-              <div class="folder-links">
-                <a href="#"><i data-feather="github"></i></a>
-              </div>
-            </div>
-            <h3 class="folder-title" data-i18n="p_tiktok_title">TikTok Creation Upload</h3>
-            <div class="folder-desc">
-              <p data-i18n="p_tiktok_desc">Script Python qui télécharge des vidéos TikTok par hashtags et programme des publications sur 10 jours de façon automatisée.</p>
-            </div>
-            <ul class="folder-tech">
-              <li>Python</li>
-              <li>Automation</li>
-            </ul>
-          </div>
+                    <!-- Card 4 -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/Mario-Multiplayer-Godot"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_godot_title">
+                            Peach Multiplayer
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_godot_desc">
+                                Remake de Super Mario World sur SNES avec Peach.
+                                Apprentissage du GDscript et des bases du
+                                Multiplayer local sur Godot.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Godot</li>
+                            <li>GDscript</li>
+                        </ul>
+                    </div>
 
-        </div>
-      </section>
+                    <!-- Card 5 -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/shorts-creation-and-publication"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_yt_title">
+                            Youtube Uploader
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_yt_desc_short">
+                                Script Python pour l'upload via l'API
+                                officielle.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Python</li>
+                            <li>API</li>
+                        </ul>
+                    </div>
 
-      <!-- ART GALLERY -->
-      <section class="section" id="art">
-        <h2 class="numbered-heading">
-          <span class="slash">/</span> art gallery
-        </h2>
-        <p style="margin-top:-20px; margin-bottom: 40px; color: var(--slate); font-size: 1.1rem; max-width: 600px;" data-i18n="art_desc">
-          A collection of my digital and traditional artwork, exploring different styles and mediums.
-        </p>
-        <div class="gallery-grid">
-          <!-- Placeholders Art -->
-          <div class="gallery-card">
-            <div class="placeholder-img" style="aspect-ratio: 3/4;">Illustration 1</div>
-          </div>
-          <div class="gallery-card">
-            <div class="placeholder-img" style="aspect-ratio: 1/1;">Concept Art</div>
-          </div>
-          <div class="gallery-card">
-            <div class="placeholder-img" style="aspect-ratio: 4/3;">Character Design</div>
-          </div>
-          <div class="gallery-card">
-            <div class="placeholder-img" style="aspect-ratio: 3/4;">Sketch</div>
-          </div>
-        </div>
-      </section>
+                    <!-- Card 6 -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_unreal_title">
+                            Unreal Engine Project
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_unreal_desc_short">
+                                Système de vie et mécanique d'escalade via
+                                Blueprints.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Unreal Engine</li>
+                            <li>Blueprints</li>
+                        </ul>
+                    </div>
 
-      <!-- VIDEO GALLERY -->
-      <section class="section" id="video">
-        <h2 class="numbered-heading">
-          <span class="slash">/</span> video gallery
-        </h2>
-        <p style="margin-top:-20px; margin-bottom: 40px; color: var(--slate); font-size: 1.1rem; max-width: 600px;" data-i18n="video_desc">
-          My video edits, motion design, and gameplay trailers.
-        </p>
-        <div class="video-grid">
-          <!-- Placeholders Video -->
-          <div class="video-card">
-            <div class="video-placeholder">
-              <i data-feather="play-circle"></i>
-            </div>
-            <div class="video-info">
-              <h3>Gameplay Trailer</h3>
-              <p>Promotional video for my latest game project.</p>
-            </div>
-          </div>
-          <div class="video-card">
-            <div class="video-placeholder">
-              <i data-feather="play-circle"></i>
-            </div>
-            <div class="video-info">
-              <h3>Showreel 2024</h3>
-              <p>A compilation of my best editing and motion works.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+                    <!-- Card 10: Short Creation -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/Video-Clipper-Pro"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_short_title">
+                            Short Création
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_short_desc">
+                                Application servant à couper de longues vidéos
+                                en petits formats 9/16, utilisant la puissance
+                                des GPU NVIDIA et le multiprocessing.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Python</li>
+                            <li>Tkinter</li>
+                            <li>CUDA</li>
+                        </ul>
+                    </div>
 
-      <!-- CONTACT -->
-      <section class="section" id="contact" style="text-align: center; max-width: 600px; margin: 0 auto 100px;">
-        <p class="hero-intro" style="margin-bottom: 20px;" data-i18n="contact_overline">04. What's Next?</p>
-        <h2 class="hero-title" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px;" data-i18n="contact_title">Get In Touch</h2>
-        <p class="hero-description" data-i18n="contact_text" style="margin-bottom: 40px;">
-          Si mon profil correspond à vos recherches ou si vous souhaitez échanger autour du Game Dev, n'hésitez pas à me contacter. Je suis toujours ouvert à de nouvelles opportunités.
-        </p>
-        <a href="mailto:romain.chevalier40@gmail.com" class="btn-primary" data-i18n="btn_say_hi">Say hi!</a>
-      </section>
+                    <!-- Card 11: ISART Summer School -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_isart_title">
+                            ISART Summer School Project
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_isart_desc1">
+                                Jeu 2D top-down réalisé en visual scripting. Le
+                                but est de vaincre tous les ennemis et
+                                d'affronter le boss avec des pierres et un arc.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Unity</li>
+                            <li>Visual Scripting</li>
+                        </ul>
+                    </div>
 
-    </main>
+                    <!-- Card 12: Cloud File Explorer -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/cloud-file-explorer"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_cloud_title">
+                            Cloud File Explorer
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_cloud_desc1">
+                                Application de sauvegarde de documents dans des
+                                dossiers sécurisés par login. Projet de groupe.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>App</li>
+                            <li>Security</li>
+                        </ul>
+                    </div>
 
-    <!-- Initialize Feather Icons -->
-    <script>
-      feather.replace();
-    </script>
-    <script src="src/assets/asciiData.js"></script>
-    <script src="js/script.js"></script>
-  </body>
+                    <!-- Card 13: Le Portfolio -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/portfolio"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_portfolio_title">
+                            Le Portfolio
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_portfolio_desc">
+                                Réalisation d'un portfolio moderne pour montrer
+                                mes réalisations, mes compétences et mes
+                                ambitions.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JS</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 14: TikTok Creation Upload -->
+                    <div class="folder-card">
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges/shorts-creation-and-publication"
+                                    target="_blank"
+                                    ><i data-feather="github"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_tiktok_title">
+                            TikTok Creation Upload
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_tiktok_desc">
+                                Script Python qui télécharge des vidéos TikTok
+                                par hashtags et programme des publications sur
+                                10 jours de façon automatisée.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Python</li>
+                            <li>Automation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ART GALLERY -->
+            <section class="section" id="art">
+                <h2 class="numbered-heading">
+                    <span class="slash">/</span> art gallery
+                </h2>
+                <p
+                    style="
+                        margin-top: -20px;
+                        margin-bottom: 40px;
+                        color: var(--slate);
+                        font-size: 1.1rem;
+                        max-width: 600px;
+                    "
+                    data-i18n="art_desc"
+                >
+                    A collection of my digital and traditional artwork,
+                    exploring different styles and mediums.
+                </p>
+                <div class="gallery-grid">
+                    <!-- Placeholders Art -->
+                    <div class="gallery-card">
+                        <div class="placeholder-img" style="aspect-ratio: 3/4">
+                            Illustration 1
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="placeholder-img" style="aspect-ratio: 1/1">
+                            Concept Art
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="placeholder-img" style="aspect-ratio: 4/3">
+                            Character Design
+                        </div>
+                    </div>
+                    <div class="gallery-card">
+                        <div class="placeholder-img" style="aspect-ratio: 3/4">
+                            Sketch
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIDEO GALLERY -->
+            <section class="section" id="video">
+                <h2 class="numbered-heading">
+                    <span class="slash">/</span> video gallery
+                </h2>
+                <p
+                    style="
+                        margin-top: -20px;
+                        margin-bottom: 40px;
+                        color: var(--slate);
+                        font-size: 1.1rem;
+                        max-width: 600px;
+                    "
+                    data-i18n="video_desc"
+                >
+                    My video edits, motion design, and gameplay trailers.
+                </p>
+                <div class="video-grid">
+                    <!-- Placeholders Video -->
+                    <div class="video-card">
+                        <div class="video-placeholder">
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>Gameplay Trailer</h3>
+                            <p>Promotional video for my latest game project.</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-placeholder">
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>Showreel 2024</h3>
+                            <p>
+                                A compilation of my best editing and motion
+                                works.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section
+                class="section"
+                id="contact"
+                style="
+                    text-align: center;
+                    max-width: 600px;
+                    margin: 0 auto 100px;
+                "
+            >
+                <p
+                    class="hero-intro"
+                    style="margin-bottom: 20px"
+                    data-i18n="contact_overline"
+                >
+                    04. What's Next?
+                </p>
+                <h2
+                    class="hero-title"
+                    style="
+                        font-size: clamp(2rem, 4vw, 3rem);
+                        margin-bottom: 20px;
+                    "
+                    data-i18n="contact_title"
+                >
+                    Get In Touch
+                </h2>
+                <p
+                    class="hero-description"
+                    data-i18n="contact_text"
+                    style="margin-bottom: 40px"
+                >
+                    Si mon profil correspond à vos recherches ou si vous
+                    souhaitez échanger autour du Game Dev, n'hésitez pas à me
+                    contacter. Je suis toujours ouvert à de nouvelles
+                    opportunités.
+                </p>
+                <a
+                    href="mailto:romain.chevalier40@gmail.com"
+                    class="btn-primary"
+                    data-i18n="btn_say_hi"
+                    >Say hi!</a
+                >
+            </section>
+        </main>
+
+        <!-- Initialize Feather Icons -->
+        <script>
+            feather.replace();
+        </script>
+        <script src="src/assets/asciiData.js"></script>
+        <script src="js/script.js"></script>
+    </body>
 </html>

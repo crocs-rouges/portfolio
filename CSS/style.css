@@ -244,6 +244,36 @@ section {
     background-color: var(--lightest-navy);
 }
 
+.section-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.section-header-row .numbered-heading {
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+
+.view-all-link {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--green);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.view-all-link:hover {
+    color: var(--green);
+    text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.view-all-link:after {
+    display: none;
+}
+
 /* 
    =================================================
    HERO SECTION
