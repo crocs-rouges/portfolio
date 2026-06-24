@@ -358,6 +358,24 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
         canvas.addEventListener("touchend", handleLeave);
 
+        // ASCII Explosion on click
+        canvas.addEventListener("mousedown", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            
+            particles.forEach((p) => {
+                const dx = p.x - clickX;
+                const dy = p.y - clickY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < size * 0.4) {
+                    const force = (1 - dist / (size * 0.4)) * 30;
+                    p.vx += (dx / dist) * force;
+                    p.vy += (dy / dist) * force;
+                }
+            });
+        });
+
         draw();
     };
 
@@ -403,5 +421,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run setup after a small delay to allow initial rendering
     setTimeout(setupAnimations, 100);
+
+    // ==========================================
+    // 6. PHASE 2: CUSTOM CURSOR, AMBIENT, XP BAR
+    // ==========================================
+    
+    // XP Scroll Bar
+    const xpBarFill = document.querySelector('.xp-bar-fill');
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+        if(xpBarFill) {
+            xpBarFill.style.width = scrollPercentage + '%';
+        }
+    });
+
+    // Custom Cursor & Ambient Glow
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+    const ambientGlow = document.querySelector('.ambient-glow');
+
+    window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        if (cursorDot) {
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+        }
+        if (cursorOutline) {
+            cursorOutline.style.left = `${posX}px`;
+            cursorOutline.style.top = `${posY}px`;
+        }
+        if (ambientGlow) {
+            ambientGlow.style.left = `${posX}px`;
+            ambientGlow.style.top = `${posY}px`;
+        }
+    });
+
+    // Cursor Hover Effects
+    const interactables = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            document.body.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-hover');
+        });
+    });
 
 });
