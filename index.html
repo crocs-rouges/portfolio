@@ -31,7 +31,7 @@
                 <a href="#" class="logo">Romain Chevalier</a>
 
                 <div class="nav-right">
-                    <button id="game-mode-toggle" class="game-mode-btn">
+                    <button id="game-mode-toggle" class="game-mode-btn" aria-label="Toggle Game Mode">
                         <span class="game-dot"></span>
                         <span data-i18n="game_mode_btn">GAME MODE</span>
                     </button>
@@ -59,9 +59,14 @@
                     <button
                         id="language-toggle"
                         class="lang-btn"
-                        aria-label="Changer la langue"
+                        aria-label="Toggle language"
                     >
                         EN
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                        <i data-feather="menu"></i>
                     </button>
                 </div>
             </nav>

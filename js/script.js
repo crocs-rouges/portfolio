@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 3. NAV SCROLL EFFECT
+    // 3. NAV SCROLL EFFECT & MOBILE MENU
     // ==========================================
     let lastScrollTop = 0;
     const header = document.querySelector('.header');
@@ -560,7 +560,39 @@ document.addEventListener('DOMContentLoaded', () => {
             header.style.transform = 'translateY(0)';
         }
         lastScrollTop = scrollTop;
-    });
+    }, { passive: true });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            body.classList.toggle('menu-open', isActive);
+            mobileMenuBtn.setAttribute('aria-expanded', isActive);
+            
+            // Update icon
+            if (isActive) {
+                mobileMenuBtn.innerHTML = '<i data-feather="x"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i data-feather="menu"></i>';
+            }
+            if (window.feather) feather.replace();
+        });
+        
+        // Close menu when clicking a link
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                body.classList.remove('menu-open');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuBtn.innerHTML = '<i data-feather="menu"></i>';
+                if (window.feather) feather.replace();
+            });
+        });
+    }
     // ==========================================
     // 4. ASCII PORTRAIT LOGIC
     // ==========================================
