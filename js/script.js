@@ -1242,4 +1242,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==========================================
+    // 9. VIDEO MODAL LOGIC
+    // ==========================================
+    const videoModal = document.getElementById('video-modal');
+    const modalVideoContainer = document.querySelector('.modal-video-container');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const videoCards = document.querySelectorAll('.video-card');
+
+    if (videoModal && modalVideoContainer && closeModalBtn) {
+        function openModal(type, src) {
+            modalVideoContainer.innerHTML = '';
+            
+            if (type === 'youtube') {
+                modalVideoContainer.innerHTML = `<iframe src="${src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            } else if (type === 'local') {
+                modalVideoContainer.innerHTML = `<video controls autoplay style="width: 100%; height: 100%; object-fit: contain;"><source src="${src}" type="video/mp4">Your browser does not support the video tag.</video>`;
+            }
+            
+            videoModal.classList.add('show');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            videoModal.classList.remove('show');
+            document.body.style.overflow = '';
+            
+            setTimeout(() => {
+                modalVideoContainer.innerHTML = '';
+            }, 300);
+        }
+
+        videoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const type = card.getAttribute('data-type');
+                const src = card.getAttribute('data-src');
+                if (type && src) {
+                    if (typeof SoundManager !== 'undefined') SoundManager.playClick();
+                    openModal(type, src);
+                }
+            });
+            card.style.cursor = 'pointer';
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && videoModal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+    }
+
 });

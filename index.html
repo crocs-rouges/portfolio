@@ -336,11 +336,11 @@
                 <!-- OTHER PROJECTS (Folder Grid) -->
                 <div class="projects-grid stagger-container">
                     <!-- Card 1 (Removed Zelda) -->
-                    <!-- Card 7: SOKOBAN -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.1s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/SOKOBAN/TitleCard.png');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -370,11 +370,11 @@
                         </ul>
                     </div>
 
-                    <!-- Card 8: Mobile Mini Game -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.2s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/One_Button_Game/Gameplay.png');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -404,11 +404,11 @@
                         </ul>
                     </div>
 
-                    <!-- Card 9: Rider Skate -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.3s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/Rider_Skate/Gameplay.png');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -438,11 +438,11 @@
                         </ul>
                     </div>
 
-                    <!-- Card 6 -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.4s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/Proto_Zelda_Unreal/Project_Screen.png');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -470,11 +470,11 @@
                         </ul>
                     </div>
 
-                    <!-- Card 10: Short Creation -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.5s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/Short_Creation/Video_Clipper_Pro.png');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -504,11 +504,11 @@
                         </ul>
                     </div>
 
-                    <!-- Card 11: ISART Summer School -->
                     <div
                         class="folder-card stagger-item"
                         style="transition-delay: 0.6s"
                     >
+                        <div class="folder-bg" style="background-image: url('assets/Projects/Isart_Summer/Gameplay.jpg');"></div>
                         <div class="folder-header">
                             <div class="folder-icon">
                                 <i data-feather="folder"></i>
@@ -617,32 +617,46 @@
                     My video edits, motion design, and gameplay trailers.
                 </p>
                 <div class="video-grid stagger-container">
-                    <!-- Placeholders Video -->
                     <div
                         class="video-card stagger-item"
                         style="transition-delay: 0.1s"
+                        data-type="youtube"
+                        data-src="https://www.youtube.com/embed/oznwVu8Eul4?autoplay=1"
                     >
-                        <div class="video-placeholder">
+                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/oznwVu8Eul4/maxresdefault.jpg'); background-size: cover; background-position: center;">
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="video-info">
-                            <h3>Gameplay Trailer</h3>
-                            <p>Promotional video for my latest game project.</p>
+                            <h3>Project Trailer 1</h3>
+                            <p>Présentation du projet.</p>
                         </div>
                     </div>
                     <div
                         class="video-card stagger-item"
                         style="transition-delay: 0.2s"
+                        data-type="youtube"
+                        data-src="https://www.youtube.com/embed/stYrd2LLf94?autoplay=1"
                     >
-                        <div class="video-placeholder">
+                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/stYrd2LLf94/maxresdefault.jpg'); background-size: cover; background-position: center;">
                             <i data-feather="play-circle"></i>
                         </div>
                         <div class="video-info">
-                            <h3>Showreel 2024</h3>
-                            <p>
-                                A compilation of my best editing and motion
-                                works.
-                            </p>
+                            <h3>Project Trailer 2</h3>
+                            <p>Gameplay footage.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="video-card stagger-item"
+                        style="transition-delay: 0.3s"
+                        data-type="youtube"
+                        data-src="PX2R_gI4D14"
+                    >
+                        <div class="video-placeholder" style="background-image: url('https://img.youtube.com/vi/PX2R_gI4D14/maxresdefault.jpg'); background-size: cover; background-position: center;">
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3>SHMUP Walkthrough</h3>
+                            <p>Aperçu complet du gameplay de Aegis Overdrive.</p>
                         </div>
                     </div>
                 </div>
@@ -692,6 +706,16 @@
                 >
             </section>
         </main>
+
+        <!-- VIDEO MODAL -->
+        <div id="video-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-video-container">
+                    <!-- Iframe or Video tag injected here -->
+                </div>
+            </div>
+        </div>
 
         <!-- Initialize Feather Icons -->
         <script>
