@@ -247,7 +247,7 @@
                 <div class="featured-project reveal-up">
                     <div class="featured-img-container">
                         <img
-                            src="assets/Zelda_LA_Unity/Gameplay.jpg"
+                            src="assets/Projects/Zelda_LA_Unity/Gameplay.jpg"
                             alt="Zelda Remake"
                             loading="lazy"
                         />
@@ -290,7 +290,7 @@
                 <div class="featured-project alt reveal-up">
                     <div class="featured-img-container">
                         <img
-                            src="assets/SHMUP/special feature.jpg"
+                            src="assets/Projects/SHMUP/special feature.jpg"
                             alt="AEGIS OVERDRIVE"
                             loading="lazy"
                         />
@@ -547,7 +547,7 @@
                 <p
                     style="
                         margin-top: -20px;
-                        margin-bottom: 40px;
+                        margin-bottom: 20px;
                         color: var(--slate);
                         font-size: 1.1rem;
                         max-width: 600px;
@@ -557,39 +557,44 @@
                     A collection of my digital and traditional artwork,
                     exploring different styles and mediums.
                 </p>
-                <div class="gallery-grid stagger-container">
-                    <!-- Placeholders Art -->
-                    <div
-                        class="gallery-card stagger-item"
-                        style="transition-delay: 0.1s"
-                    >
-                        <div class="placeholder-img" style="aspect-ratio: 3/4">
-                            Illustration 1
-                        </div>
+
+                <div class="gallery-filters reveal-up">
+                    <button class="filter-btn active" data-filter="all">Tout</button>
+                    <button class="filter-btn" data-filter="art">Dessin</button>
+                    <button class="filter-btn" data-filter="photo">Photographie</button>
+                </div>
+
+                <div class="gallery-grid stagger-container" id="art-gallery-grid">
+                    <!-- Artwork -->
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.1s">
+                        <img src="assets/art/City.jpg" alt="City" class="gallery-img" loading="lazy" />
                     </div>
-                    <div
-                        class="gallery-card stagger-item"
-                        style="transition-delay: 0.2s"
-                    >
-                        <div class="placeholder-img" style="aspect-ratio: 1/1">
-                            Concept Art
-                        </div>
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.2s">
+                        <img src="assets/art/Fort Boyard.jpg" alt="Fort Boyard" class="gallery-img" loading="lazy" />
                     </div>
-                    <div
-                        class="gallery-card stagger-item"
-                        style="transition-delay: 0.3s"
-                    >
-                        <div class="placeholder-img" style="aspect-ratio: 4/3">
-                            Character Design
-                        </div>
+                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.3s">
+                        <img src="assets/art/Gwen@0,25x.png" alt="Gwen" class="gallery-img" loading="lazy" />
                     </div>
-                    <div
-                        class="gallery-card stagger-item"
-                        style="transition-delay: 0.4s"
-                    >
-                        <div class="placeholder-img" style="aspect-ratio: 3/4">
-                            Sketch
-                        </div>
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.4s">
+                        <img src="assets/art/House.jpg" alt="House" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.5s">
+                        <img src="assets/art/Kiara.jpg" alt="Kiara" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 0.6s">
+                        <img src="assets/art/Music_Girl.jpg" alt="Music Girl" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.7s">
+                        <img src="assets/art/Nature1.jpg" alt="Nature 1" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.8s">
+                        <img src="assets/art/Nature2.jpg" alt="Nature 2" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="photo" style="transition-delay: 0.9s">
+                        <img src="assets/art/PC.jpg" alt="PC" class="gallery-img" loading="lazy" />
+                    </div>
+                    <div class="gallery-card stagger-item" data-category="art" style="transition-delay: 1.0s">
+                        <img src="assets/art/Walking_Girl.jpg" alt="Walking Girl" class="gallery-img" loading="lazy" />
                     </div>
                 </div>
             </section>

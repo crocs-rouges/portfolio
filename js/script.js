@@ -811,6 +811,33 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(setupAnimations, 100);
 
     // ==========================================
+    // 5.5 GALLERY FILTER LOGIC
+    // ==========================================
+    const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
+    const artCards = document.querySelectorAll('#art-gallery-grid .gallery-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Try to play sound if defined
+            if (typeof SoundManager !== 'undefined') SoundManager.playClick();
+
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            artCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // ==========================================
     // 6. PHASE 2: CUSTOM CURSOR, AMBIENT, XP BAR
     // ==========================================
     
