@@ -657,23 +657,34 @@ document.addEventListener('DOMContentLoaded', () => {
             bgMouse.y = event.clientY;
         });
         
-        // 5. ✨ Particules au Clic (Click Sparks)
+        // 5. ✨ Particules au Clic (Click Sparks) - Digital/Cyber DA
         window.addEventListener('mousedown', (e) => {
             if (!window.clickSparks) window.clickSparks = [];
-            const count = 12 + Math.random() * 8;
-            const colors = ['#eb6f92', '#9ccfd8', '#f6c177', '#c4a7e7']; // Rose Pine theme colors
+            if (!window.clickRipples) window.clickRipples = [];
+            
+            // Cyber Ripple (expanding diamond)
+            window.clickRipples.push({
+                x: e.clientX,
+                y: e.clientY,
+                size: 2,
+                life: 1.0
+            });
+            
+            // ASCII Sparks
+            const count = 6 + Math.random() * 4;
+            const chars = ['+', '-', '0', '1', '>', '<', '//', '*'];
             for (let i = 0; i < count; i++) {
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 2 + Math.random() * 5;
+                const velocity = 2 + Math.random() * 4;
                 window.clickSparks.push({
                     x: e.clientX,
                     y: e.clientY,
                     vx: Math.cos(angle) * velocity,
                     vy: Math.sin(angle) * velocity,
                     life: 1.0,
-                    decay: 0.015 + Math.random() * 0.03,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: 1 + Math.random() * 3
+                    decay: 0.02 + Math.random() * 0.03,
+                    char: chars[Math.floor(Math.random() * chars.length)],
+                    color: '#eb6f92' // Accent pink
                 });
             }
         });
@@ -857,16 +868,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            // Draw Sparks
+            // Draw Digital Ripples
+            if (window.clickRipples && window.clickRipples.length > 0) {
+                for (let i = window.clickRipples.length - 1; i >= 0; i--) {
+                    let r = window.clickRipples[i];
+                    r.size += 2.5;
+                    r.life -= 0.04;
+                    if (r.life <= 0) {
+                        window.clickRipples.splice(i, 1);
+                        continue;
+                    }
+                    ctx.strokeStyle = '#eb6f92';
+                    ctx.globalAlpha = r.life * 0.6;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    // Diamond shape
+                    ctx.moveTo(r.x, r.y - r.size);
+                    ctx.lineTo(r.x + r.size, r.y);
+                    ctx.lineTo(r.x, r.y + r.size);
+                    ctx.lineTo(r.x - r.size, r.y);
+                    ctx.closePath();
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+            
+            // Draw ASCII Sparks
             if (window.clickSparks && window.clickSparks.length > 0) {
                 for (let i = window.clickSparks.length - 1; i >= 0; i--) {
                     let s = window.clickSparks[i];
                     s.x += s.vx;
                     s.y += s.vy;
-                    // Physics
-                    s.vy += 0.15; // gravity
-                    s.vx *= 0.96; // friction
-                    s.vy *= 0.96; // friction
+                    // Digital friction (no gravity for cyber feel)
+                    s.vx *= 0.92; 
+                    s.vy *= 0.92; 
                     s.life -= s.decay;
                     
                     if (s.life <= 0) {
@@ -874,11 +909,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         continue;
                     }
                     
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                    ctx.font = "14px 'Courier New', Courier, monospace";
                     ctx.fillStyle = s.color;
                     ctx.globalAlpha = s.life;
-                    ctx.fill();
+                    ctx.fillText(s.char, s.x, s.y);
                     ctx.globalAlpha = 1;
                 }
             }
