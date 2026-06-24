@@ -96,6 +96,218 @@ const translations = {
     }
 };
 
+// ==========================================
+// SOUND MANAGER (Procedural Web Audio)
+// ==========================================
+const SoundManager = {
+    ctx: null,
+    
+    init() {
+        if (!this.ctx) {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+        }
+    },
+    
+    playHover() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'sine'; 
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.05, now + 0.01); // very subtle
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        
+        osc.start(now);
+        osc.stop(now + 0.1);
+    },
+    
+    playClick() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'square';
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.03);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.15, now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        
+        osc.start(now);
+        osc.stop(now + 0.05);
+        
+        // Mechanical noise
+        const bufferSize = this.ctx.sampleRate * 0.02;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        
+        const noiseFilter = this.ctx.createBiquadFilter();
+        noiseFilter.type = 'highpass';
+        noiseFilter.frequency.value = 1000;
+        
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.1, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+        
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+        
+        noise.start(now);
+    },
+    
+    playStartup() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc1.type = 'square';
+        osc2.type = 'sawtooth';
+        
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        const now = this.ctx.currentTime;
+        
+        // Retro startup sweep
+        osc1.frequency.setValueAtTime(150, now);
+        osc1.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+        osc1.frequency.setValueAtTime(600, now + 0.1);
+        osc1.frequency.exponentialRampToValueAtTime(1200, now + 0.3);
+        
+        osc2.frequency.setValueAtTime(152, now);
+        osc2.frequency.exponentialRampToValueAtTime(605, now + 0.1);
+        osc2.frequency.setValueAtTime(605, now + 0.1);
+        osc2.frequency.exponentialRampToValueAtTime(1205, now + 0.3);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.08, now + 0.05);
+        gain.gain.setValueAtTime(0.08, now + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+        
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.8);
+        osc2.stop(now + 0.8);
+    },
+    
+    playShutdown() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'sawtooth';
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.3);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        
+        osc.start(now);
+        osc.stop(now + 0.4);
+    },
+    
+    playProjectHover() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.type = 'triangle'; // Warmer, rounder sound
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(450, now + 0.1);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        
+        osc.start(now);
+        osc.stop(now + 0.15);
+    },
+    
+    playExplosion() {
+        if (!this.ctx || this.ctx.state === 'suspended') return;
+        const now = this.ctx.currentTime;
+        
+        // Bass drop
+        const osc = this.ctx.createOscillator();
+        const oscGain = this.ctx.createGain();
+        osc.type = 'square';
+        
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(20, now + 0.5);
+        
+        oscGain.gain.setValueAtTime(0, now);
+        oscGain.gain.linearRampToValueAtTime(0.2, now + 0.05);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        
+        osc.connect(oscGain);
+        oscGain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+        
+        // White noise crash
+        const bufferSize = this.ctx.sampleRate * 0.5;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        
+        const noiseFilter = this.ctx.createBiquadFilter();
+        noiseFilter.type = 'lowpass';
+        noiseFilter.frequency.setValueAtTime(3000, now);
+        noiseFilter.frequency.exponentialRampToValueAtTime(100, now + 0.5);
+        
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0, now);
+        noiseGain.gain.linearRampToValueAtTime(0.3, now + 0.02);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+        
+        noise.start(now);
+    }
+};
+
+window.addEventListener('mousedown', () => SoundManager.init(), { once: true });
+window.addEventListener('keydown', () => SoundManager.init(), { once: true });
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // ==========================================
@@ -252,6 +464,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Hook up sounds
+    const interactiveElements = document.querySelectorAll('a, button, .interactive');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => SoundManager.playHover());
+    });
+    
+    const projectCards = document.querySelectorAll('.featured-project, .folder-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => SoundManager.playProjectHover());
+    });
+    
+    const sayHiBtn = document.querySelector('.btn-primary');
+    if (sayHiBtn) {
+        sayHiBtn.addEventListener('mousedown', () => SoundManager.playClick());
+    }
+
     const gameModeBtn = document.getElementById('game-mode-toggle');
     const body = document.body;
     let isGameMode = false;
@@ -261,8 +489,16 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerLocalTextShake();
         if (isGameMode) {
             body.classList.add('game-mode');
+            body.classList.add('animating-crt');
+            SoundManager.playStartup();
+            // Remove animation class after 400ms to destroy containing block (fixes position: fixed cursor scroll bug)
+            setTimeout(() => {
+                body.classList.remove('animating-crt');
+            }, 400);
         } else {
             body.classList.remove('game-mode');
+            body.classList.remove('animating-crt');
+            SoundManager.playShutdown();
         }
     });
 
@@ -657,8 +893,13 @@ document.addEventListener('DOMContentLoaded', () => {
             bgMouse.y = event.clientY;
         });
         
-        // 5. ✨ Particules au Clic (Click Sparks) - Digital/Cyber DA
         window.addEventListener('mousedown', (e) => {
+            // Text explosion triggers sound
+            if (window.explodingLetters && !window.explodingLetters.some(l => !l.repositioned)) {
+                SoundManager.playExplosion();
+            }
+            explodeHeroText(e.clientX, e.clientY);
+            
             if (!window.clickSparks) window.clickSparks = [];
             if (!window.clickRipples) window.clickRipples = [];
             

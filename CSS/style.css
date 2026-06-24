@@ -754,7 +754,10 @@ body.game-mode {
     --green: #ff00ff;
     
     font-family: var(--font-pixel);
-    animation: crt-turn-on 0.4s ease-out forwards;
+}
+
+body.game-mode.animating-crt {
+    animation: crt-turn-on 0.4s ease-out;
 }
 
 body.game-mode h1, 
