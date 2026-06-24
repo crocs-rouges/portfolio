@@ -405,20 +405,19 @@ section {
     left: 15px;
 }
 
-.img-placeholder {
+.about-pic img {
     width: 100%;
     aspect-ratio: 1;
+    object-fit: cover;
     background-color: var(--light-navy);
     border-radius: var(--border-radius);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
     mix-blend-mode: multiply;
     filter: grayscale(100%) contrast(1);
     transition: all 0.3s ease;
 }
 
-.about-pic .wrapper:hover .img-placeholder {
+.about-pic .wrapper:hover img {
     mix-blend-mode: normal;
     filter: none;
 }

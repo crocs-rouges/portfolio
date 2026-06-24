@@ -155,9 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!canvas) return;
 
         const calculateSize = (width) => {
-            if (width <= 480) return Math.min(220, width - 40);
-            if (width <= 768) return Math.min(280, width - 60);
-            return 400; // Will use largest available
+            if (width <= 480) return Math.min(320, width - 40);
+            if (width <= 768) return Math.min(500, width - 60);
+            return 800; // Will use largest available
         };
 
         let size = calculateSize(window.innerWidth);
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let startTime = 0;
 
         const createParticlesFromRaw = (rawParticles, isMobileSize) => {
-            const fontSize = isMobileSize ? 5 : 7;
+            const fontSize = isMobileSize ? 4 : 5;
             return rawParticles.map((p) => ({
                 x: p.x + (Math.random() - 0.5) * 400,
                 y: p.y + (Math.random() - 0.5) * 400,
@@ -187,11 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const setupCanvas = () => {
-            const isMobileSize = size <= 280;
-            let dataSize = "280";
-            if (size <= 220) dataSize = "220";
-            else if (size <= 280) dataSize = "280";
-            else dataSize = "280";
+            const isMobileSize = size <= 320;
+            let dataSize = "500";
+            if (size <= 320) dataSize = "320";
+            else if (size <= 500) dataSize = "500";
+            else dataSize = "800";
 
             const rawData = asciiData[dataSize] || asciiData[Object.keys(asciiData)[0]];
             if (rawData) {
@@ -229,8 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.x += (mouseTarget.x - mouse.x) * 0.15;
             mouse.y += (mouseTarget.y - mouse.y) * 0.15;
 
-            const isMobileSize = size <= 280;
-            const fontSize = isMobileSize ? 5 : 7;
+            const isMobileSize = size <= 320;
+            const fontSize = isMobileSize ? 4 : 5;
             ctx.font = `${fontSize}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";

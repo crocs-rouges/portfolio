@@ -7,14 +7,14 @@ const path = require('path');
   const page = await browser.newPage();
   
   // Read the image file and convert to data URL
-  const imgPath = path.join(__dirname, 'public/profile.png');
+  const imgPath = path.join(__dirname, 'public/profile_cropped.png');
   const imgBuffer = fs.readFileSync(imgPath);
   const imgBase64 = imgBuffer.toString('base64');
   const dataUrl = `data:image/png;base64,${imgBase64}`;
 
   const results = await page.evaluate(async (dataUrl) => {
     const chars = " .:-=+*#%@".split("");
-    const sizes = [400, 280, 220];
+    const sizes = [800, 500, 320];
     const data = {};
 
     const img = new Image();
@@ -29,7 +29,7 @@ const path = require('path');
       offscreen.width = canvasWidth;
       offscreen.height = canvasHeight;
 
-      const scale = 0.8;
+      const scale = 0.95; // Use more of the canvas space
       const imgAspect = img.width / img.height;
 
       let drawHeight = canvasHeight * scale;
@@ -48,8 +48,8 @@ const path = require('path');
       const pixels = imageData.data;
 
       const particles = [];
-      const isMobileSize = size <= 280;
-      const fontSize = isMobileSize ? 5 : 7;
+      const isMobileSize = size <= 320;
+      const fontSize = isMobileSize ? 4 : 5; // Smaller font = more detail
       const colGap = fontSize * 0.7; 
       const rowGap = fontSize * 1.1;
 
@@ -81,7 +81,7 @@ const path = require('path');
     return data;
   }, dataUrl);
 
-  const output = `export const asciiData = ${JSON.stringify(results)};`;
+  const output = `window.asciiData = ${JSON.stringify(results)};`;
   fs.writeFileSync(path.join(__dirname, 'src/assets/asciiData.js'), output);
   
   console.log('ASCII data generated successfully.');
