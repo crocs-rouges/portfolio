@@ -59,10 +59,10 @@ const translations = {
         
         video_title: "video gallery",
         video_desc: "Mes montages vidéo, motion design et trailers de gameplay.",
-        v_trailer1_title: "Project Trailer 1",
-        v_trailer1_desc: "Présentation du projet.",
-        v_trailer2_title: "Project Trailer 2",
-        v_trailer2_desc: "Gameplay footage.",
+        v_trailer1_title: "Zelda Remake (Unity)",
+        v_trailer1_desc: "Devlog sur la création d'un remake de Zelda Link's Awakening sur Unity.",
+        v_trailer2_title: "Best Of REPO",
+        v_trailer2_desc: "Montage dynamique d'une session hilarante entre amis sur REPO.",
         v_shmup_title: "SHMUP Walkthrough",
         v_shmup_desc: "Aperçu complet du gameplay de Aegis Overdrive.",
         
@@ -127,10 +127,10 @@ const translations = {
         
         video_title: "video gallery",
         video_desc: "My video edits, motion design, and gameplay trailers.",
-        v_trailer1_title: "Project Trailer 1",
-        v_trailer1_desc: "Project presentation.",
-        v_trailer2_title: "Project Trailer 2",
-        v_trailer2_desc: "Gameplay footage.",
+        v_trailer1_title: "Zelda Remake (Unity)",
+        v_trailer1_desc: "Devlog on the creation of a Zelda Link's Awakening remake in Unity.",
+        v_trailer2_title: "Best Of REPO",
+        v_trailer2_desc: "Fun and dynamic gaming montage of a REPO session with friends.",
         v_shmup_title: "SHMUP Walkthrough",
         v_shmup_desc: "Complete gameplay overview of Aegis Overdrive.",
         
