@@ -10,10 +10,10 @@ const translations = {
         nav_contact: "Contact",
         game_mode_btn: "GAME MODE",
         
-        hero_intro: "salut, moi c'est romain.",
-        hero_title: "Game Designer & Programmer.",
-        hero_subtitle: "Je crée des mondes interactifs.",
-        hero_desc_minimal: "Étudiant à ISART Digital. Passionné par l'architecture logicielle, la création d'univers immersifs et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.",
+        hero_intro_start: "salut, moi c'est ",
+        hero_intro_name: "romain",
+        hero_intro_end: ".",
+        hero_desc_merged: "Game Designer & Programmer. Je crée des mondes interactifs. Étudiant à ISART Digital passionné par l'architecture logicielle et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.",
         btn_say_hi: "Say hi!",
         
         about_title: "about me",
@@ -77,10 +77,10 @@ const translations = {
         nav_contact: "Contact",
         game_mode_btn: "GAME MODE",
         
-        hero_intro: "hi, romain here.",
-        hero_title: "Game Designer & Programmer.",
-        hero_subtitle: "I build interactive digital worlds.",
-        hero_desc_minimal: "Student at ISART Digital. Passionate about software architecture, creating immersive worlds, and Gameplay Programming. I mainly code in C# (Unity/Godot) and Python.",
+        hero_intro_start: "hi, ",
+        hero_intro_name: "romain",
+        hero_intro_end: " here.",
+        hero_desc_merged: "Game Designer & Programmer. I build interactive digital worlds. Student at ISART Digital passionate about software architecture and Gameplay Programming. I mainly code in C# (Unity/Godot) and Python.",
         btn_say_hi: "Say hi!",
         
         about_title: "about me",
@@ -359,11 +359,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLang = localStorage.getItem('lang') || 'fr';
 
     function applyMatrixDecodeEffect(element, finalString) {
-        // Only run if it's a hero element
-        if (!element.classList.contains('hero-intro') && 
-            !element.classList.contains('hero-title') && 
-            !element.classList.contains('hero-subtitle') && 
-            !element.classList.contains('hero-description')) {
+        // Only run if it's inside the hero-text
+        if (!element.closest('.hero-text')) {
             element.innerHTML = finalString;
             return;
         }

@@ -31,7 +31,11 @@
                 <a href="#" class="logo">Romain Chevalier</a>
 
                 <div class="nav-right">
-                    <button id="game-mode-toggle" class="game-mode-btn" aria-label="Toggle Game Mode">
+                    <button
+                        id="game-mode-toggle"
+                        class="game-mode-btn"
+                        aria-label="Toggle Game Mode"
+                    >
                         <span class="game-dot"></span>
                         <span data-i18n="game_mode_btn">GAME MODE</span>
                     </button>
@@ -45,10 +49,10 @@
                                 >Software</a
                             >
                         </li>
-                        <li><a href="#art" data-i18n="nav_art">Art</a></li>
                         <li>
                             <a href="#video" data-i18n="nav_video">Video</a>
                         </li>
+                        <li><a href="#art" data-i18n="nav_art">Art</a></li>
                         <li>
                             <a href="#contact" data-i18n="nav_contact"
                                 >Contact</a
@@ -63,9 +67,15 @@
                     >
                         EN
                     </button>
-                    
+
                     <!-- Mobile Menu Button -->
-                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                    <button
+                        class="mobile-menu-btn"
+                        id="mobile-menu-btn"
+                        aria-label="Menu"
+                        aria-expanded="false"
+                        aria-controls="nav-links"
+                    >
                         <i data-feather="menu"></i>
                     </button>
                 </div>
@@ -126,29 +136,31 @@
                         ></canvas>
                     </div>
                     <div class="hero-text">
-                        <p class="hero-intro" data-i18n="hero_intro">
-                            hi, romain here.
-                        </p>
-                        <h1 class="hero-title" data-i18n="hero_title">
-                            Game Designer & Programmer.
+                        <h1 class="hero-title" style="white-space: nowrap">
+                            <span data-i18n="hero_intro_start">hi, </span
+                            ><span class="highlight" data-i18n="hero_intro_name"
+                                >romain</span
+                            ><span data-i18n="hero_intro_end"> here.</span>
                         </h1>
-                        <h2 class="hero-subtitle" data-i18n="hero_subtitle">
-                            I build interactive digital worlds.
-                        </h2>
                         <p
                             class="hero-description"
-                            data-i18n="hero_desc_minimal"
+                            data-i18n="hero_desc_merged"
                         >
-                            Étudiant à ISART Digital. Passionné par
-                            l'architecture logicielle, la création d'univers
-                            immersifs et le Gameplay Programming. Je code
-                            principalement en C# (Unity/Godot) et Python.
+                            Game Designer & Programmer. Je crée des mondes
+                            interactifs. Étudiant à ISART Digital passionné par
+                            l'architecture logicielle et le Gameplay
+                            Programming. Je code principalement en C# et Python.
                         </p>
                         <a
                             href="mailto:romain.chevalier40@gmail.com"
-                            class="btn-primary"
+                            class="btn-primary interactive"
+                            style="
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 10px;
+                            "
                         >
-                            <i data-feather="mail" class="icon-small"></i>
+                            <i data-feather="mail"></i>
                             <span data-i18n="btn_say_hi">Say hi!</span>
                         </a>
                     </div>
@@ -574,6 +586,99 @@
                 </div>
             </section>
 
+            <!-- VIDEO GALLERY -->
+            <section class="section" id="video">
+                <h2 class="numbered-heading reveal-up">
+                    <span class="slash">/</span>
+                    <span data-i18n="video_title">video gallery</span>
+                </h2>
+                <p
+                    style="
+                        margin-top: -20px;
+                        margin-bottom: 40px;
+                        color: var(--slate);
+                        font-size: 1.1rem;
+                        max-width: 600px;
+                    "
+                    data-i18n="video_desc"
+                >
+                    My video edits, motion design, and gameplay trailers.
+                </p>
+                <div class="video-grid stagger-container">
+                    <div
+                        class="video-card stagger-item"
+                        style="transition-delay: 0.1s"
+                        data-type="youtube"
+                        data-src="https://www.youtube.com/embed/oznwVu8Eul4?autoplay=1"
+                    >
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/oznwVu8Eul4/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3 data-i18n="v_trailer1_title">
+                                Project Trailer 1
+                            </h3>
+                            <p data-i18n="v_trailer1_desc">
+                                Présentation du projet.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="video-card stagger-item"
+                        style="transition-delay: 0.2s"
+                        data-type="youtube"
+                        data-src="https://www.youtube.com/embed/stYrd2LLf94?autoplay=1"
+                    >
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/stYrd2LLf94/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3 data-i18n="v_trailer2_title">
+                                Project Trailer 2
+                            </h3>
+                            <p data-i18n="v_trailer2_desc">Gameplay footage.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="video-card stagger-item"
+                        style="transition-delay: 0.3s"
+                        data-type="youtube"
+                        data-src="https://www.youtube.com/embed/PX2R_gI4D14?autoplay=1"
+                    >
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/PX2R_gI4D14/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3 data-i18n="v_shmup_title">SHMUP Walkthrough</h3>
+                            <p data-i18n="v_shmup_desc">
+                                Aperçu complet du gameplay de Aegis Overdrive.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- ART GALLERY -->
             <section class="section" id="art">
                 <h2 class="numbered-heading reveal-up">
@@ -742,99 +847,6 @@
                             class="gallery-img"
                             loading="lazy"
                         />
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIDEO GALLERY -->
-            <section class="section" id="video">
-                <h2 class="numbered-heading reveal-up">
-                    <span class="slash">/</span>
-                    <span data-i18n="video_title">video gallery</span>
-                </h2>
-                <p
-                    style="
-                        margin-top: -20px;
-                        margin-bottom: 40px;
-                        color: var(--slate);
-                        font-size: 1.1rem;
-                        max-width: 600px;
-                    "
-                    data-i18n="video_desc"
-                >
-                    My video edits, motion design, and gameplay trailers.
-                </p>
-                <div class="video-grid stagger-container">
-                    <div
-                        class="video-card stagger-item"
-                        style="transition-delay: 0.1s"
-                        data-type="youtube"
-                        data-src="https://www.youtube.com/embed/oznwVu8Eul4?autoplay=1"
-                    >
-                        <div
-                            class="video-placeholder"
-                            style="
-                                background-image: url(&quot;https://img.youtube.com/vi/oznwVu8Eul4/maxresdefault.jpg&quot;);
-                                background-size: cover;
-                                background-position: center;
-                            "
-                        >
-                            <i data-feather="play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3 data-i18n="v_trailer1_title">
-                                Project Trailer 1
-                            </h3>
-                            <p data-i18n="v_trailer1_desc">
-                                Présentation du projet.
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="video-card stagger-item"
-                        style="transition-delay: 0.2s"
-                        data-type="youtube"
-                        data-src="https://www.youtube.com/embed/stYrd2LLf94?autoplay=1"
-                    >
-                        <div
-                            class="video-placeholder"
-                            style="
-                                background-image: url(&quot;https://img.youtube.com/vi/stYrd2LLf94/maxresdefault.jpg&quot;);
-                                background-size: cover;
-                                background-position: center;
-                            "
-                        >
-                            <i data-feather="play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3 data-i18n="v_trailer2_title">
-                                Project Trailer 2
-                            </h3>
-                            <p data-i18n="v_trailer2_desc">Gameplay footage.</p>
-                        </div>
-                    </div>
-                    <div
-                        class="video-card stagger-item"
-                        style="transition-delay: 0.3s"
-                        data-type="youtube"
-                        data-src="https://www.youtube.com/embed/PX2R_gI4D14?autoplay=1"
-                    >
-                        <div
-                            class="video-placeholder"
-                            style="
-                                background-image: url(&quot;https://img.youtube.com/vi/PX2R_gI4D14/maxresdefault.jpg&quot;);
-                                background-size: cover;
-                                background-position: center;
-                            "
-                        >
-                            <i data-feather="play-circle"></i>
-                        </div>
-                        <div class="video-info">
-                            <h3 data-i18n="v_shmup_title">SHMUP Walkthrough</h3>
-                            <p data-i18n="v_shmup_desc">
-                                Aperçu complet du gameplay de Aegis Overdrive.
-                            </p>
-                        </div>
                     </div>
                 </div>
             </section>
