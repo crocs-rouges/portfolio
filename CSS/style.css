@@ -263,11 +263,11 @@ a {
 }
 
 section {
-    min-height: 100vh;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 100px 0;
+    padding: 60px 0;
 }
 
 /* Numbered Section Heading */
