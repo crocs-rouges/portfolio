@@ -13,6 +13,7 @@ const translations = {
         hero_intro_start: "salut, moi c'est ",
         hero_intro_name: "romain",
         hero_intro_end: ".",
+        hero_subtitle: "Passionné par la conception et la création de jeux vidéo.",
         hero_desc_merged: "Game Designer & Programmer. Je crée des mondes interactifs. Étudiant à ISART Digital passionné par l'architecture logicielle et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.",
         btn_say_hi: "Say hi!",
         
@@ -80,6 +81,7 @@ const translations = {
         hero_intro_start: "hi, ",
         hero_intro_name: "romain",
         hero_intro_end: " here.",
+        hero_subtitle: "Passionate about designing and creating video games.",
         hero_desc_merged: "Game Designer & Programmer. I build interactive digital worlds. Student at ISART Digital passionate about software architecture and Gameplay Programming. I mainly code in C# (Unity/Godot) and Python.",
         btn_say_hi: "Say hi!",
         
