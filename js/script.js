@@ -1000,7 +1000,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             explodeHeroText(e.clientX, e.clientY);
             
-            if (!window.clickSparks) window.clickSparks = [];
             if (!window.clickRipples) window.clickRipples = [];
             
             // Cyber Ripple (expanding diamond)
@@ -1010,24 +1009,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 size: 2,
                 life: 1.0
             });
-            
-            // ASCII Sparks
-            const count = 6 + Math.random() * 4;
-            const chars = ['+', '-', '0', '1', '>', '<', '//', '*'];
-            for (let i = 0; i < count; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 2 + Math.random() * 4;
-                window.clickSparks.push({
-                    x: e.clientX,
-                    y: e.clientY,
-                    vx: Math.cos(angle) * velocity,
-                    vy: Math.sin(angle) * velocity,
-                    life: 1.0,
-                    decay: 0.02 + Math.random() * 0.03,
-                    char: chars[Math.floor(Math.random() * chars.length)],
-                    color: '#eb6f92' // Accent pink
-                });
-            }
         });
 
         // Resize canvas
@@ -1103,13 +1084,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initBgParticles() {
             bgParticles = [];
-            let numberOfParticles = (width * height) / 9000; // Density
+            let numberOfParticles = (width * height) / 6000; // Increased Density for Premium look
             for (let i = 0; i < numberOfParticles; i++) {
                 let size = (Math.random() * 2) + 1;
                 let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
                 let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let dx = (Math.random() - 0.5) * 1;
-                let dy = (Math.random() - 0.5) * 1;
+                let dx = (Math.random() - 0.5) * 1.5;
+                let dy = (Math.random() - 0.5) * 1.5;
                 bgParticles.push(new BgParticle(x, y, dx, dy, size));
             }
         }
@@ -1121,10 +1102,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let b = a; b < bgParticles.length; b++) {
                     let distance = ((bgParticles[a].x - bgParticles[b].x) * (bgParticles[a].x - bgParticles[b].x))
                                  + ((bgParticles[a].y - bgParticles[b].y) * (bgParticles[a].y - bgParticles[b].y));
-                    if (distance < (width / 7) * (height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
-                        ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.2})`; // Theme green
-                        ctx.lineWidth = 1;
+                    if (distance < (width / 5) * (height / 5)) {
+                        opacityValue = 1 - (distance / 25000);
+                        if(opacityValue < 0) opacityValue = 0;
+                        ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.4})`; // Brighter Theme green connections
+                        ctx.lineWidth = 1.2;
                         ctx.beginPath();
                         ctx.moveTo(bgParticles[a].x, bgParticles[a].y);
                         ctx.lineTo(bgParticles[b].x, bgParticles[b].y);
