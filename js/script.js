@@ -549,16 +549,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastScrollTop = 0;
     const header = document.querySelector('.header');
 
+    let isNavTicking = false;
+
     window.addEventListener('scroll', () => {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scroll Down
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            // Scroll Up
-            header.style.transform = 'translateY(0)';
+        if (!isNavTicking) {
+            window.requestAnimationFrame(() => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scroll Down
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scroll Up
+                    header.style.transform = 'translateY(0)';
+                }
+                lastScrollTop = scrollTop;
+                isNavTicking = false;
+            });
+            isNavTicking = true;
         }
-        lastScrollTop = scrollTop;
     }, { passive: true });
 
     // Mobile Menu Toggle
@@ -612,10 +620,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const mouse = { x: -1000, y: -1000, active: false };
         const mouseTarget = { x: -1000, y: -1000 };
         let startTime = 0;
+        let staticAsciiCanvas = null;
+        let lastActiveTime = 0;
 
         const createParticlesFromRaw = (rawParticles, isMobileSize) => {
-            const fontSize = isMobileSize ? 4 : 5;
-            return rawParticles.map((p) => ({
+            // Reduce point density by 50% on desktop for performance
+            const filteredParticles = isMobileSize 
+                ? rawParticles 
+                : rawParticles.filter((_, index) => index % 2 === 0);
+            
+            // Increase font size slightly to compensate for missing points
+            const fontSize = isMobileSize ? 4 : 6;
+            
+            return filteredParticles.map((p) => ({
                 x: p.x + (Math.random() - 0.5) * 400,
                 y: p.y + (Math.random() - 0.5) * 400,
                 targetX: p.x,
@@ -631,7 +648,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }));
         };
 
+        let rgbColor = '235, 111, 146';
+        
+        const updateCachedColor = () => {
+            const style = getComputedStyle(document.body);
+            let colorStr = style.getPropertyValue('--green').trim() || '#eb6f92'; 
+            const hexToRgb = (hex) => {
+                let r = 0, g = 0, b = 0;
+                if (hex.length == 4) {
+                    r = parseInt(hex[1]+hex[1], 16);
+                    g = parseInt(hex[2]+hex[2], 16);
+                    b = parseInt(hex[3]+hex[3], 16);
+                } else if (hex.length == 7) {
+                    r = parseInt(hex.substring(1,3), 16);
+                    g = parseInt(hex.substring(3,5), 16);
+                    b = parseInt(hex.substring(5,7), 16);
+                }
+                return `${r}, ${g}, ${b}`;
+            };
+            rgbColor = colorStr.startsWith('#') ? hexToRgb(colorStr) : '235, 111, 146';
+        };
+
         const setupCanvas = () => {
+            staticAsciiCanvas = null;
+            updateCachedColor();
             const isMobileSize = size <= 320;
             let dataSize = "500";
             if (size <= 320) dataSize = "320";
@@ -658,12 +698,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let ctx = setupCanvas();
 
+        const gameBtn = document.getElementById('game-mode-toggle');
+        if (gameBtn) {
+            gameBtn.addEventListener('click', () => {
+                setTimeout(() => {
+                    updateCachedColor();
+                    staticAsciiCanvas = null;
+                }, 50);
+            });
+        }
+
         window.addEventListener("resize", () => {
             size = calculateSize(window.innerWidth);
             ctx = setupCanvas();
         });
 
+        let isAsciiVisible = true;
         const draw = () => {
+            if (!isAsciiVisible) return;
             animationId = requestAnimationFrame(draw);
             ctx.clearRect(0, 0, size, size);
 
@@ -671,35 +723,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const elapsed = (performance.now() - startTime) / 1000;
 
+            if (mouse.active) {
+                lastActiveTime = elapsed;
+            }
+
             mouse.x += (mouseTarget.x - mouse.x) * 0.15;
             mouse.y += (mouseTarget.y - mouse.y) * 0.15;
 
+            // Cache completely static portrait to save CPU/GPU
+            const isSettled = !mouse.active && (elapsed - lastActiveTime > 2.5) && (elapsed > 4.5) && (elapsed - (window.lastAsciiExplosionTime || 0) > 2.5);
+
+            if (isSettled) {
+                if (!staticAsciiCanvas) {
+                    staticAsciiCanvas = document.createElement('canvas');
+                    staticAsciiCanvas.width = canvas.width;
+                    staticAsciiCanvas.height = canvas.height;
+                    const sCtx = staticAsciiCanvas.getContext('2d');
+                    const dpr = window.devicePixelRatio || 1;
+                    sCtx.scale(dpr, dpr);
+                    
+                    const isMobileSize = size <= 320;
+                    sCtx.font = `${isMobileSize ? 4 : 6}px monospace`;
+                    sCtx.textAlign = "center";
+                    sCtx.textBaseline = "middle";
+                    sCtx.fillStyle = `rgb(${rgbColor})`;
+                    
+                    particles.forEach((p) => {
+                        sCtx.globalAlpha = p.baseAlpha;
+                        sCtx.fillText(p.char, p.targetX, p.targetY);
+                    });
+                }
+                ctx.drawImage(staticAsciiCanvas, 0, 0, size, size);
+                return;
+            } else {
+                staticAsciiCanvas = null;
+            }
+
             const isMobileSize = size <= 320;
-            const fontSize = isMobileSize ? 4 : 5;
+            const fontSize = isMobileSize ? 4 : 6;
             ctx.font = `${fontSize}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            // Grab the CSS variable color for dynamic theme support
-            const style = getComputedStyle(document.body);
-            let colorStr = style.getPropertyValue('--green').trim() || '#eb6f92'; 
-            // the variable in Gazi layout is --green, which we set to the Rose Pine highlight
-
-            // A tiny helper to parse hex and use alpha
-            const hexToRgb = (hex) => {
-                let r = 0, g = 0, b = 0;
-                if (hex.length == 4) {
-                    r = parseInt(hex[1]+hex[1], 16);
-                    g = parseInt(hex[2]+hex[2], 16);
-                    b = parseInt(hex[3]+hex[3], 16);
-                } else if (hex.length == 7) {
-                    r = parseInt(hex.substring(1,3), 16);
-                    g = parseInt(hex.substring(3,5), 16);
-                    b = parseInt(hex.substring(5,7), 16);
-                }
-                return `${r}, ${g}, ${b}`;
-            };
-            let rgbColor = colorStr.startsWith('#') ? hexToRgb(colorStr) : '235, 111, 146';
+            // Color is now cached outside this loop in setupCanvas
+            ctx.fillStyle = `rgb(${rgbColor})`;
 
             particles.forEach((p) => {
                 const particleTime = elapsed - p.delay;
@@ -718,10 +785,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (mouse.active) {
                     const dx = p.x - mouse.x;
                     const dy = p.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
                     const maxDist = size * 0.2;
+                    const distSq = dx * dx + dy * dy;
 
-                    if (dist < maxDist && dist > 0) {
+                    // Only do expensive sqrt if within bounding box / squared distance
+                    if (distSq < maxDist * maxDist && distSq > 0) {
+                        const dist = Math.sqrt(distSq);
                         const force = (1 - dist / maxDist) * 4;
                         p.vx += (dx / dist) * force;
                         p.vy += (dy / dist) * force;
@@ -781,9 +850,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                ctx.fillStyle = `rgba(${rgbColor}, ${p.currentAlpha})`;
+                ctx.globalAlpha = p.currentAlpha;
                 ctx.fillText(p.char, p.x, p.y);
             });
+            ctx.globalAlpha = 1; // Restore
         };
 
         const handleMouseMove = (e) => {
@@ -819,6 +889,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
+            window.lastAsciiExplosionTime = (performance.now() - startTime) / 1000;
+
             // Explode the adjacent HTML text in the global canvas!
             explodeHeroText(e.clientX, e.clientY);
             
@@ -836,6 +908,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 p.repositioned = false;
             });
         });
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                if (!isAsciiVisible) {
+                    isAsciiVisible = true;
+                    draw();
+                }
+            } else {
+                isAsciiVisible = false;
+            }
+        });
+        observer.observe(canvas);
 
         draw();
     };
@@ -916,14 +1000,26 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // XP Scroll Bar
     const xpBarFill = document.querySelector('.xp-bar-fill');
+    let cachedScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let isXpTicking = false;
+    
+    window.addEventListener('resize', () => {
+        cachedScrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    }, { passive: true });
+
     window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollPercentage = (scrollTop / scrollHeight) * 100;
-        if(xpBarFill) {
-            xpBarFill.style.width = scrollPercentage + '%';
+        if (!isXpTicking) {
+            window.requestAnimationFrame(() => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollPercentage = (scrollTop / cachedScrollHeight) * 100;
+                if(xpBarFill) {
+                    xpBarFill.style.width = scrollPercentage + '%';
+                }
+                isXpTicking = false;
+            });
+            isXpTicking = true;
         }
-    });
+    }, { passive: true });
 
     // Custom Cursor
     const cursor = document.getElementById('cursor');
@@ -932,37 +1028,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if device supports hover (ignore mobile)
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     
-    if (!isTouchDevice && cursor && cursorFollower) {
-        let mouseX = 0, mouseY = 0;
-        let followerX = 0, followerY = 0;
+    let cursorMouseX = 0, cursorMouseY = 0;
+    let followerX = 0, followerY = 0;
+    const ambientGlow = document.querySelector('.ambient-glow');
 
+    if (!isTouchDevice && cursor && cursorFollower) {
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
+            cursorMouseX = e.clientX;
+            cursorMouseY = e.clientY;
+        }, { passive: true });
+
+        // Add a function to update cursor DOM that can be called from rAF
+        window.updateCursorDOM = function() {
             // Instantly move the small dot
-            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            cursor.style.transform = `translate3d(${cursorMouseX}px, ${cursorMouseY}px, 0)`;
             
             // Move ambient glow if it exists
-            const ambientGlow = document.querySelector('.ambient-glow');
             if(ambientGlow) {
-                ambientGlow.style.left = `${mouseX}px`;
-                ambientGlow.style.top = `${mouseY}px`;
+                ambientGlow.style.left = `${cursorMouseX}px`;
+                ambientGlow.style.top = `${cursorMouseY}px`;
             }
-        });
 
-        // Smooth follow for the larger circle
-        function animateFollower() {
-            let dx = mouseX - followerX;
-            let dy = mouseY - followerY;
+            let dx = cursorMouseX - followerX;
+            let dy = cursorMouseY - followerY;
             
             followerX += dx * 0.15; // Easing factor
             followerY += dy * 0.15;
             
             cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
-            requestAnimationFrame(animateFollower);
+        };
+
+        // If no bg canvas, use standalone loop
+        const bgCanvas = document.getElementById('bg-canvas');
+        if (!bgCanvas) {
+            function animateFollower() {
+                window.updateCursorDOM();
+                requestAnimationFrame(animateFollower);
+            }
+            animateFollower();
         }
-        animateFollower();
 
         // Add hover effect to interactive elements
         const interactives = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
@@ -991,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mousemove', (event) => {
             bgMouse.x = event.clientX;
             bgMouse.y = event.clientY;
-        });
+        }, { passive: true });
         
         window.addEventListener('mousedown', (e) => {
             // Text explosion triggers sound
@@ -1011,13 +1115,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Resize canvas
+        // Resize canvas (debounced)
+        let resizeTimeout;
         function resizeBg() {
             width = bgCanvas.width = window.innerWidth;
             height = bgCanvas.height = window.innerHeight;
             initBgParticles();
         }
-        window.addEventListener('resize', resizeBg);
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeBg, 200);
+        });
 
         // Particle Class
         class BgParticle {
@@ -1084,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initBgParticles() {
             bgParticles = [];
-            let numberOfParticles = (width * height) / 6000; // Increased Density for Premium look
+            let numberOfParticles = (width * height) / 20000; // Increased Density for Premium look
             for (let i = 0; i < numberOfParticles; i++) {
                 let size = (Math.random() * 2) + 1;
                 let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
@@ -1098,27 +1206,34 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw connecting lines
         function connectBg() {
             let opacityValue = 1;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
             for (let a = 0; a < bgParticles.length; a++) {
                 for (let b = a; b < bgParticles.length; b++) {
                     let distance = ((bgParticles[a].x - bgParticles[b].x) * (bgParticles[a].x - bgParticles[b].x))
                                  + ((bgParticles[a].y - bgParticles[b].y) * (bgParticles[a].y - bgParticles[b].y));
-                    if (distance < (width / 5) * (height / 5)) {
-                        opacityValue = 1 - (distance / 25000);
-                        if(opacityValue < 0) opacityValue = 0;
-                        ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.4})`; // Brighter Theme green connections
-                        ctx.lineWidth = 1.2;
-                        ctx.beginPath();
-                        ctx.moveTo(bgParticles[a].x, bgParticles[a].y);
-                        ctx.lineTo(bgParticles[b].x, bgParticles[b].y);
-                        ctx.stroke();
-                    }
+                    
+                    if (distance > (width / 12) * (height / 12)) continue;
+                    
+                    opacityValue = 1 - (distance / 25000);
+                    if(opacityValue < 0) opacityValue = 0;
+                    ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.4})`; // Brighter Theme green connections
+                    ctx.moveTo(bgParticles[a].x, bgParticles[a].y);
+                    ctx.lineTo(bgParticles[b].x, bgParticles[b].y);
                 }
             }
+            ctx.stroke();
         }
 
         function animateBg() {
             requestAnimationFrame(animateBg);
             ctx.clearRect(0, 0, width, height);
+            
+            // Unify cursor DOM updates into this loop
+            if (window.updateCursorDOM) {
+                window.updateCursorDOM();
+            }
+
             for (let i = 0; i < bgParticles.length; i++) {
                 bgParticles[i].update();
             }
@@ -1263,29 +1378,38 @@ document.addEventListener('DOMContentLoaded', () => {
             glare.classList.add('tilt-glare');
             card.appendChild(glare);
 
+            let rect = null;
+            let isTiltTicking = false;
+
             card.addEventListener('mouseenter', () => {
+                rect = card.getBoundingClientRect();
                 card.style.transition = 'transform 0s';
                 glare.style.transition = 'opacity 0.3s ease';
             });
 
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                // Calculate rotation (max 10 degrees)
-                const rotateX = ((y - centerY) / centerY) * -10;
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Move glare
-                const glareX = (x / rect.width) * 100;
-                const glareY = (y / rect.height) * 100;
-                glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+                if (!isTiltTicking && rect) {
+                    window.requestAnimationFrame(() => {
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        // Calculate rotation (max 10 degrees)
+                        const rotateX = ((y - centerY) / centerY) * -10;
+                        const rotateY = ((x - centerX) / centerX) * 10;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                        
+                        // Move glare
+                        const glareX = (x / rect.width) * 100;
+                        const glareY = (y / rect.height) * 100;
+                        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+                        isTiltTicking = false;
+                    });
+                    isTiltTicking = true;
+                }
             });
 
             card.addEventListener('mouseleave', () => {
