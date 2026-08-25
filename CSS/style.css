@@ -844,7 +844,7 @@ section {
 .folder-card:hover {
     box-shadow: 0 30px 60px rgba(235, 111, 146, 0.25), 0 0 40px rgba(235, 111, 146, 0.1);
     border-color: rgba(235, 111, 146, 0.5);
-    transform: scale(1.05) translateY(-10px) !important;
+    /* JS handles transform */
 }
 
 .folder-card > * {
@@ -896,11 +896,6 @@ section {
 }
 .folder-card:hover .tilt-glare {
     opacity: 1;
-}
-
-.folder-card:hover {
-    transform: translateY(-7px) scale(1.02);
-    box-shadow: 0 20px 40px -15px rgba(2,12,27,0.8);
 }
 
 .folder-header {

@@ -1041,8 +1041,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.getElementById('cursor');
     const cursorFollower = document.getElementById('cursor-follower');
     
-    // Check if device supports hover (ignore mobile)
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // Check if device is primarily touch (using standard media query instead of maxTouchPoints which breaks on hybrid laptops)
+    const isTouchDevice = window.matchMedia("(any-pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches;
     
     let cursorMouseX = 0, cursorMouseY = 0;
     let followerX = 0, followerY = 0;
@@ -1394,45 +1394,56 @@ document.addEventListener('DOMContentLoaded', () => {
             glare.classList.add('tilt-glare');
             card.appendChild(glare);
 
-            let rect = null;
-            let isTiltTicking = false;
+            let tiltFrameId = null;
 
             card.addEventListener('mouseenter', () => {
-                rect = card.getBoundingClientRect();
                 card.style.transition = 'transform 0s';
                 glare.style.transition = 'opacity 0.3s ease';
             });
 
             card.addEventListener('mousemove', (e) => {
-                if (!isTiltTicking && rect) {
-                    window.requestAnimationFrame(() => {
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        
-                        const centerX = rect.width / 2;
-                        const centerY = rect.height / 2;
-                        
-                        // Calculate rotation (max 10 degrees)
-                        const rotateX = ((y - centerY) / centerY) * -10;
-                        const rotateY = ((x - centerX) / centerX) * 10;
-                        
-                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                        
-                        // Move glare
-                        const glareX = (x / rect.width) * 100;
-                        const glareY = (y / rect.height) * 100;
-                        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
-                        isTiltTicking = false;
-                    });
-                    isTiltTicking = true;
+                if (tiltFrameId) {
+                    window.cancelAnimationFrame(tiltFrameId);
                 }
+                
+                tiltFrameId = window.requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Calculate rotation (max 10 degrees)
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    card.style.transform = `perspective(1000px) translateY(-7px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    
+                    // Move glare
+                    const glareX = (x / rect.width) * 100;
+                    const glareY = (y / rect.height) * 100;
+                    glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+                    tiltFrameId = null;
+                });
             });
 
             card.addEventListener('mouseleave', () => {
-                card.style.transition = 'transform 0.4s ease-out';
+                if (tiltFrameId) {
+                    window.cancelAnimationFrame(tiltFrameId);
+                    tiltFrameId = null;
+                }
+                // Restore original CSS transition
+                card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
                 glare.style.transition = 'opacity 0.4s ease';
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                // Remove inline transform so CSS takes over
+                card.style.transform = '';
                 glare.style.background = `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%)`;
+                
+                // Clear the inline transition after it completes to avoid inline specificity issues later
+                setTimeout(() => {
+                    card.style.transition = '';
+                }, 400);
             });
         });
     }
