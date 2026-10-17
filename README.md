@@ -20,6 +20,9 @@ Recréation d'un niveau de Mario en utilisant des tableaux 2D, avec un système 
 ### Remake Zelda
 Recréation de Link's Awakening sur Unity avec système de combat, inventaire et sauvegarde JSON. Système d'inventaire et de swap d'arme à la Zelda.
 
+### Rider Skate
+Arcade mobile 2.5D hybride sous Unity 6 : physique 2D déterministe couplée à un rendu 3D dynamique (URP). Simulation custom (accélération tangentielle locale, force vectorielle Ground Stick pour l'adhérence aux loopings, grinds magnétiques sur Splines Bézier avec Pumping, réceptions Perfect Stomp) et architecture Data-Driven avec système de quêtes procédurales persistant.
+
 ### Short Creation
 Projet d'application pour couper de longues vidéos en petits courts-métrages. Développé avec Tkinter, Python, CUDA pour la puissance des GPU Nvidia et le multiprocessing.
 

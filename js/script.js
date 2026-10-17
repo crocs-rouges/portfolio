@@ -31,12 +31,16 @@ const translations = {
         tech_loops: "Théorie des boucles & 3C",
         
         software_title: "software",
+        pfilter_all: "Tout",
+        pfilter_unity: "Unity & C#",
+        pfilter_godot: "Godot & C#",
+        pfilter_python: "Python & Outils",
         featured_overline: "Projet Phare",
         p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
-        p_shmup_desc: "Shoot 'em up réalisé lors de ma première année à ISART Digital. Ce projet de 2 mois, entièrement développé sur Godot en C#, est axé sur l'intégration d'effets de 'Juiciness' et une architecture de code rigoureuse.",
+        p_shmup_desc: "Shoot 'em up développé sur Godot en C# avec une architecture rigoureuse basée sur le <strong>Command Pattern</strong>. Focus majeur sur le <strong>Game Feel</strong> et la <strong>Juiciness</strong> : <em>Hit Stop</em> dynamique sur impact, secousses d'écran adaptatives, patterns de tirs rythmés et pooling d'entités sans GC.",
         
         p_zelda_title: "Remake Zelda",
-        p_zelda_desc: "Réalisation de Link's Awakening sur Unity avec système de combat, inventaire et sauvegarde JSON, système d'inventaire et de swap d'armes.",
+        p_zelda_desc: "Refactor solo sur Unity avec une architecture robuste : <strong>State Machine</strong> pour le joueur et le combat, <strong>Stateless Behavior Tree</strong> pour l'IA ennemie, et contrat <strong>IDataPersistence</strong> avec persistance chiffrée sur disque. Inventaire scriptable et caméra de Koholint.",
         p_puissance4_title: "Puissance 4",
         p_puissance4_desc: "Un jeu de Puissance 4 développé avec Pygame, incluant une adaptation automatique de la taille, gestion des erreurs et système de victoire.",
         p_mario_title: "Python Mario",
@@ -46,17 +50,17 @@ const translations = {
         p_yt_title: "Youtube Uploader",
         p_yt_desc_short: "Script Python automatisé pour l'upload de vidéos via l'API officielle de YouTube.",
         p_unreal_title: "Unreal Engine Project",
-        p_unreal_desc_short: "Création d'un système de vie et de mécaniques d'escalade via les Blueprints d'Unreal Engine.",
-        p_sokoban_title: "SOKOBAN (GDP1)",
-        p_sokoban_desc: "Made in GDP1. Réinterprétation du Sokoban sur le thème du casino. Intègre une mécanique de dé roulant, architecture propre (Command pattern, A*) et Juiciness.",
+        p_unreal_desc_short: "Prototypage de mécaniques 3D : système de santé modulaire et mécanique d'escalade procédurale via les Blueprints d'Unreal Engine.",
+        p_sokoban_title: "SOKOBAN (Fake 3D in 2D)",
+        p_sokoban_desc: "Réinterprétation casino de Sokoban. Mécanique de dé roulant avec physique discrète, architecture rigoureuse via <strong>Command Pattern</strong> (Undo/Redo illimité), pathfinding <strong>A*</strong> et feedbacks visuels satisfaisants.",
         p_mobile_title: "Mobile Mini Game OFG",
-        p_mobile_desc: "Réalisé en GDP1. One Finger Game inspiré de MUCHO PARTY. Un jeu 2 joueurs sur un seul téléphone (split screen ou full screen partagé), réalisé en 1 mois.",
+        p_mobile_desc: "One Finger Game multijoueur local (2 joueurs sur un seul écran tactile). Conception mathématique avec <strong>Systèmes Polaires</strong> et <strong>Trigonométrie appliquée</strong> pour des interactions physiques fluides.",
         p_rider_title: "Rider Skate",
-        p_rider_desc: "Jeu d'arcade mobile 2.5D alliant la fluidité de Rider et la technicité du skate. Physique 2D avec visuels 3D, système de tricks et rails dynamiques.",
+        p_rider_desc: "Runner arcade mobile 2.5D combinant physique 2D déterministe et rendu 3D dynamique (URP). Architecture en <strong>State Machine</strong> et approche <strong>Data-Driven</strong> (ScriptableObjects). Simulation custom : accélération tangentielle locale, force vectorielle <strong>Ground Stick</strong> pour l'adhérence aux loopings, grinds magnétiques sur <strong>Splines Bézier</strong> avec <strong>Pumping</strong>, réceptions <strong>Perfect Stomp</strong> (&plusmn;5&deg;) et système de <strong>Quêtes Procédurales</strong> avec persistance.",
         p_short_title: "Short Création",
-        p_short_desc: "Application servant à couper de longues vidéos en petits formats 9/16, utilisant la puissance des GPU NVIDIA et le multiprocessing.",
+        p_short_desc: "Outil de production vidéo automatisé découpant des formats longs en 9/16 pour YouTube Shorts / TikTok. Pipeline accéléré par <strong>GPU NVIDIA (CUDA)</strong>, multiprocessing et interface Tkinter.",
         p_isart_title: "ISART Summer School Project",
-        p_isart_desc1: "Jeu 2D top-down réalisé en visual scripting. Le but est de vaincre tous les ennemis et d'affronter le boss avec des pierres et un arc.",
+        p_isart_desc1: "Jeu d'action top-down 2D réalisé sous Unity. Système de combat projectiles/arc, gestion de vagues d'ennemis et State Machine de pattern de boss.",
         view_all_projects: "Voir tous les projets",
         
         art_title: "art gallery",
@@ -76,7 +80,9 @@ const translations = {
         
         contact_overline: "04. Et ensuite ?",
         contact_title: "Get In Touch",
-        contact_text: "Si mon profil correspond à vos recherches ou si vous souhaitez échanger autour du Game Dev, n'hésitez pas à me contacter. Je suis toujours ouvert à de nouvelles opportunités."
+        contact_text: "Si mon profil correspond à vos recherches ou si vous souhaitez échanger autour du Game Dev, n'hésitez pas à me contacter. Je suis toujours ouvert à de nouvelles opportunités.",
+        achievement_title: "SUCCÈS DÉVERROUILLÉ !",
+        achievement_desc: "Maître Rétro : Konami Code exécuté ! (+5000 XP)"
     },
     en: {
         nav_about: "About",
@@ -107,12 +113,16 @@ const translations = {
         tech_loops: "Loop Theory & 3C",
         
         software_title: "software",
+        pfilter_all: "All",
+        pfilter_unity: "Unity & C#",
+        pfilter_godot: "Godot & C#",
+        pfilter_python: "Python & Tools",
         featured_overline: "Featured Project",
         p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
-        p_shmup_desc: "Shoot 'em up created during my first year at ISART Digital. This 2-month project, fully developed on Godot using C#, focuses on implementing 'Juiciness' effects and rigorous code architecture.",
+        p_shmup_desc: "Shoot 'em up built in Godot with C# featuring a rigorous <strong>Command Pattern</strong> architecture. Heavy focus on <strong>Game Feel</strong> and <strong>Juiciness</strong>: dynamic <em>Hit Stop</em> on impact, adaptive screen shake, rhythm-synced procedural bullet patterns, and zero-GC entity pooling.",
         
         p_zelda_title: "Zelda Remake",
-        p_zelda_desc: "Recreation of Link's Awakening on Unity with combat system, inventory, JSON save, and weapon swapping.",
+        p_zelda_desc: "Solo refactor in Unity with robust architecture: <strong>State Machine</strong> for player combat states, <strong>Stateless Behavior Tree</strong> for enemy AI, and <strong>IDataPersistence</strong> contract with encrypted disk saves. Scriptable inventory system and Koholint camera follow.",
         p_puissance4_title: "Connect 4",
         p_puissance4_desc: "A Connect 4 game developed with Pygame, including automatic size adaptation, error management and victory system.",
         p_mario_title: "Python Mario",
@@ -122,17 +132,17 @@ const translations = {
         p_yt_title: "Youtube Uploader",
         p_yt_desc_short: "Automated Python script for uploading videos via the official YouTube API.",
         p_unreal_title: "Unreal Engine Project",
-        p_unreal_desc_short: "Creation of a health system and climbing mechanics via Unreal Engine Blueprints.",
-        p_sokoban_title: "SOKOBAN (GDP1)",
-        p_sokoban_desc: "Made in GDP1. Casino-themed reinterpretation of Sokoban. Features a rolling dice mechanic, clean architecture (Command pattern, A*), and Juiciness.",
+        p_unreal_desc_short: "3D mechanics prototyping: modular health system and procedural climbing mechanics using Unreal Engine Blueprints.",
+        p_sokoban_title: "SOKOBAN (Fake 3D in 2D)",
+        p_sokoban_desc: "Casino-themed reimagining of Sokoban. Rolling dice discrete physics, <strong>Command Pattern</strong> architecture for infinite Undo/Redo, <strong>A*</strong> pathfinding, and juicy visual feedbacks.",
         p_mobile_title: "Mobile Mini Game OFG",
-        p_mobile_desc: "Made in GDP1. One Finger Game inspired by MUCHO PARTY. A 2-player game on a single phone (split or shared full screen), developed in 1 month.",
+        p_mobile_desc: "One Finger Game local multiplayer (2 players on a single touchscreen). Advanced mathematical design using <strong>Polar Coordinate Systems</strong> and <strong>applied trigonometry</strong> for seamless touch interactions.",
         p_rider_title: "Rider Skate",
-        p_rider_desc: "2.5D mobile arcade game combining Rider's fluidity and skateboarding techniques. 2D physics with 3D visuals, trick system, and dynamic rails.",
+        p_rider_desc: "Hybrid 2.5D mobile arcade runner pairing deterministic 2D physics with dynamic 3D rendering (URP). Modular <strong>State Machine</strong> and <strong>Data-Driven</strong> architecture (ScriptableObjects). Custom simulation: local tangential acceleration, vector <strong>Ground Stick</strong> for extreme looping adherence, magnetic grinds on <strong>Bézier Splines</strong> with <strong>Pumping</strong>, skill-based <strong>Perfect Stomp</strong> (&plusmn;5&deg;) landings, and a persistent <strong>Procedural Quest System</strong>.",
         p_short_title: "Short Creation Engine",
-        p_short_desc: "Application used to cut long videos into small 9:16 formats, utilizing the power of NVIDIA GPUs and multiprocessing.",
+        p_short_desc: "Automated video clipping engine transforming long videos into 9/16 Shorts/TikToks. Accelerated by <strong>NVIDIA GPUs (CUDA)</strong>, multiprocessing, and a Tkinter GUI.",
         p_isart_title: "ISART Summer School Project",
-        p_isart_desc1: "Top-down 2D game made with visual scripting. The goal is to defeat all enemies and face the boss using stones and a bow.",
+        p_isart_desc1: "Top-down 2D action game built in Unity. Bow and projectile combat system, enemy wave manager, and boss AI pattern State Machine.",
         view_all_projects: "View All Projects",
         
         art_title: "art gallery",
@@ -152,7 +162,9 @@ const translations = {
         
         contact_overline: "04. What's Next?",
         contact_title: "Get In Touch",
-        contact_text: "If my profile matches your search or if you want to chat about Game Dev, feel free to contact me. My inbox is always open."
+        contact_text: "If my profile matches your search or if you want to chat about Game Dev, feel free to contact me. My inbox is always open.",
+        achievement_title: "ACHIEVEMENT UNLOCKED!",
+        achievement_desc: "Retro Master: Konami Code Executed! (+5000 XP)"
     }
 };
 
@@ -362,6 +374,45 @@ const SoundManager = {
         noiseGain.connect(this.ctx.destination);
         
         noise.start(now);
+    },
+
+    playFanfare() {
+        if (!this.ctx) this.init();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const now = this.ctx.currentTime;
+        
+        // Zelda Secret & Triumph 8-bit Fanfare (G5, F#5, D#5, A4, G#4, E5, G#5, C6)
+        const notes = [
+            { freq: 783.99, duration: 0.11 },
+            { freq: 739.99, duration: 0.11 },
+            { freq: 622.25, duration: 0.11 },
+            { freq: 440.00, duration: 0.11 },
+            { freq: 415.30, duration: 0.11 },
+            { freq: 659.25, duration: 0.11 },
+            { freq: 830.61, duration: 0.12 },
+            { freq: 1046.50, duration: 0.55 }
+        ];
+        
+        let noteTime = now + 0.02;
+        notes.forEach((note) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(note.freq, noteTime);
+            
+            gain.gain.setValueAtTime(0, noteTime);
+            gain.gain.linearRampToValueAtTime(0.14, noteTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, noteTime + note.duration);
+            
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            
+            osc.start(noteTime);
+            osc.stop(noteTime + note.duration);
+            
+            noteTime += note.duration * 0.95;
+        });
     }
 };
 
@@ -436,11 +487,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 2. GAME MODE LOGIC
+    // 2. SCREEN SHAKE & TACTILE JUICE
     // ==========================================
-    function triggerLocalTextShake() {
-        // Disabled in favor of canvas particle explosion
+    function triggerScreenShake(duration = 350) {
+        document.body.classList.remove('screen-shake');
+        void document.body.offsetWidth; // Force DOM reflow
+        document.body.classList.add('screen-shake');
+        setTimeout(() => {
+            document.body.classList.remove('screen-shake');
+        }, duration);
     }
+
+    // ==========================================
+    // 2.5 KONAMI CODE EASTER EGG (Juiciness & Gamification)
+    // ==========================================
+    function triggerKonamiEasterEgg() {
+        SoundManager.playFanfare();
+        triggerScreenShake(600);
+
+        // Turn on Game Mode if not already active
+        if (!isGameMode && gameModeBtn) {
+            gameModeBtn.click();
+        }
+
+        // Boost XP Bar to 100% with animated rainbow glow
+        const xpContainer = document.querySelector('.xp-bar-container');
+        const xpBarFill = document.querySelector('.xp-bar-fill');
+        if (xpContainer && xpBarFill) {
+            xpContainer.classList.add('xp-bar-boosted');
+            xpBarFill.style.width = '100%';
+            setTimeout(() => {
+                xpContainer.classList.remove('xp-bar-boosted');
+            }, 6000);
+        }
+
+        // Show Achievement Toast
+        const toast = document.getElementById('achievement-toast');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4500);
+        }
+
+        // Cyber fireworks particles across screen
+        if (!window.clickSparks) window.clickSparks = [];
+        const chars = ['★', '◆', 'XP', '1UP', '100%', '✦', '▲'];
+        const colors = ['#eb6f92', '#f6c177', '#9ccfd8', '#c4a7e7', '#31748f'];
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        for (let i = 0; i < 50; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 12 + 3;
+            window.clickSparks.push({
+                x: centerX + (Math.random() - 0.5) * 200,
+                y: centerY + (Math.random() - 0.5) * 200,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                char: chars[Math.floor(Math.random() * chars.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                life: 1.0,
+                decay: Math.random() * 0.015 + 0.01
+            });
+        }
+    }
+
+    // Sequence: ↑ ↑ ↓ ↓ ← → ← → B A
+    const konamiSequence = [
+        'arrowup', 'arrowup',
+        'arrowdown', 'arrowdown',
+        'arrowleft', 'arrowright',
+        'arrowleft', 'arrowright',
+        'b', 'a'
+    ];
+    let konamiPointer = 0;
+
+    window.addEventListener('keydown', (e) => {
+        SoundManager.init();
+        const key = e.key.toLowerCase();
+        if (key === konamiSequence[konamiPointer]) {
+            konamiPointer++;
+            if (konamiPointer === konamiSequence.length) {
+                konamiPointer = 0;
+                triggerKonamiEasterEgg();
+            }
+        } else {
+            konamiPointer = (key === konamiSequence[0]) ? 1 : 0;
+        }
+    });
 
     function explodeHeroText(clickX, clickY) {
         if (window.explodingLetters && window.explodingLetters.length > 0) return; // already exploding
@@ -543,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gameModeBtn.addEventListener('click', () => {
         isGameMode = !isGameMode;
-        triggerLocalTextShake();
+        triggerScreenShake(300);
         if (isGameMode) {
             body.classList.add('game-mode');
             body.classList.add('animating-crt');
@@ -720,22 +855,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     updateCachedColor();
                     staticAsciiCanvas = null;
+                    wakeAscii();
                 }, 50);
             });
         }
 
+        let isAsciiVisible = window.innerWidth > 768;
+        let isAsciiAnimating = false;
+
+        const wakeAscii = () => {
+            if (!isAsciiVisible || document.hidden || window.innerWidth <= 768) return;
+            if (!isAsciiAnimating) {
+                isAsciiAnimating = true;
+                if (animationId) cancelAnimationFrame(animationId);
+                animationId = requestAnimationFrame(draw);
+            }
+        };
+
+        const sleepAscii = () => {
+            isAsciiAnimating = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        };
+
+        let resizeAsciiTimeout;
         window.addEventListener("resize", () => {
-            size = calculateSize(window.innerWidth);
-            ctx = setupCanvas();
+            clearTimeout(resizeAsciiTimeout);
+            resizeAsciiTimeout = setTimeout(() => {
+                if (window.innerWidth <= 768) {
+                    isAsciiVisible = false;
+                    sleepAscii();
+                    return;
+                }
+                isAsciiVisible = true;
+                size = calculateSize(window.innerWidth);
+                ctx = setupCanvas();
+                wakeAscii();
+            }, 200);
         });
 
-        let isAsciiVisible = true;
         const draw = () => {
-            if (!isAsciiVisible) return;
-            animationId = requestAnimationFrame(draw);
+            if (!isAsciiVisible || document.hidden || window.innerWidth <= 768) {
+                sleepAscii();
+                return;
+            }
+
             ctx.clearRect(0, 0, size, size);
 
-            if (!dataReady || particles.length === 0) return;
+            if (!dataReady || particles.length === 0) {
+                animationId = requestAnimationFrame(draw);
+                return;
+            }
 
             const elapsed = (performance.now() - startTime) / 1000;
 
@@ -746,7 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.x += (mouseTarget.x - mouse.x) * 0.15;
             mouse.y += (mouseTarget.y - mouse.y) * 0.15;
 
-            // Cache completely static portrait to save CPU/GPU
+            // Cache completely static portrait and SLEEP loop to save CPU/GPU
             const isSettled = !mouse.active && (elapsed - lastActiveTime > 2.5) && (elapsed > 4.5) && (elapsed - (window.lastAsciiExplosionTime || 0) > 2.5);
 
             if (isSettled) {
@@ -770,6 +942,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
                 ctx.drawImage(staticAsciiCanvas, 0, 0, size, size);
+                sleepAscii();
                 return;
             } else {
                 staticAsciiCanvas = null;
@@ -870,6 +1043,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fillText(p.char, p.x, p.y);
             });
             ctx.globalAlpha = 1; // Restore
+
+            animationId = requestAnimationFrame(draw);
         };
 
         const handleMouseMove = (e) => {
@@ -877,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseTarget.x = e.clientX - rect.left;
             mouseTarget.y = e.clientY - rect.top;
             mouse.active = true;
+            wakeAscii();
         };
 
         const handleTouchMove = (e) => {
@@ -885,6 +1061,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseTarget.x = touch.clientX - rect.left;
             mouseTarget.y = touch.clientY - rect.top;
             mouse.active = true;
+            wakeAscii();
             if (e.cancelable) e.preventDefault();
         };
 
@@ -901,10 +1078,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ASCII Explosion on click
         canvas.addEventListener("mousedown", (e) => {
+            wakeAscii();
             const rect = canvas.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
             const clickY = e.clientY - rect.top;
             
+            triggerScreenShake(300);
             window.lastAsciiExplosionTime = (performance.now() - startTime) / 1000;
 
             // Explode the adjacent HTML text in the global canvas!
@@ -926,18 +1105,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                if (!isAsciiVisible) {
-                    isAsciiVisible = true;
-                    draw();
-                }
+            if (entries[0].isIntersecting && window.innerWidth > 768) {
+                isAsciiVisible = true;
+                wakeAscii();
             } else {
                 isAsciiVisible = false;
+                sleepAscii();
             }
         });
         observer.observe(canvas);
 
-        draw();
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                sleepAscii();
+            } else if (isAsciiVisible && window.innerWidth > 768) {
+                wakeAscii();
+            }
+        });
+
+        if (window.innerWidth > 768) {
+            wakeAscii();
+        }
     };
 
     initAsciiPortrait();
@@ -982,6 +1170,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run setup after a small delay to allow initial rendering
     setTimeout(setupAnimations, 100);
+
+    // ==========================================
+    // 5.4 SOFTWARE PROJECT FILTER LOGIC
+    // ==========================================
+    const projectFilterBtns = document.querySelectorAll('.project-filters .project-filter-btn');
+    const projectItemsToFilter = document.querySelectorAll('.featured-project, .folder-card');
+
+    projectFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (typeof SoundManager !== 'undefined') SoundManager.playClick();
+
+            projectFilterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectItemsToFilter.forEach(card => {
+                const tech = card.getAttribute('data-tech') || '';
+                if (filterValue === 'all' || tech.toLowerCase().includes(filterValue.toLowerCase())) {
+                    card.classList.remove('project-hidden');
+                } else {
+                    card.classList.add('project-hidden');
+                }
+            });
+        });
+    });
 
     // ==========================================
     // 5.5 GALLERY FILTER LOGIC
@@ -1049,18 +1263,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const ambientGlow = document.querySelector('.ambient-glow');
 
     if (!isTouchDevice && cursor && cursorFollower) {
-        document.addEventListener('mousemove', (e) => {
-            cursorMouseX = e.clientX;
-            cursorMouseY = e.clientY;
-        }, { passive: true });
+        let cursorAnimId = null;
 
-        // Add a function to update cursor DOM that can be called from rAF
-        window.updateCursorDOM = function() {
+        function updateCursorDOM() {
             // Instantly move the small dot
             cursor.style.transform = `translate3d(${cursorMouseX}px, ${cursorMouseY}px, 0)`;
             
             // Move ambient glow if it exists
-            if(ambientGlow) {
+            if (ambientGlow) {
                 ambientGlow.style.left = `${cursorMouseX}px`;
                 ambientGlow.style.top = `${cursorMouseY}px`;
             }
@@ -1072,17 +1282,26 @@ document.addEventListener('DOMContentLoaded', () => {
             followerY += dy * 0.15;
             
             cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
-        };
 
-        // If no bg canvas, use standalone loop
-        const bgCanvas = document.getElementById('bg-canvas');
-        if (!bgCanvas) {
-            function animateFollower() {
-                window.updateCursorDOM();
-                requestAnimationFrame(animateFollower);
+            // Keep ticking while follower is moving towards cursor
+            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                cursorAnimId = requestAnimationFrame(updateCursorDOM);
+            } else {
+                cursorAnimId = null;
             }
-            animateFollower();
         }
+
+        function requestCursorTick() {
+            if (!cursorAnimId) {
+                cursorAnimId = requestAnimationFrame(updateCursorDOM);
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            cursorMouseX = e.clientX;
+            cursorMouseY = e.clientY;
+            requestCursorTick();
+        }, { passive: true });
 
         // Add hover effect to interactive elements
         const interactives = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
@@ -1100,6 +1319,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = bgCanvas.getContext('2d');
         let width, height;
         let bgParticles = [];
+        let bgAnimationId = null;
+        let isBgRunning = false;
         
         // Mouse interaction
         let bgMouse = {
@@ -1117,6 +1338,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Text explosion triggers sound
             if (window.explodingLetters && !window.explodingLetters.some(l => !l.repositioned)) {
                 SoundManager.playExplosion();
+                triggerScreenShake(300);
             }
             explodeHeroText(e.clientX, e.clientY);
             
@@ -1173,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.y += this.dy;
 
                 // Mouse interactivity (Repel)
-                if(bgMouse.x != null) {
+                if (bgMouse.x != null) {
                     let dx = bgMouse.x - this.x;
                     let dy = bgMouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
@@ -1208,47 +1430,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initBgParticles() {
             bgParticles = [];
-            let numberOfParticles = (width * height) / 20000; // Increased Density for Premium look
+            const isMobile = window.innerWidth <= 768;
+            // Adaptive particle density: ~20 on mobile, ~50 on desktop
+            const maxParticles = isMobile ? 22 : 55;
+            const divisor = isMobile ? 35000 : 25000;
+            const numberOfParticles = Math.min(maxParticles, Math.max(15, Math.floor((width * height) / divisor)));
+            
             for (let i = 0; i < numberOfParticles; i++) {
                 let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let dx = (Math.random() - 0.5) * 1.5;
-                let dy = (Math.random() - 0.5) * 1.5;
+                let x = (Math.random() * ((width - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((height - size * 2) - (size * 2)) + size * 2);
+                let dx = (Math.random() - 0.5) * 1.2;
+                let dy = (Math.random() - 0.5) * 1.2;
                 bgParticles.push(new BgParticle(x, y, dx, dy, size));
             }
         }
 
-        // Draw connecting lines
+        // Draw connecting lines with O(N^2) spatial bounding box optimization
         function connectBg() {
-            let opacityValue = 1;
-            ctx.lineWidth = 1.2;
+            // Skip connecting lines on mobile screens to save GPU/battery
+            if (window.innerWidth <= 768) return;
+
+            const maxDist = 120;
+            const maxDistSq = maxDist * maxDist;
+            
+            ctx.lineWidth = 1.0;
             ctx.beginPath();
+            let hasLines = false;
+            
             for (let a = 0; a < bgParticles.length; a++) {
-                for (let b = a; b < bgParticles.length; b++) {
-                    let distance = ((bgParticles[a].x - bgParticles[b].x) * (bgParticles[a].x - bgParticles[b].x))
-                                 + ((bgParticles[a].y - bgParticles[b].y) * (bgParticles[a].y - bgParticles[b].y));
+                const pA = bgParticles[a];
+                for (let b = a + 1; b < bgParticles.length; b++) {
+                    const pB = bgParticles[b];
                     
-                    if (distance > (width / 12) * (height / 12)) continue;
+                    // Fast bounding box rejection (skips ~80% of multiplications)
+                    const dx = Math.abs(pA.x - pB.x);
+                    if (dx > maxDist) continue;
+                    const dy = Math.abs(pA.y - pB.y);
+                    if (dy > maxDist) continue;
                     
-                    opacityValue = 1 - (distance / 25000);
-                    if(opacityValue < 0) opacityValue = 0;
-                    ctx.strokeStyle = `rgba(235, 111, 146, ${opacityValue * 0.4})`; // Brighter Theme green connections
-                    ctx.moveTo(bgParticles[a].x, bgParticles[a].y);
-                    ctx.lineTo(bgParticles[b].x, bgParticles[b].y);
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq > maxDistSq) continue;
+                    
+                    ctx.moveTo(pA.x, pA.y);
+                    ctx.lineTo(pB.x, pB.y);
+                    hasLines = true;
                 }
             }
-            ctx.stroke();
+            if (hasLines) {
+                ctx.strokeStyle = 'rgba(235, 111, 146, 0.15)';
+                ctx.stroke();
+            }
         }
 
         function animateBg() {
-            requestAnimationFrame(animateBg);
+            if (!isBgRunning) return;
+            bgAnimationId = requestAnimationFrame(animateBg);
             ctx.clearRect(0, 0, width, height);
-            
-            // Unify cursor DOM updates into this loop
-            if (window.updateCursorDOM) {
-                window.updateCursorDOM();
-            }
 
             for (let i = 0; i < bgParticles.length; i++) {
                 bgParticles[i].update();
@@ -1372,8 +1610,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function startBgLoop() {
+            if (!isBgRunning && !document.hidden) {
+                isBgRunning = true;
+                bgAnimationId = requestAnimationFrame(animateBg);
+            }
+        }
+
+        function stopBgLoop() {
+            if (isBgRunning) {
+                isBgRunning = false;
+                if (bgAnimationId) {
+                    cancelAnimationFrame(bgAnimationId);
+                    bgAnimationId = null;
+                }
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopBgLoop();
+            } else {
+                startBgLoop();
+            }
+        });
+
         resizeBg();
-        animateBg();
+        startBgLoop();
         
         // Mouse out event to release particles
         window.addEventListener('mouseout', () => {
