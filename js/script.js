@@ -1304,7 +1304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
 
         // Add hover effect to interactive elements
-        const interactives = document.querySelectorAll('a, button, .folder-card, .featured-img-container');
+        const interactives = document.querySelectorAll('a, button, .folder-card, .featured-img-container, .gallery-card');
         interactives.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
@@ -1765,6 +1765,58 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && videoModal.classList.contains('show')) {
                 closeModal();
+            }
+        });
+    }
+
+    // ==========================================
+    // 9.5 IMAGE LIGHTBOX MODAL LOGIC
+    // ==========================================
+    const imageModal = document.getElementById('image-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeImageModalBtn = document.getElementById('close-image-modal');
+    const galleryCards = document.querySelectorAll('#art-gallery-grid .gallery-card');
+
+    if (imageModal && lightboxImg && lightboxCaption && closeImageModalBtn) {
+        function openImageModal(src, alt) {
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            lightboxCaption.textContent = alt || '';
+            imageModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('show');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                lightboxImg.src = '';
+                lightboxCaption.textContent = '';
+            }, 300);
+        }
+
+        galleryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('img');
+                if (img) {
+                    if (typeof SoundManager !== 'undefined') SoundManager.playClick();
+                    openImageModal(img.src, img.alt);
+                }
+            });
+        });
+
+        closeImageModalBtn.addEventListener('click', closeImageModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && imageModal.classList.contains('show')) {
+                closeImageModal();
             }
         });
     }
