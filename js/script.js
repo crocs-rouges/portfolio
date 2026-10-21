@@ -68,6 +68,8 @@ const translations = {
         filter_all: "Tout",
         filter_art: "Dessin",
         filter_photo: "Photographie",
+        art_btn_more: "Voir plus",
+        art_btn_less: "Voir moins",
         
         video_title: "video gallery",
         video_desc: "Mes montages vidéo, motion design et trailers de gameplay.",
@@ -150,6 +152,8 @@ const translations = {
         filter_all: "All",
         filter_art: "Drawing",
         filter_photo: "Photography",
+        art_btn_more: "Show more",
+        art_btn_less: "Show less",
         
         video_title: "video gallery",
         video_desc: "My video edits, motion design, and gameplay trailers.",
@@ -1198,31 +1202,100 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
-    // 5.5 GALLERY FILTER LOGIC
+    // 5.5 GALLERY FILTER & "VOIR PLUS" LOGIC
     // ==========================================
     const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
     const artCards = document.querySelectorAll('#art-gallery-grid .gallery-card');
+    const galleryMoreContainer = document.getElementById('gallery-more-container');
+    const galleryMoreBtn = document.getElementById('gallery-more-btn');
+
+    const GALLERY_VISIBLE_LIMIT = 6;
+    let isGalleryExpanded = false;
+    let currentGalleryFilter = 'all';
+
+    function updateGalleryItems() {
+        let matchingCount = 0;
+        const activeLang = localStorage.getItem('lang') || 'fr';
+
+        artCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            const matchesFilter = (currentGalleryFilter === 'all' || category === currentGalleryFilter);
+
+            if (!matchesFilter) {
+                card.classList.add('hidden');
+                card.classList.remove('gallery-overflow');
+            } else {
+                card.classList.remove('hidden');
+                matchingCount++;
+
+                if (!isGalleryExpanded && matchingCount > GALLERY_VISIBLE_LIMIT) {
+                    card.classList.add('gallery-overflow');
+                } else {
+                    card.classList.remove('gallery-overflow');
+                }
+            }
+        });
+
+        // Show/hide the "Voir plus" button based on total matching count
+        if (galleryMoreContainer) {
+            if (matchingCount > GALLERY_VISIBLE_LIMIT) {
+                galleryMoreContainer.style.display = 'flex';
+            } else {
+                galleryMoreContainer.style.display = 'none';
+            }
+        }
+
+        // Update button text and state
+        if (galleryMoreBtn) {
+            const textSpan = galleryMoreBtn.querySelector('.btn-more-text');
+            if (isGalleryExpanded) {
+                galleryMoreBtn.classList.add('expanded');
+                galleryMoreBtn.setAttribute('aria-expanded', 'true');
+                if (textSpan) {
+                    textSpan.setAttribute('data-i18n', 'art_btn_less');
+                    textSpan.textContent = translations[activeLang]?.art_btn_less || (activeLang === 'fr' ? 'Voir moins' : 'Show less');
+                }
+            } else {
+                galleryMoreBtn.classList.remove('expanded');
+                galleryMoreBtn.setAttribute('aria-expanded', 'false');
+                if (textSpan) {
+                    textSpan.setAttribute('data-i18n', 'art_btn_more');
+                    textSpan.textContent = translations[activeLang]?.art_btn_more || (activeLang === 'fr' ? 'Voir plus' : 'Show more');
+                }
+            }
+        }
+    }
+
+    if (galleryMoreBtn) {
+        galleryMoreBtn.addEventListener('click', () => {
+            if (typeof SoundManager !== 'undefined') SoundManager.playClick();
+            isGalleryExpanded = !isGalleryExpanded;
+            updateGalleryItems();
+
+            if (!isGalleryExpanded) {
+                const artSection = document.getElementById('art');
+                if (artSection) {
+                    artSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    }
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Try to play sound if defined
             if (typeof SoundManager !== 'undefined') SoundManager.playClick();
 
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const filterValue = btn.getAttribute('data-filter');
-
-            artCards.forEach(card => {
-                const category = card.getAttribute('data-category');
-                if (filterValue === 'all' || category === filterValue) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+            currentGalleryFilter = btn.getAttribute('data-filter') || 'all';
+            isGalleryExpanded = false; // Reset to 6 visible when changing filter
+            updateGalleryItems();
         });
     });
+
+    // Initial setup: limit to 6 visible photos on load
+    updateGalleryItems();
 
     // ==========================================
     // 6. PHASE 2: CUSTOM CURSOR, AMBIENT, XP BAR

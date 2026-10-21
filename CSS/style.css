@@ -1100,7 +1100,8 @@ body.game-mode .game-dot {
     column-gap: 20px;
 }
 
-.gallery-card.hidden {
+.gallery-card.hidden,
+.gallery-card.gallery-overflow {
     display: none;
 }
 
@@ -1144,6 +1145,64 @@ body.game-mode .game-dot {
 
 .gallery-card:hover .gallery-img {
     transform: scale(1.08);
+}
+
+/* Gallery More Button */
+.gallery-more-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px auto 20px;
+    width: 100%;
+}
+
+.btn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(42, 39, 63, 0.45);
+    color: var(--lightest-slate);
+    border: 1px solid rgba(235, 111, 146, 0.35);
+    border-radius: 30px;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-more:hover {
+    color: var(--green);
+    border-color: var(--green);
+    background: rgba(235, 111, 146, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(235, 111, 146, 0.3);
+}
+
+.btn-more-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.35s ease;
+}
+
+.btn-more.expanded .btn-more-icon {
+    transform: rotate(180deg);
+}
+
+body.game-mode .btn-more {
+    border-radius: 0;
+    border: 2px solid var(--slate);
+    color: var(--slate);
+    background: #000;
+}
+
+body.game-mode .btn-more:hover {
+    border-color: var(--green);
+    color: #000;
+    background: var(--green);
+    box-shadow: none;
 }
 
 .placeholder-img {
