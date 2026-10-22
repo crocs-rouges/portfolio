@@ -763,8 +763,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!canvas) return;
 
         const calculateSize = (width) => {
-            if (width <= 480) return Math.min(320, width - 40);
-            if (width <= 768) return Math.min(500, width - 60);
+            if (width <= 480) return Math.min(300, Math.max(260, width - 40));
+            if (width <= 768) return Math.min(420, width - 60);
             return 800; // Will use largest available
         };
 
@@ -778,29 +778,32 @@ document.addEventListener('DOMContentLoaded', () => {
         let staticAsciiCanvas = null;
         let lastActiveTime = 0;
 
-        const createParticlesFromRaw = (rawParticles, isMobileSize) => {
-            // Reduce point density by 50% on desktop for performance
-            const filteredParticles = isMobileSize 
-                ? rawParticles 
-                : rawParticles.filter((_, index) => index % 2 === 0);
+        const createParticlesFromRaw = (rawParticles, isMobileSize, scaleFactor = 1, offsetX = 0, offsetY = 0) => {
+            // Keep 50% density for buttery smooth 60fps performance on all devices
+            const filteredParticles = rawParticles.filter((_, index) => index % 2 === 0);
             
-            // Increase font size slightly to compensate for missing points
-            const fontSize = isMobileSize ? 4 : 6;
+            // Scaled font size
+            const baseFontSize = isMobileSize ? 5 : 6;
+            const fontSize = Math.max(3, Math.round(baseFontSize * scaleFactor));
             
-            return filteredParticles.map((p) => ({
-                x: p.x + (Math.random() - 0.5) * 400,
-                y: p.y + (Math.random() - 0.5) * 400,
-                targetX: p.x,
-                targetY: p.y,
-                vx: 0,
-                vy: 0,
-                char: p.char,
-                fontSize: fontSize,
-                baseAlpha: p.alpha,
-                currentAlpha: 0,
-                delay: Math.random() * 0.4,
-                shimmer: Math.random() * Math.PI * 2,
-            }));
+            return filteredParticles.map((p) => {
+                const tx = p.x * scaleFactor + offsetX;
+                const ty = p.y * scaleFactor + offsetY;
+                return {
+                    x: tx + (Math.random() - 0.5) * (isMobileSize ? 100 : 400),
+                    y: ty + (Math.random() - 0.5) * (isMobileSize ? 100 : 400),
+                    targetX: tx,
+                    targetY: ty,
+                    vx: 0,
+                    vy: 0,
+                    char: p.char,
+                    fontSize: fontSize,
+                    baseAlpha: p.alpha,
+                    currentAlpha: 0,
+                    delay: Math.random() * 0.35,
+                    shimmer: Math.random() * Math.PI * 2,
+                };
+            });
         };
 
         let rgbColor = '235, 111, 146';
@@ -827,7 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const setupCanvas = () => {
             staticAsciiCanvas = null;
             updateCachedColor();
-            const isMobileSize = size <= 320;
+            const isMobileSize = size <= 420;
             let dataSize = "500";
             if (size <= 320) dataSize = "320";
             else if (size <= 500) dataSize = "500";
@@ -835,7 +838,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const rawData = asciiData[dataSize] || asciiData[Object.keys(asciiData)[0]];
             if (rawData) {
-                particles = createParticlesFromRaw(rawData, isMobileSize);
+                const baseWidth = dataSize === "320" ? 320 : (dataSize === "500" ? 500 : 800);
+                const scaleFactor = isMobileSize ? (size / baseWidth) : 1;
+
+                // Center drawing inside canvas for mobile
+                let offsetX = 0;
+                let offsetY = 0;
+                if (isMobileSize && dataSize === "320") {
+                    const contentCenterX = ((82 + 291) / 2) * scaleFactor;
+                    const contentCenterY = ((81 + 371) / 2) * scaleFactor;
+                    offsetX = (size / 2) - contentCenterX;
+                    offsetY = (size / 2) - contentCenterY;
+                }
+
+                particles = createParticlesFromRaw(rawData, isMobileSize, scaleFactor, offsetX, offsetY);
                 dataReady = true;
                 startTime = performance.now();
             }
@@ -864,11 +880,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        let isAsciiVisible = window.innerWidth > 768;
+        let isAsciiVisible = true;
         let isAsciiAnimating = false;
 
         const wakeAscii = () => {
-            if (!isAsciiVisible || document.hidden || window.innerWidth <= 768) return;
+            if (!isAsciiVisible || document.hidden) return;
             if (!isAsciiAnimating) {
                 isAsciiAnimating = true;
                 if (animationId) cancelAnimationFrame(animationId);
@@ -888,20 +904,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener("resize", () => {
             clearTimeout(resizeAsciiTimeout);
             resizeAsciiTimeout = setTimeout(() => {
-                if (window.innerWidth <= 768) {
-                    isAsciiVisible = false;
-                    sleepAscii();
-                    return;
+                const newSize = calculateSize(window.innerWidth);
+                if (newSize !== size) {
+                    size = newSize;
+                    ctx = setupCanvas();
                 }
-                isAsciiVisible = true;
-                size = calculateSize(window.innerWidth);
-                ctx = setupCanvas();
                 wakeAscii();
             }, 200);
         });
 
         const draw = () => {
-            if (!isAsciiVisible || document.hidden || window.innerWidth <= 768) {
+            if (!isAsciiVisible || document.hidden) {
                 sleepAscii();
                 return;
             }
@@ -922,8 +935,11 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.x += (mouseTarget.x - mouse.x) * 0.15;
             mouse.y += (mouseTarget.y - mouse.y) * 0.15;
 
-            // Cache completely static portrait and SLEEP loop to save CPU/GPU
-            const isSettled = !mouse.active && (elapsed - lastActiveTime > 2.5) && (elapsed > 4.5) && (elapsed - (window.lastAsciiExplosionTime || 0) > 2.5);
+            // Cache static portrait and SLEEP loop once settled to consume 0% CPU/GPU
+            const isMobile = size <= 420;
+            const settleDelay = isMobile ? 1.5 : 2.5;
+            const minTime = isMobile ? 2.5 : 4.5;
+            const isSettled = !mouse.active && (elapsed - lastActiveTime > settleDelay) && (elapsed > minTime) && (elapsed - (window.lastAsciiExplosionTime || 0) > 2.0);
 
             if (isSettled) {
                 if (!staticAsciiCanvas) {
@@ -934,8 +950,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dpr = window.devicePixelRatio || 1;
                     sCtx.scale(dpr, dpr);
                     
-                    const isMobileSize = size <= 320;
-                    sCtx.font = `${isMobileSize ? 4 : 6}px monospace`;
+                    const sampleFontSize = (particles[0] && particles[0].fontSize) ? particles[0].fontSize : (isMobile ? 5 : 6);
+                    sCtx.font = `${sampleFontSize}px monospace`;
                     sCtx.textAlign = "center";
                     sCtx.textBaseline = "middle";
                     sCtx.fillStyle = `rgb(${rgbColor})`;
@@ -952,13 +968,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 staticAsciiCanvas = null;
             }
 
-            const isMobileSize = size <= 320;
-            const fontSize = isMobileSize ? 4 : 6;
-            ctx.font = `${fontSize}px monospace`;
+            const currentFontSize = (particles[0] && particles[0].fontSize) ? particles[0].fontSize : (isMobile ? 5 : 6);
+            ctx.font = `${currentFontSize}px monospace`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-
-            // Color is now cached outside this loop in setupCanvas
             ctx.fillStyle = `rgb(${rgbColor})`;
 
             particles.forEach((p) => {
@@ -981,7 +994,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const maxDist = size * 0.2;
                     const distSq = dx * dx + dy * dy;
 
-                    // Only do expensive sqrt if within bounding box / squared distance
                     if (distSq < maxDist * maxDist && distSq > 0) {
                         const dist = Math.sqrt(distSq);
                         const force = (1 - dist / maxDist) * 4;
@@ -1022,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (p.explodedAt !== undefined) {
                     const timeSinceExplode = elapsed - p.explodedAt;
                     if (timeSinceExplode > 0.1 && timeSinceExplode < 0.6) {
-                        // Disappear instantly
                         if (timeSinceExplode > 0.55 && timeSinceExplode < 0.58 && !p.repositioned) {
                             p.x = p.targetX + (Math.random() - 0.5) * 400;
                             p.y = p.targetY + (Math.random() - 0.5) * 400;
@@ -1030,7 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             p.vy = 0;
                             p.repositioned = true;
                         }
-                        return; // skip rendering
+                        return;
                     }
                     if (timeSinceExplode >= 0.6) {
                         if (timeSinceExplode > 2.0) {
@@ -1046,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.globalAlpha = p.currentAlpha;
                 ctx.fillText(p.char, p.x, p.y);
             });
-            ctx.globalAlpha = 1; // Restore
+            ctx.globalAlpha = 1;
 
             animationId = requestAnimationFrame(draw);
         };
@@ -1060,13 +1071,24 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const handleTouchMove = (e) => {
+            if (!e.touches || e.touches.length === 0) return;
             const rect = canvas.getBoundingClientRect();
             const touch = e.touches[0];
             mouseTarget.x = touch.clientX - rect.left;
             mouseTarget.y = touch.clientY - rect.top;
             mouse.active = true;
             wakeAscii();
-            if (e.cancelable) e.preventDefault();
+            // NEVER call preventDefault so user can scroll and pinch-zoom freely!
+        };
+
+        const handleTouchStart = (e) => {
+            if (!e.touches || e.touches.length === 0) return;
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            mouseTarget.x = touch.clientX - rect.left;
+            mouseTarget.y = touch.clientY - rect.top;
+            mouse.active = true;
+            wakeAscii();
         };
 
         const handleLeave = () => {
@@ -1075,61 +1097,66 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseTarget.y = -1000;
         };
 
-        canvas.addEventListener("mousemove", handleMouseMove);
-        canvas.addEventListener("mouseleave", handleLeave);
-        canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
-        canvas.addEventListener("touchend", handleLeave);
+        canvas.addEventListener("mousemove", handleMouseMove, { passive: true });
+        canvas.addEventListener("mouseleave", handleLeave, { passive: true });
+        canvas.addEventListener("touchstart", handleTouchStart, { passive: true });
+        canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
+        canvas.addEventListener("touchend", handleLeave, { passive: true });
+        canvas.addEventListener("touchcancel", handleLeave, { passive: true });
 
-        // ASCII Explosion on click
-        canvas.addEventListener("mousedown", (e) => {
+        // ASCII Explosion on click / tap
+        const triggerExplosionAt = (clientX, clientY) => {
             wakeAscii();
             const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
+            const clickX = clientX - rect.left;
+            const clickY = clientY - rect.top;
             
             triggerScreenShake(300);
             window.lastAsciiExplosionTime = (performance.now() - startTime) / 1000;
 
-            // Explode the adjacent HTML text in the global canvas!
-            explodeHeroText(e.clientX, e.clientY);
+            explodeHeroText(clientX, clientY);
             
             const now = (performance.now() - startTime) / 1000;
             particles.forEach((p) => {
                 const dx = p.x - clickX;
                 const dy = p.y - clickY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < size * 0.5) {
-                    const force = (1 - dist / (size * 0.5)) * 40;
-                    p.vx += (dx / dist) * force;
-                    p.vy += (dy / dist) * force;
+                if (dist < size * 0.4) {
+                    const force = (1 - dist / (size * 0.4)) * 25;
+                    const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.5;
+                    p.vx = Math.cos(angle) * force;
+                    p.vy = Math.sin(angle) * force;
+                    p.explodedAt = now;
+                    p.repositioned = false;
                 }
-                p.explodedAt = now;
-                p.repositioned = false;
             });
+        };
+
+        canvas.addEventListener("mousedown", (e) => {
+            triggerExplosionAt(e.clientX, e.clientY);
         });
 
+        // IntersectionObserver - wake/sleep loop when scrolling into/out of view
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && window.innerWidth > 768) {
+            if (entries[0].isIntersecting) {
                 isAsciiVisible = true;
                 wakeAscii();
             } else {
                 isAsciiVisible = false;
                 sleepAscii();
             }
-        });
+        }, { threshold: 0.1 });
         observer.observe(canvas);
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 sleepAscii();
-            } else if (isAsciiVisible && window.innerWidth > 768) {
+            } else {
                 wakeAscii();
             }
         });
 
-        if (window.innerWidth > 768) {
-            wakeAscii();
-        }
+        wakeAscii();
     };
 
     initAsciiPortrait();
@@ -1329,7 +1356,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cursorFollower = document.getElementById('cursor-follower');
     
     // Check if device is primarily touch (using standard media query instead of maxTouchPoints which breaks on hybrid laptops)
-    const isTouchDevice = window.matchMedia("(any-pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches;
+    const isTouchDevice = (window.matchMedia("(any-pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches) || (window.innerWidth <= 768);
     
     let cursorMouseX = 0, cursorMouseY = 0;
     let followerX = 0, followerY = 0;
