@@ -89,12 +89,17 @@
                     <a
                         href="https://github.com/crocs-rouges"
                         target="_blank"
+                        rel="noopener noreferrer"
                         aria-label="GitHub"
                         ><i data-feather="github"></i
                     ></a>
                 </li>
                 <li>
-                    <a href="#" aria-label="LinkedIn"
+                    <a
+                        href="https://www.linkedin.com/in/romain-chevalier-17811341b/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
                         ><i data-feather="linkedin"></i
                     ></a>
                 </li>
@@ -345,12 +350,12 @@
                     </button>
                 </div>
 
-                <!-- FEATURED PROJECT 1: ZELDA -->
+                <!-- FEATURED PROJECT 1: TERRAIN PROCEDURAL GENERATION (Main Project) -->
                 <div class="featured-project reveal-up" data-tech="unity">
                     <div class="featured-img-container">
                         <img
-                            src="assets/Projects/Zelda_LA_Unity/Gameplay.webp"
-                            alt="Zelda Link's Awakening Refactor"
+                            src="assets/Projects/Terrain_Procedural/Gameplay.webp"
+                            alt="Génération Procédurale de Terrain 3D"
                             loading="lazy"
                         />
                     </div>
@@ -361,33 +366,37 @@
                         >
                             Featured Project
                         </p>
-                        <h3 class="project-title" data-i18n="p_zelda_title">
-                            Remake Zelda
+                        <h3 class="project-title" data-i18n="p_terrain_title">
+                            Génération Procédurale 3D
                         </h3>
                         <div class="project-description">
-                            <p data-i18n="p_zelda_desc">
-                                Refactor solo sur Unity avec une architecture
-                                robuste : <strong>State Machine</strong> pour le
-                                joueur et le combat,
-                                <strong>Stateless Behavior Tree</strong> pour
-                                l'IA ennemie, et contrat
-                                <strong>IDataPersistence</strong> avec
-                                persistance chiffrée sur disque. Inventaire
-                                scriptable et caméra de Koholint.
+                            <p data-i18n="p_terrain_desc">
+                                Générateur de terrain 3D procédural et modulaire temps réel développé sous <strong>Unity 6 (URP)</strong> en C#.
+                                Implémentation d'un bruit de Perlin fractal multi-octaves (<strong>fBm</strong> : octaves, persistance, lacunarité),
+                                remapping d'élévation non-linéaire par <strong>AnimationCurve</strong>, baking dynamique de textures de biomes (eau, sable, roche, neige)
+                                et génération de maillage 3D temps réel (<strong>MeshData</strong>) avec <strong>MeshCollider</strong> dynamique et <strong>Custom Editor</strong> interactif.
                             </p>
                         </div>
                         <ul class="project-tech-list">
-                            <li>Unity & C#</li>
-                            <li>Stateless Behavior Tree</li>
-                            <li>State Machine</li>
-                            <li>IDataPersistence</li>
+                            <li>Unity 6 & C#</li>
+                            <li>Fractal Perlin Noise (fBm)</li>
+                            <li>Procedural 3D Mesh</li>
+                            <li>Biome Texture Baking</li>
+                            <li>Custom Editor Tooling</li>
+                            <li>URP</li>
                         </ul>
                         <div class="project-links">
                             <a
-                                href="https://github.com/crocs-rouges"
+                                href="https://github.com/crocs-rouges/Terrain-Procedural-Generation"
                                 target="_blank"
-                                aria-label="GitHub Link"
+                                aria-label="GitHub Repository"
                                 ><i data-feather="github"></i
+                            ></a>
+                            <a
+                                href="https://youtu.be/VFNAJGFIzn0"
+                                target="_blank"
+                                aria-label="YouTube Devlog"
+                                ><i data-feather="youtube"></i
                             ></a>
                         </div>
                     </div>
@@ -495,8 +504,60 @@
                 <div class="projects-grid stagger-container">
                     <div
                         class="folder-card stagger-item"
-                        data-tech="godot"
+                        data-tech="unity"
                         style="transition-delay: 0.1s"
+                    >
+                        <div
+                            class="folder-bg"
+                            style="
+                                background-image: url(&quot;assets/Projects/Zelda_LA_Unity/Gameplay.webp&quot;);
+                            "
+                        ></div>
+                        <div class="folder-header">
+                            <div class="folder-icon">
+                                <i data-feather="folder"></i>
+                            </div>
+                            <div class="folder-links">
+                                <a
+                                    href="https://github.com/crocs-rouges"
+                                    target="_blank"
+                                    aria-label="GitHub Repository"
+                                    ><i data-feather="github"></i
+                                ></a>
+                                <a
+                                    href="https://youtu.be/oznwVu8Eul4"
+                                    target="_blank"
+                                    aria-label="YouTube Devlog"
+                                    ><i data-feather="youtube"></i
+                                ></a>
+                            </div>
+                        </div>
+                        <h3 class="folder-title" data-i18n="p_zelda_title">
+                            Remake Zelda
+                        </h3>
+                        <div class="folder-desc">
+                            <p data-i18n="p_zelda_desc">
+                                Refactor solo sur Unity avec une architecture
+                                robuste : <strong>State Machine</strong> pour le
+                                joueur et le combat,
+                                <strong>Stateless Behavior Tree</strong> pour
+                                l'IA ennemie, et contrat
+                                <strong>IDataPersistence</strong> avec
+                                persistance chiffrée sur disque. Inventaire
+                                scriptable et caméra de Koholint.
+                            </p>
+                        </div>
+                        <ul class="folder-tech">
+                            <li>Unity & C#</li>
+                            <li>Stateless Behavior Tree</li>
+                            <li>State Machine</li>
+                            <li>IDataPersistence</li>
+                        </ul>
+                    </div>
+                    <div
+                        class="folder-card stagger-item"
+                        data-tech="godot"
+                        style="transition-delay: 0.2s"
                     >
                         <div
                             class="folder-bg"
@@ -541,7 +602,7 @@
                     <div
                         class="folder-card stagger-item"
                         data-tech="godot"
-                        style="transition-delay: 0.2s"
+                        style="transition-delay: 0.3s"
                     >
                         <div
                             class="folder-bg"
@@ -585,7 +646,7 @@
                     <div
                         class="folder-card stagger-item"
                         data-tech="other"
-                        style="transition-delay: 0.3s"
+                        style="transition-delay: 0.4s"
                     >
                         <div
                             class="folder-bg"
@@ -626,7 +687,7 @@
                     <div
                         class="folder-card stagger-item"
                         data-tech="python"
-                        style="transition-delay: 0.4s"
+                        style="transition-delay: 0.5s"
                     >
                         <div
                             class="folder-bg"
@@ -670,7 +731,7 @@
                     <div
                         class="folder-card stagger-item"
                         data-tech="unity"
-                        style="transition-delay: 0.5s"
+                        style="transition-delay: 0.6s"
                     >
                         <div
                             class="folder-bg"
@@ -734,6 +795,31 @@
                         class="video-card stagger-item"
                         style="transition-delay: 0.1s"
                         data-type="youtube"
+                        data-src="https://www.youtube.com/embed/VFNAJGFIzn0?autoplay=1"
+                    >
+                        <div
+                            class="video-placeholder"
+                            style="
+                                background-image: url(&quot;https://img.youtube.com/vi/VFNAJGFIzn0/maxresdefault.jpg&quot;);
+                                background-size: cover;
+                                background-position: center;
+                            "
+                        >
+                            <i data-feather="play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h3 data-i18n="v_terrain_title">
+                                Générateur de Monde 3D (Unity)
+                            </h3>
+                            <p data-i18n="v_terrain_desc">
+                                Devlog sur la création d'un générateur de terrain procédural temps réel sous Unity 6.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="video-card stagger-item"
+                        style="transition-delay: 0.2s"
+                        data-type="youtube"
                         data-src="https://www.youtube.com/embed/oznwVu8Eul4?autoplay=1"
                     >
                         <div
@@ -758,7 +844,7 @@
                     </div>
                     <div
                         class="video-card stagger-item"
-                        style="transition-delay: 0.2s"
+                        style="transition-delay: 0.3s"
                         data-type="youtube"
                         data-src="https://www.youtube.com/embed/stYrd2LLf94?autoplay=1"
                     >
@@ -782,7 +868,7 @@
                     </div>
                     <div
                         class="video-card stagger-item"
-                        style="transition-delay: 0.3s"
+                        style="transition-delay: 0.4s"
                         data-type="youtube"
                         data-src="https://www.youtube.com/embed/PX2R_gI4D14?autoplay=1"
                     >

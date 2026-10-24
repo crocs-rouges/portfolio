@@ -36,6 +36,8 @@ const translations = {
         pfilter_godot: "Godot & C#",
         pfilter_python: "Python & Outils",
         featured_overline: "Projet Phare",
+        p_terrain_title: "Génération Procédurale 3D",
+        p_terrain_desc: "Générateur de terrain 3D procédural et modulaire temps réel développé sous <strong>Unity 6 (URP)</strong> en C#. Implémentation d'un bruit de Perlin fractal multi-octaves (<strong>fBm</strong> : octaves, persistance, lacunarité), remapping d'élévation non-linéaire par <strong>AnimationCurve</strong>, baking dynamique de textures de biomes (eau, sable, roche, neige) et génération de maillage 3D temps réel (<strong>MeshData</strong>) avec <strong>MeshCollider</strong> dynamique et <strong>Custom Editor</strong> interactif.",
         p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
         p_shmup_desc: "Shoot 'em up développé sur Godot en C# avec une architecture rigoureuse basée sur le <strong>Command Pattern</strong>. Focus majeur sur le <strong>Game Feel</strong> et la <strong>Juiciness</strong> : <em>Hit Stop</em> dynamique sur impact, secousses d'écran adaptatives, patterns de tirs rythmés et pooling d'entités sans GC.",
         
@@ -73,6 +75,8 @@ const translations = {
         
         video_title: "video gallery",
         video_desc: "Mes montages vidéo, motion design et trailers de gameplay.",
+        v_terrain_title: "Générateur de Monde 3D (Unity)",
+        v_terrain_desc: "Devlog sur la création d'un générateur de terrain procédural temps réel sous Unity 6.",
         v_trailer1_title: "Zelda Remake (Unity)",
         v_trailer1_desc: "Devlog sur la création d'un remake de Zelda Link's Awakening sur Unity.",
         v_trailer2_title: "Best Of REPO",
@@ -120,6 +124,8 @@ const translations = {
         pfilter_godot: "Godot & C#",
         pfilter_python: "Python & Tools",
         featured_overline: "Featured Project",
+        p_terrain_title: "3D Procedural Terrain",
+        p_terrain_desc: "Modular real-time procedural 3D terrain generator built in <strong>Unity 6 (URP)</strong> with C#. Features multi-octave fractal Perlin noise (<strong>fBm</strong>: octaves, persistence, lacunarity), non-linear height redistribution via <strong>AnimationCurve</strong>, dynamic biome texture baking (water, sand, rock, snow), and real-time procedural 3D mesh synthesis (<strong>MeshData</strong>) with dynamic colliders and interactive <strong>Custom Editor</strong>.",
         p_shmup_title: "AEGIS OVERDRIVE (SHMUP)",
         p_shmup_desc: "Shoot 'em up built in Godot with C# featuring a rigorous <strong>Command Pattern</strong> architecture. Heavy focus on <strong>Game Feel</strong> and <strong>Juiciness</strong>: dynamic <em>Hit Stop</em> on impact, adaptive screen shake, rhythm-synced procedural bullet patterns, and zero-GC entity pooling.",
         
@@ -157,6 +163,8 @@ const translations = {
         
         video_title: "video gallery",
         video_desc: "My video edits, motion design, and gameplay trailers.",
+        v_terrain_title: "3D World Generator (Unity)",
+        v_terrain_desc: "Full devlog covering the creation of a real-time procedural terrain generator in Unity 6.",
         v_trailer1_title: "Zelda Remake (Unity)",
         v_trailer1_desc: "Devlog on the creation of a Zelda Link's Awakening remake in Unity.",
         v_trailer2_title: "Best Of REPO",
