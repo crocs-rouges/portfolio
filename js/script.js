@@ -13,9 +13,12 @@ const translations = {
         hero_intro_start: "salut, moi c'est ",
         hero_intro_name: "romain",
         hero_intro_end: ".",
+        hero_status: "Stage : 5 Mai – 31 Août • Gameplay Programmer / Tech Designer",
         hero_subtitle: "Passionné par la conception et la création de jeux vidéo.",
         hero_desc_merged: "Game Designer & Programmer. Je crée des mondes interactifs. Étudiant à ISART Digital passionné par l'architecture logicielle et le Gameplay Programming. Je code principalement en C# (Unity/Godot) et Python.",
         btn_say_hi: "Say hi!",
+        btn_contact_me: "Me Contacter",
+        btn_download_cv: "Télécharger mon CV",
         
         about_title: "about me",
         moti_p1: "Je suis actuellement étudiant en première année de Game Design & Programming à ISART Digital. Passionné depuis toujours par les jeux vidéo et la richesse de leurs univers, j'ai orienté mon parcours vers la conception vidéoludique.",
@@ -24,7 +27,14 @@ const translations = {
         philo_1: "<strong>La Force Silencieuse :</strong> Puissance sans besoin de validation, l'action prime sur les mots.",
         philo_2: "<strong>L'Excellence par l'Habitude :</strong> Faire de la qualité une répétition, pas un acte isolé.",
         philo_3: "<strong>Design Systems :</strong> <em>\"Créer des systèmes qui résistent au joueur pour valoriser son intelligence et son effort.\"</em>",
-        tech_intro: "Voici quelques technologies avec lesquelles je travaille :",
+        
+        edu_title: "Formation",
+        edu_degree_1: "Bachelor Game Design & Programming",
+        edu_desc_1: "Spécialisation Gameplay Programming (Unity/C# & Godot), intégration du Game Feel, architecture logicielle et optimisation.",
+        edu_degree_2: "Baccalauréat Général",
+        edu_desc_2: "Spécialités Mathématiques, NSI (Numérique & Sciences Informatiques) et Mathématiques Expertes.",
+        
+        tech_intro: "Technologies et savoir-faire clés :",
         tech_prog: "Gameplay Programming",
         tech_archi: "Architecture (Design Patterns)",
         tech_gd: "Game Design & UX",
@@ -85,8 +95,11 @@ const translations = {
         v_shmup_desc: "Aperçu complet du gameplay de Aegis Overdrive.",
         
         contact_overline: "04. Et ensuite ?",
-        contact_title: "Get In Touch",
-        contact_text: "Si mon profil correspond à vos recherches ou si vous souhaitez échanger autour du Game Dev, n'hésitez pas à me contacter. Je suis toujours ouvert à de nouvelles opportunités.",
+        contact_status: "Stage : 5 Mai – 31 Août • Gameplay Programmer / Tech Designer",
+        contact_title: "Discutons de votre opportunité",
+        contact_text: "Vous recherchez un Gameplay Programmer motivé, rigoureux en architecture logicielle (C#, Unity, Godot) et sensible au Game Feel ? Échangeons dès maintenant sur votre projet ou votre équipe.",
+        contact_btn_email: "M'envoyer un email",
+        email_copied: "✓ Adresse copiée !",
         achievement_title: "SUCCÈS DÉVERROUILLÉ !",
         achievement_desc: "Maître Rétro : Konami Code exécuté ! (+5000 XP)"
     },
@@ -101,9 +114,12 @@ const translations = {
         hero_intro_start: "hi, ",
         hero_intro_name: "romain",
         hero_intro_end: " here.",
+        hero_status: "Internship: May 5 – August 31 • Gameplay Programmer / Tech Designer",
         hero_subtitle: "Passionate about designing and creating video games.",
         hero_desc_merged: "Game Designer & Programmer. I build interactive digital worlds. Student at ISART Digital passionate about software architecture and Gameplay Programming. I mainly code in C# (Unity/Godot) and Python.",
         btn_say_hi: "Say hi!",
+        btn_contact_me: "Get In Touch",
+        btn_download_cv: "Download CV",
         
         about_title: "about me",
         moti_p1: "I am currently a first-year student in Game Design & Programming at ISART Digital. Always passionate about video games and their rich universes, I oriented my path towards game design.",
@@ -112,7 +128,14 @@ const translations = {
         philo_1: "<strong>Silent Strength :</strong> Power without the need for validation, action speaks louder than words.",
         philo_2: "<strong>Excellence by Habit :</strong> Making quality a repetition, not an isolated act.",
         philo_3: "<strong>Design Systems :</strong> <em>\"Create systems that resist the player to highlight their intelligence and effort.\"</em>",
-        tech_intro: "Here are some technologies I have been working with:",
+        
+        edu_title: "Education",
+        edu_degree_1: "Bachelor in Game Design & Programming",
+        edu_desc_1: "Specializing in Gameplay Programming (Unity/C# & Godot), Game Feel design, software architecture, and optimization.",
+        edu_degree_2: "French General Baccalaureate",
+        edu_desc_2: "Majors in Mathematics, Computer Science (NSI), and Advanced Mathematics.",
+        
+        tech_intro: "Key Technologies & Core Skills:",
         tech_prog: "Gameplay Programming",
         tech_archi: "Architecture (Design Patterns)",
         tech_gd: "Game Design & UX",
@@ -173,8 +196,11 @@ const translations = {
         v_shmup_desc: "Complete gameplay overview of Aegis Overdrive.",
         
         contact_overline: "04. What's Next?",
-        contact_title: "Get In Touch",
-        contact_text: "If my profile matches your search or if you want to chat about Game Dev, feel free to contact me. My inbox is always open.",
+        contact_status: "Internship: May 5 – August 31 • Gameplay Programmer / Tech Designer",
+        contact_title: "Let's Discuss Opportunities",
+        contact_text: "Looking for a driven Gameplay Programmer with strong software architecture skills (C#, Unity, Godot) and high attention to Game Feel? Let's connect and discuss your project or team.",
+        contact_btn_email: "Send an Email",
+        email_copied: "✓ Email copied!",
         achievement_title: "ACHIEVEMENT UNLOCKED!",
         achievement_desc: "Retro Master: Konami Code Executed! (+5000 XP)"
     }
@@ -437,22 +463,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. TRANSLATION LOGIC
     // ==========================================
     const langToggle = document.getElementById('language-toggle');
-    let currentLang = localStorage.getItem('lang') || 'fr';
+    let currentLang = 'fr';
+    try {
+        currentLang = localStorage.getItem('lang') || 'fr';
+    } catch (e) {
+        currentLang = 'fr';
+    }
 
     function applyMatrixDecodeEffect(element, finalString) {
-        // Only run if it's inside the hero-text
-        if (!element.closest('.hero-text')) {
-            element.innerHTML = finalString;
-            return;
+        if (!element) return;
+        if (element._matrixInterval) {
+            clearInterval(element._matrixInterval);
+            element._matrixInterval = null;
         }
 
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
         let iterations = 0;
         const isLongText = finalString.length > 50;
-        const speed = isLongText ? 15 : 30; 
-        const charsPerIter = isLongText ? 2.5 : 1;
+        const speed = isLongText ? 15 : 25; 
+        const charsPerIter = isLongText ? 2.5 : 1.2;
         
-        let interval = setInterval(() => {
+        element._matrixInterval = setInterval(() => {
             let currentString = "";
             let lockedCount = Math.floor(iterations * charsPerIter);
             for (let i = 0; i < finalString.length; i++) {
@@ -467,36 +498,79 @@ document.addEventListener('DOMContentLoaded', () => {
             element.textContent = currentString;
             
             if (lockedCount >= finalString.length) {
-                clearInterval(interval);
+                clearInterval(element._matrixInterval);
+                element._matrixInterval = null;
                 element.innerHTML = finalString; 
             }
             iterations++;
         }, speed);
     }
 
-    function setLanguage(lang) {
+    function setLanguage(lang, animateHero = true) {
+        currentLang = lang;
         document.documentElement.lang = lang;
-        langToggle.textContent = lang === 'fr' ? 'EN' : 'FR';
-        localStorage.setItem('lang', lang);
+        if (langToggle) {
+            langToggle.textContent = lang === 'fr' ? 'EN' : 'FR';
+            langToggle.setAttribute('aria-label', lang === 'fr' ? 'Passer en anglais' : 'Switch to French');
+        }
+        try {
+            localStorage.setItem('lang', lang);
+        } catch (e) {}
         
+        // Restore hero DOM text visibility immediately if letters were exploding
+        const heroTextContainer = document.querySelector('.hero-text');
+        if (heroTextContainer) {
+            if (window.explodingLetters && window.explodingLetters.length > 0) {
+                window.explodingLetters = [];
+            }
+            heroTextContainer.style.transition = 'opacity 0.2s ease';
+            heroTextContainer.style.opacity = '1';
+        }
+
         const elements = document.querySelectorAll('[data-i18n]');
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             if (translations[lang] && translations[lang][key]) {
-                if (element.tagName === 'A' && element.children.length === 0) {
-                     element.textContent = translations[lang][key];
+                const translatedText = translations[lang][key];
+
+                // Hero narrative text gets matrix decode effect if animateHero is true
+                const isHeroNarrative = animateHero && (
+                    element.classList.contains('hero-title') ||
+                    element.classList.contains('hero-subtitle') ||
+                    element.classList.contains('hero-description') ||
+                    element.closest('.hero-title')
+                );
+
+                if (isHeroNarrative) {
+                    applyMatrixDecodeEffect(element, translatedText);
                 } else {
-                    applyMatrixDecodeEffect(element, translations[lang][key]);
+                    if (element._matrixInterval) {
+                        clearInterval(element._matrixInterval);
+                        element._matrixInterval = null;
+                    }
+                    element.innerHTML = translatedText;
                 }
             }
         });
+
+        if (window.feather) {
+            feather.replace();
+        }
     }
 
-    setLanguage(currentLang);
-    langToggle.addEventListener('click', () => {
-        currentLang = currentLang === 'fr' ? 'en' : 'fr';
-        setLanguage(currentLang);
-    });
+    // Set initial language on load without matrix scramble for instant clean render
+    setLanguage(currentLang, false);
+
+    if (langToggle) {
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            setLanguage(currentLang, true);
+            if (SoundManager && typeof SoundManager.playClick === 'function') {
+                SoundManager.playClick();
+            }
+        });
+    }
 
     // ==========================================
     // 2. SCREEN SHAKE & TACTILE JUICE
@@ -679,9 +753,57 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('mouseenter', () => SoundManager.playProjectHover());
     });
     
-    const sayHiBtn = document.querySelector('.btn-primary');
-    if (sayHiBtn) {
-        sayHiBtn.addEventListener('mousedown', () => SoundManager.playClick());
+    const actionButtons = document.querySelectorAll('.btn-primary, .btn-secondary, .contact-social-pill, .btn-more');
+    actionButtons.forEach(btn => {
+        btn.addEventListener('mousedown', () => SoundManager.playClick());
+    });
+
+    // ==========================================
+    // COPY EMAIL TO CLIPBOARD
+    // ==========================================
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const copyEmailText = document.getElementById('copy-email-text');
+    const copyEmailIcon = document.getElementById('copy-email-icon');
+    let copyResetTimeout = null;
+
+    if (copyEmailBtn && copyEmailText) {
+        copyEmailBtn.addEventListener('click', async () => {
+            const email = "romain.chevalier40@gmail.com";
+            const activeLang = localStorage.getItem('lang') || 'fr';
+            const copiedLabel = translations[activeLang]?.email_copied || (activeLang === 'fr' ? "✓ Adresse copiée !" : "✓ Email copied!");
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(email);
+                } else {
+                    const tempInput = document.createElement('input');
+                    tempInput.value = email;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                }
+
+                copyEmailBtn.classList.add('copied');
+                copyEmailText.textContent = copiedLabel;
+                if (copyEmailIcon) {
+                    copyEmailIcon.setAttribute('data-feather', 'check');
+                    if (window.feather) feather.replace();
+                }
+
+                clearTimeout(copyResetTimeout);
+                copyResetTimeout = setTimeout(() => {
+                    copyEmailBtn.classList.remove('copied');
+                    copyEmailText.textContent = email;
+                    if (copyEmailIcon) {
+                        copyEmailIcon.setAttribute('data-feather', 'copy');
+                        if (window.feather) feather.replace();
+                    }
+                }, 2500);
+            } catch (err) {
+                console.error("Clipboard copy failed: ", err);
+            }
+        });
     }
 
     const gameModeBtn = document.getElementById('game-mode-toggle');
@@ -1443,16 +1565,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
         
         window.addEventListener('mousedown', (e) => {
-            // Text explosion triggers sound
-            if (window.explodingLetters && !window.explodingLetters.some(l => !l.repositioned)) {
-                SoundManager.playExplosion();
-                triggerScreenShake(300);
+            // NEVER trigger explosion, shake, or sounds when clicking top bar / header, navigation, or interactive controls
+            if (e.target.closest('.header, header, nav, button, a, input, textarea, select, .modal-overlay, .modal-container, .interactive, .achievement-toast, .project-card, .folder-card')) {
+                return;
             }
-            explodeHeroText(e.clientX, e.clientY);
+
+            // Only trigger hero text explosion & screen shake when clicking inside the hero section background/canvas
+            const heroSection = document.getElementById('hero');
+            const isClickInHero = heroSection && heroSection.contains(e.target);
+
+            if (isClickInHero) {
+                if (window.explodingLetters && !window.explodingLetters.some(l => !l.repositioned)) {
+                    SoundManager.playExplosion();
+                    triggerScreenShake(300);
+                }
+                explodeHeroText(e.clientX, e.clientY);
+            }
             
             if (!window.clickRipples) window.clickRipples = [];
             
-            // Cyber Ripple (expanding diamond)
+            // Cyber Ripple (expanding diamond) on canvas background
             window.clickRipples.push({
                 x: e.clientX,
                 y: e.clientY,

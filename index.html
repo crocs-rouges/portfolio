@@ -1,9 +1,36 @@
-�<!doctype html>
+<!doctype html>
 <html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Romain Chevalier</title>
+        <title>Romain Chevalier — Gameplay Programmer & Game Designer</title>
+        <meta
+            name="description"
+            content="Portfolio de Romain Chevalier — Gameplay Programmer & Game Designer à ISART Digital. Spécialisé en C#, Unity, Godot, physique 2.5D, génération procédurale et Game Feel."
+        />
+        <meta name="author" content="Romain Chevalier" />
+        <meta name="theme-color" content="#232136" />
+
+        <!-- Open Graph / Social Sharing -->
+        <meta property="og:title" content="Romain Chevalier — Gameplay Programmer & Game Designer" />
+        <meta
+            property="og:description"
+            content="Portfolio interactif : Projets C#, Unity 6, Godot, Game Feel et Architecture logicielle."
+        />
+        <meta property="og:image" content="public/profile.png" />
+        <meta property="og:type" content="website" />
+
+        <!-- Twitter Meta -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Romain Chevalier — Gameplay Programmer & Game Designer" />
+        <meta
+            name="twitter:description"
+            content="Portfolio interactif : Projets C#, Unity 6, Godot, Game Feel et Architecture logicielle."
+        />
+        <meta name="twitter:image" content="public/profile.png" />
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
 
         <!-- Google Fonts: Inter & Fira Code & Press Start 2P (for Game Mode) -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -128,6 +155,10 @@
                         <canvas id="ascii-canvas"></canvas>
                     </div>
                     <div class="hero-text">
+                        <div class="availability-badge">
+                            <span class="status-pulse"></span>
+                            <span data-i18n="hero_status">Stage : 5 Mai – 31 Août • Gameplay Programmer / Tech Designer</span>
+                        </div>
                         <h1 class="hero-title">
                             <span data-i18n="hero_intro_start">hi, </span
                             ><span class="highlight" data-i18n="hero_intro_name"
@@ -147,18 +178,25 @@
                             l'architecture logicielle et le Gameplay
                             Programming. Je code principalement en C# et Python.
                         </p>
-                        <a
-                            href="mailto:romain.chevalier40@gmail.com"
-                            class="btn-primary interactive"
-                            style="
-                                display: inline-flex;
-                                align-items: center;
-                                gap: 10px;
-                            "
-                        >
-                            <i data-feather="mail"></i>
-                            <span data-i18n="btn_say_hi">Say hi!</span>
-                        </a>
+                        <div class="hero-cta-group">
+                            <a
+                                href="#contact"
+                                class="btn-primary interactive"
+                            >
+                                <i data-feather="send"></i>
+                                <span data-i18n="btn_contact_me">Me Contacter</span>
+                            </a>
+                            <a
+                                href="assets/CV_Romain_Chevalier.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn-secondary interactive"
+                                download="CV_Romain_Chevalier.pdf"
+                            >
+                                <i data-feather="file-text"></i>
+                                <span data-i18n="btn_download_cv">Télécharger mon CV</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -183,14 +221,13 @@
                                 class="fact-item stagger-item"
                                 style="transition-delay: 0.2s"
                             >
-                                <i data-feather="user"></i> 19 ans
+                                <i data-feather="award"></i> ISART Digital
                             </div>
                             <div
                                 class="fact-item stagger-item"
                                 style="transition-delay: 0.3s"
                             >
-                                <i data-feather="code"></i> Gameplay Programmer
-                                & Tech Designer
+                                <i data-feather="code"></i> Gameplay Programmer & Tech Designer
                             </div>
                         </div>
 
@@ -236,57 +273,104 @@
                             </ul>
                         </div>
 
+                        <!-- FORMATION / EDUCATION TIMELINE -->
+                        <div class="education-block reveal-up">
+                            <h3 class="education-title">
+                                <i data-feather="award"></i>
+                                <span data-i18n="edu_title">Formation</span>
+                            </h3>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <h4 class="timeline-degree" data-i18n="edu_degree_1">Bachelor Game Design & Programming</h4>
+                                            <span class="timeline-date">2025 — 2030</span>
+                                        </div>
+                                        <p class="timeline-school">ISART DIGITAL, Paris</p>
+                                        <p class="timeline-desc" data-i18n="edu_desc_1">Spécialisation Gameplay Programming (Unity/C# & Godot), intégration du Game Feel, architecture logicielle et optimisation.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <h4 class="timeline-degree" data-i18n="edu_degree_2">Baccalauréat Général</h4>
+                                            <span class="timeline-date">Mention</span>
+                                        </div>
+                                        <p class="timeline-school">Filière Scientifique</p>
+                                        <p class="timeline-desc" data-i18n="edu_desc_2">Spécialités Mathématiques, NSI (Numérique & Sciences Informatiques) et Mathématiques Expertes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <p class="tech-intro" data-i18n="tech_intro">
-                            Voici quelques technologies avec lesquelles je
-                            travaille :
+                            Technologies et savoir-faire clés :
                         </p>
                         <div class="skills-container stagger-container">
                             <div
                                 class="skill-category stagger-item"
                                 style="transition-delay: 0.1s"
                             >
-                                <h4>Gameplay Programming</h4>
+                                <h4>Moteurs & Outils</h4>
                                 <ul class="skills-list">
-                                    <li>C#, Python, Unity 6</li>
-                                    <li>Godot, Unreal (Blueprints)</li>
-                                    <li data-i18n="tech_archi">
-                                        Architecture (Design Patterns)
-                                    </li>
+                                    <li>Unity (Expertise) & Godot</li>
+                                    <li>Visual Studio & Git</li>
+                                    <li>Unreal Engine (Blueprints)</li>
                                 </ul>
                             </div>
                             <div
                                 class="skill-category stagger-item"
                                 style="transition-delay: 0.2s"
                             >
-                                <h4>Game Design & UX</h4>
+                                <h4>Langages & Code</h4>
                                 <ul class="skills-list">
-                                    <li data-i18n="tech_loops">
-                                        Théorie des boucles & 3C
-                                    </li>
-                                    <li>Juiciness & Game Feel</li>
-                                    <li>FTUE & Level Design</li>
+                                    <li>C# (Niveau Avancé)</li>
+                                    <li>Python & Outils Custom</li>
+                                    <li>JavaScript, HTML5 / CSS3</li>
                                 </ul>
                             </div>
                             <div
                                 class="skill-category stagger-item"
                                 style="transition-delay: 0.3s"
                             >
-                                <h4>Maths & Rendu</h4>
+                                <h4>Savoir-Faire Gameplay</h4>
                                 <ul class="skills-list">
-                                    <li>Maths Gameplay (Euler, Trig)</li>
-                                    <li>GLSL & Visual Shaders</li>
-                                    <li>VFX & Particules</li>
+                                    <li>Architecture (Design Patterns)</li>
+                                    <li>Maths (Vecteurs, Trigo)</li>
+                                    <li>Optimisation (Memory, FPS)</li>
                                 </ul>
                             </div>
                             <div
                                 class="skill-category stagger-item"
                                 style="transition-delay: 0.4s"
                             >
-                                <h4>Philosophie & Analyse</h4>
+                                <h4>Game Design & Prod</h4>
                                 <ul class="skills-list">
-                                    <li>Storytelling & Ludonarrative</li>
-                                    <li>Analyse de systèmes</li>
+                                    <li>Juiciness & Game Feel</li>
+                                    <li>Prototypage Rapide</li>
+                                    <li>Utilisation de l'IA en prod</li>
                                 </ul>
+                            </div>
+                        </div>
+
+                        <!-- LANGUAGES BADGES -->
+                        <div class="languages-row reveal-up">
+                            <div class="language-item">
+                                <span class="lang-flag">🇫🇷</span>
+                                <span class="lang-name">Français</span>
+                                <span class="lang-level">(Maternelle)</span>
+                            </div>
+                            <div class="language-item">
+                                <span class="lang-flag">🇬🇧</span>
+                                <span class="lang-name">Anglais</span>
+                                <span class="lang-level">(C1 • Courant)</span>
+                            </div>
+                            <div class="language-item">
+                                <span class="lang-flag">🇯🇵</span>
+                                <span class="lang-name">Japonais</span>
+                                <span class="lang-level">(A1 • Notions)</span>
                             </div>
                         </div>
                     </div>
@@ -490,11 +574,16 @@
                             <a
                                 href="https://github.com/crocs-rouges/SHMUP"
                                 target="_blank"
-                                aria-label="GitHub Link"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub Repository"
                                 ><i data-feather="github"></i
                             ></a>
-                            <a href="#" aria-label="External Link"
-                                ><i data-feather="external-link"></i
+                            <a
+                                href="https://youtu.be/PX2R_gI4D14"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube Walkthrough"
+                                ><i data-feather="youtube"></i
                             ></a>
                         </div>
                     </div>
@@ -1256,47 +1345,91 @@
             </section>
 
             <section
-                class="section reveal-up"
+                class="section reveal-up contact-section"
                 id="contact"
-                style="
-                    text-align: center;
-                    max-width: 600px;
-                    margin: 0 auto 100px;
-                "
             >
-                <p
-                    class="hero-intro"
-                    style="margin-bottom: 20px"
-                    data-i18n="contact_overline"
-                >
-                    04. What's Next?
-                </p>
-                <h2
-                    class="hero-title"
-                    style="
-                        font-size: clamp(2rem, 4vw, 3rem);
-                        margin-bottom: 20px;
-                    "
-                    data-i18n="contact_title"
-                >
-                    Get In Touch
-                </h2>
-                <p
-                    class="hero-description"
-                    data-i18n="contact_text"
-                    style="margin-bottom: 40px"
-                >
-                    Si mon profil correspond à vos recherches ou si vous
-                    souhaitez échanger autour du Game Dev, n'hésitez pas à me
-                    contacter. Je suis toujours ouvert à de nouvelles
-                    opportunités.
-                </p>
-                <a
-                    href="mailto:romain.chevalier40@gmail.com"
-                    class="btn-primary"
-                    data-i18n="btn_say_hi"
-                    >Say hi!</a
-                >
+                <div class="contact-card">
+                    <p
+                        class="contact-overline"
+                        data-i18n="contact_overline"
+                    >
+                        04. Et ensuite ?
+                    </p>
+                    <div class="availability-badge contact-badge">
+                        <span class="status-pulse"></span>
+                        <span data-i18n="contact_status">Stage : 5 Mai – 31 Août • Gameplay Programmer / Tech Designer</span>
+                    </div>
+                    <h2
+                        class="contact-title"
+                        data-i18n="contact_title"
+                    >
+                        Discutons de votre opportunité
+                    </h2>
+                    <p
+                        class="contact-description"
+                        data-i18n="contact_text"
+                    >
+                        Vous recherchez un Gameplay Programmer motivé, rigoureux en architecture logicielle (C#, Unity, Godot) et sensible au Game Feel ? Échangeons dès maintenant sur votre projet ou votre équipe.
+                    </p>
+
+                    <div class="contact-actions-primary">
+                        <a
+                            href="mailto:romain.chevalier40@gmail.com"
+                            class="btn-primary interactive"
+                        >
+                            <i data-feather="mail"></i>
+                            <span data-i18n="contact_btn_email">M'envoyer un email</span>
+                        </a>
+                        <button
+                            id="copy-email-btn"
+                            class="btn-secondary interactive"
+                            type="button"
+                            aria-label="Copier l'adresse email"
+                        >
+                            <i data-feather="copy" id="copy-email-icon"></i>
+                            <span id="copy-email-text">romain.chevalier40@gmail.com</span>
+                        </button>
+                        <a
+                            href="assets/CV_Romain_Chevalier.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn-secondary interactive"
+                            download="CV_Romain_Chevalier.pdf"
+                        >
+                            <i data-feather="file-text"></i>
+                            <span data-i18n="btn_download_cv">Télécharger mon CV (PDF)</span>
+                        </a>
+                    </div>
+
+                    <div class="contact-social-links">
+                        <a
+                            href="tel:+33609134880"
+                            class="contact-social-pill interactive"
+                            aria-label="Téléphone"
+                        >
+                            <i data-feather="phone"></i>
+                            <span>06 09 13 48 80</span>
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/in/romain-chevalier-17811341b/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-social-pill interactive"
+                        >
+                            <i data-feather="linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a
+                            href="https://github.com/crocs-rouges"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-social-pill interactive"
+                        >
+                            <i data-feather="github"></i>
+                            <span>GitHub</span>
+                        </a>
+                    </div>
+                </div>
             </section>
         </main>
 
